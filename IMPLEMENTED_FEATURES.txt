@@ -1,0 +1,58 @@
+# Ilmora - Implemented Features
+
+## Core Architecture
+- Next.js 14 Frontend (App Router)
+- FastAPI Backend Service
+- PostgreSQL Database with pgvector extension
+- Type-safe Database Models (SQLAlchemy)
+- Centralized Configuration Management
+- Standardized Logging System
+
+## Authentication & Security
+- Firebase Authentication Integration (Email/Password)
+- JWT Token Verification Middleware (Backend)
+- React Auth Context for Global User State
+- Protected Route Guards (Frontend)
+- Secure API Dependency Injection (get_current_user)
+- Automatic User Provisioning in Database
+
+## AI & Logic Engine
+- Model-Agnostic AI Service Architecture
+- RAG (Retrieval-Augmented Generation) Pipeline
+- Streaming Response Handling
+- Context-Aware System Prompting (Strict Injection Order)
+- Ethical Integrity Layer (Interface, Keyword, Exam Context Detection)
+- Idempotent Interaction Logging
+
+## Data & Memory
+- Vectorized Memory Storage with Governance (Importance Scoring, Noise Filtering)
+- Knowledge Graph Schema (Nodes, Edges, Relations)
+- Recursive Prerequisite Traversal & Missing Concept Analysis
+- User Learning Profile Schema
+- Concept Mastery Tracking (with performance indexing)
+- Interaction History Tracking with Client Reference IDs
+
+## Offline Capabilities
+- Local IndexedDB Storage
+- Request Mutation Queue
+- Automatic Network Reconnection Sync
+- Resilient Error Handling (Infinite Retry for Server Errors, Drop for Client Errors)
+
+## User Interface
+- Landing Page with Dynamic Auth States
+- Login/Registration Page
+- Onboarding Flow (Profile Personalization)
+- Student Dashboard (Subject Cards, Weak Areas)
+- Mobile-First PWA Layout (Bottom Navigation)
+- Chat Interface with Offline Support
+- Knowledge Graph Explorer (Basic Setup)
+- Document Upload & Ingestion UI
+- Notes Viewer & Editor (Offline-First)
+- Practice Mode (AI Quiz Generation)
+
+## Content Pipeline
+- Ingestion Service (PDF/TXT Support)
+- Automatic Text Extraction & Vectorization
+- Document Management API
+- User-Document Ownership Logic
+
