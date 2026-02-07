@@ -104,6 +104,7 @@ class User(Base):
     interactions: Mapped[List["Interaction"]] = relationship(back_populates="user")
     memories: Mapped[List["Memory"]] = relationship(back_populates="user")
     notes: Mapped[List["Note"]] = relationship(back_populates="user")
+    passkeys: Mapped[List["PasskeyCredential"]] = relationship(back_populates="user")
 
 class LearningProfile(Base):
     __tablename__ = "learning_profiles"
@@ -133,6 +134,20 @@ class LearningProfile(Base):
     consistency_score: Mapped[float] = mapped_column(Float, default=0.0)
     
     user: Mapped["User"] = relationship(back_populates="profile")
+
+class PasskeyCredential(Base):
+    __tablename__ = "passkey_credentials"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), index=True)
+    credential_id: Mapped[str] = mapped_column(String, unique=True, index=True)
+    public_key: Mapped[str] = mapped_column(Text)
+    sign_count: Mapped[int] = mapped_column(Integer, default=0)
+    transports: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    last_used_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+
+    user: Mapped["User"] = relationship(back_populates="passkeys")
 
 # --- Content & Interaction Models ---
 
@@ -282,6 +297,67 @@ class Feedback(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     user: Mapped["User"] = relationship("User")  # Unidirectional is fine for now
+
+# --- Admin Ops Models ---
+
+class AuditEvent(Base):
+    __tablename__ = "audit_events"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    action: Mapped[str] = mapped_column(String)
+    actor: Mapped[str] = mapped_column(String)
+    target: Mapped[str] = mapped_column(String)
+    severity: Mapped[str] = mapped_column(String, default="Low")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class Incident(Base):
+    __tablename__ = "incidents"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    title: Mapped[str] = mapped_column(String)
+    status: Mapped[str] = mapped_column(String, default="Investigating")
+    severity: Mapped[str] = mapped_column(String, default="Medium")
+    owner: Mapped[str] = mapped_column(String, default="NOC")
+    region: Mapped[str] = mapped_column(String, default="Global")
+    impact: Mapped[str] = mapped_column(Text, default="")
+    services: Mapped[List[str]] = mapped_column(JSON, default=list)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class IncidentTimelineEvent(Base):
+    __tablename__ = "incident_timeline_events"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    incident_id: Mapped[str] = mapped_column(String, ForeignKey("incidents.id"))
+    note: Mapped[str] = mapped_column(String)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class IncidentNote(Base):
+    __tablename__ = "incident_notes"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    incident_id: Mapped[str] = mapped_column(String, ForeignKey("incidents.id"))
+    body: Mapped[str] = mapped_column(Text)
+    author: Mapped[str] = mapped_column(String, default="admin")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class RoleAuditEvent(Base):
+    __tablename__ = "role_audit_events"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    actor: Mapped[str] = mapped_column(String)
+    action: Mapped[str] = mapped_column(String)
+    role: Mapped[str] = mapped_column(String)
+    severity: Mapped[str] = mapped_column(String, default="Low")
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+class DatabaseRunbookStep(Base):
+    __tablename__ = "database_runbook_steps"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    label: Mapped[str] = mapped_column(String)
+    status: Mapped[str] = mapped_column(String, default="Pending")
+    sort_order: Mapped[int] = mapped_column(Integer, default=0)
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), onupdate=func.now())
 
 # --- Collaboration / Social Models ---
 

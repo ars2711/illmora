@@ -12,14 +12,23 @@ interface ProfileData {
 }
 
 export default function DashboardPage() {
-  const { user } = useAuth();
+  const { user, demoMode } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const checkProfile = async () => {
-      if (!user) return;
+      if (demoMode) {
+        setProfile({ full_name: "Demo Scholar", profile_completed: true });
+        setLoading(false);
+        return;
+      }
+      if (!user) {
+        // Not logged in and not in demo mode -> redirect to login
+        router.push("/login");
+        return;
+      }
       try {
         const token = await user.getIdToken();
         const res = await fetch("http://localhost:8000/api/v1/users/me", {
@@ -40,7 +49,7 @@ export default function DashboardPage() {
       }
     };
     checkProfile();
-  }, [user, router]);
+  }, [user, router, demoMode]);
 
   if (loading)
     return (
@@ -63,7 +72,50 @@ export default function DashboardPage() {
             </p>
           </header>
 
-      {/* Weak Areas Summary */}
+          {demoMode && (
+            <section className="mb-8 rounded-2xl border border-amber-200/70 bg-amber-50/80 p-4 text-sm text-amber-900 shadow-sm dark:border-amber-200/20 dark:bg-amber-200/10 dark:text-amber-100/90">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-amber-700/80 dark:text-amber-100/80">
+                    Demo workspace
+                  </p>
+                  <p className="mt-2">
+                    You can explore flows and save drafts locally. Syncing and
+                    personalized insights unlock after sign in.
+                  </p>
+                </div>
+                <Link
+                  href="/login"
+                  className="rounded-full bg-amber-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-sm hover:bg-amber-500"
+                >
+                  Sign in
+                </Link>
+              </div>
+            </section>
+          )}
+
+          {!demoMode && user && (
+            <section className="mb-8 rounded-2xl border border-slate-200 bg-white/70 p-4 text-sm text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-white/70">
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
+                    Security
+                  </p>
+                  <p className="mt-2">
+                    Manage passkeys and provider sign-in preferences.
+                  </p>
+                </div>
+                <Link
+                  href="/settings/security"
+                  className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                >
+                  Open security
+                </Link>
+              </div>
+            </section>
+          )}
+
+          {/* Weak Areas Summary */}
           <section className="mb-8">
             <div className="flex items-start gap-3 rounded-2xl border border-amber-200/80 bg-amber-50/80 p-4 backdrop-blur dark:border-amber-200/20 dark:bg-amber-200/10">
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
@@ -73,8 +125,8 @@ export default function DashboardPage() {
                 </h3>
                 <p className="mt-1 text-sm text-amber-800 dark:text-amber-100/80">
                   You seem to be struggling with{" "}
-                  <span className="font-bold">Recursion</span> based on your last
-                  chat. Recommended: 15 min review.
+                  <span className="font-bold">Recursion</span> based on your
+                  last chat. Recommended: 15 min review.
                 </p>
                 <button className="mt-3 text-sm font-medium text-amber-700 underline hover:text-amber-900 dark:text-amber-100/80 dark:hover:text-amber-100">
                   Start Review Session
@@ -83,7 +135,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-      {/* Subjects Grid */}
+          {/* Subjects Grid */}
           <section className="mb-8">
             <div className="mb-4 flex items-center justify-between">
               <h2 className="text-lg font-semibold">Your Subjects</h2>
@@ -129,7 +181,7 @@ export default function DashboardPage() {
             </div>
           </section>
 
-      {/* Recent Activity */}
+          {/* Recent Activity */}
           <section>
             <h2 className="mb-4 text-lg font-semibold">Recent Activity</h2>
             <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white/70 shadow-sm dark:divide-white/10 dark:border-white/10 dark:bg-white/5">
@@ -157,6 +209,34 @@ export default function DashboardPage() {
               </div>
             </div>
           </section>
+
+          {demoMode && (
+            <section className="mt-8">
+              <h2 className="mb-4 text-lg font-semibold">Demo studio</h2>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {[
+                  {
+                    title: "Draft queue",
+                    detail: "2 uploads staged • 1 quiz prompt ready",
+                  },
+                  {
+                    title: "Sample memory graph",
+                    detail: "Explore 12 curated nodes for recursion",
+                  },
+                ].map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-slate-200 bg-white/70 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70"
+                  >
+                    <p className="font-semibold text-slate-900 dark:text-white">
+                      {item.title}
+                    </p>
+                    <p className="mt-2">{item.detail}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
       </div>
     </div>

@@ -5,8 +5,10 @@ import { useOfflineChat } from "@/hooks/use-offline-chat";
 import { ChatLayout } from "@/components/features/chat/ChatLayout";
 import { v4 as uuidv4 } from "uuid";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
+import { useAuth } from "@/context/AuthContext";
 
 function ChatContent() {
+  const { demoMode } = useAuth();
   // In a real app, sessionId would come from URL param or global store
   // For prototype, we generate one or persist it in localStorage
   const [sessionId, setSessionId] = React.useState<string>("");
@@ -20,13 +22,17 @@ function ChatContent() {
     setSessionId(stored);
   }, []);
 
-  const { messages, sendMessage, isOnline } = useOfflineChat(sessionId);
+  const { messages, sendMessage, isOnline } = useOfflineChat(
+    sessionId,
+    demoMode,
+  );
 
   return (
     <ChatLayout
       messages={messages}
       onSendMessage={sendMessage}
       isOnline={isOnline}
+      demoMode={demoMode}
     />
   );
 }

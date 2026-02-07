@@ -41,6 +41,27 @@ body {
     sans-serif;
 }
 
+@supports (view-transition-name: root) {
+  :root {
+    view-transition-name: root;
+  }
+}
+
+:root[data-theme-transition="soft"]::view-transition-group(root) {
+  animation-duration: 420ms;
+  animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+:root[data-theme-transition="soft"]::view-transition-old(root) {
+  animation: theme-soft-out 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: center;
+}
+
+:root[data-theme-transition="soft"]::view-transition-new(root) {
+  animation: theme-soft-in 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transform-origin: center;
+}
+
 .font-display {
   font-family: var(--font-display), "Georgia", serif;
 }
@@ -87,10 +108,26 @@ body {
 
 .ilmora-constellation {
   background-image:
-    radial-gradient(circle at 20% 20%, rgba(248, 250, 252, 0.6), transparent 35%),
-    radial-gradient(circle at 75% 30%, rgba(56, 189, 248, 0.45), transparent 40%),
-    radial-gradient(circle at 40% 70%, rgba(251, 191, 36, 0.5), transparent 45%),
-    radial-gradient(circle at 80% 75%, rgba(248, 250, 252, 0.35), transparent 45%),
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(248, 250, 252, 0.6),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 75% 30%,
+      rgba(56, 189, 248, 0.45),
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 40% 70%,
+      rgba(251, 191, 36, 0.5),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(248, 250, 252, 0.35),
+      transparent 45%
+    ),
     linear-gradient(120deg, rgba(15, 23, 42, 0.1), rgba(255, 255, 255, 0));
   opacity: 0.7;
   animation: constellation-drift 14s ease-in-out infinite;
@@ -98,8 +135,16 @@ body {
 
 .ilmora-sheen {
   background-image:
-    radial-gradient(circle at 20% 10%, rgba(251, 191, 36, 0.25), transparent 45%),
-    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.2), transparent 45%),
+    radial-gradient(
+      circle at 20% 10%,
+      rgba(251, 191, 36, 0.25),
+      transparent 45%
+    ),
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(56, 189, 248, 0.2),
+      transparent 45%
+    ),
     linear-gradient(120deg, rgba(255, 255, 255, 0.1), transparent 60%);
   opacity: 0.6;
   mix-blend-mode: screen;
@@ -135,6 +180,36 @@ body {
   will-change: transform;
 }
 
+.controls-stack {
+  transform-origin: 100% 100%;
+  transition:
+    opacity 0.35s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+    max-height 0.55s ease;
+}
+
+.controls-stack.is-expanded {
+  opacity: 1;
+  max-height: 520px;
+  transform: translate3d(0, 0, 0) scale(1);
+  animation: controls-pop 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.controls-stack.is-collapsed {
+  opacity: 0;
+  max-height: 0;
+  transform: translate3d(0, 18px, 0) scale(0.6);
+  animation: controls-collapse 420ms ease-in;
+}
+
+.controls-tooltip {
+  transform: translate3d(0, 0, 0);
+}
+
+.animate-controls-orbit {
+  animation: controls-orbit 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 @keyframes floaty {
   0% {
     transform: translateY(0) rotateX(0deg);
@@ -144,6 +219,44 @@ body {
   }
   100% {
     transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes controls-orbit {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  70% {
+    transform: rotate(720deg) scale(1.05);
+  }
+  100% {
+    transform: rotate(900deg) scale(1);
+  }
+}
+
+@keyframes controls-pop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.85);
+  }
+  60% {
+    opacity: 1;
+    transform: translate3d(0, -6px, 0) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes controls-collapse {
+  0% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.6);
   }
 }
 
@@ -183,6 +296,32 @@ body {
   }
 }
 
+@keyframes theme-soft-out {
+  from {
+    opacity: 1;
+    filter: blur(0px) saturate(1);
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    filter: blur(6px) saturate(0.9);
+    transform: scale(0.985);
+  }
+}
+
+@keyframes theme-soft-in {
+  from {
+    opacity: 0;
+    filter: blur(10px) saturate(1.05);
+    transform: scale(1.015);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0px) saturate(1);
+    transform: scale(1);
+  }
+}
+
 /* Cleanup PWA scrollbars */
 ::-webkit-scrollbar {
   width: 0px;
@@ -193,5 +332,20 @@ body {
   .ilmora-scroll-accent {
     transform: none;
     transition: none;
+  }
+
+  .controls-stack,
+  .controls-stack.is-expanded,
+  .controls-stack.is-collapsed,
+  .controls-tooltip,
+  .animate-controls-orbit {
+    animation: none;
+    transition: none;
+  }
+
+  :root[data-theme-transition="soft"]::view-transition-old(root),
+  :root[data-theme-transition="soft"]::view-transition-new(root),
+  :root[data-theme-transition="soft"]::view-transition-group(root) {
+    animation: none;
   }
 }

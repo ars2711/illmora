@@ -1,15 +1,20 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
+import { adminGet } from "@/lib/admin-api";
 import {
   AlertCircle,
   FileText,
   CheckCircle,
   School,
   Users,
+  Database,
+  ShieldCheck,
+  AlertCircle as AlertCircleIcon,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface Stats {
   total_users: number;
@@ -29,29 +34,157 @@ interface FeedbackItem {
 }
 
 export default function AdminDashboard() {
-  const { user } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const router = useRouter();
   const [stats, setStats] = useState<Stats | null>(null);
   const [feedback, setFeedback] = useState<FeedbackItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [adminSearchTarget, setAdminSearchTarget] = useState("incidents");
+  const [adminSearchQuery, setAdminSearchQuery] = useState("");
+  const [adminSearchCounts, setAdminSearchCounts] = useState<{
+    incidents: number;
+    audit: number;
+    roles: number;
+  } | null>(demoMode ? { incidents: 3, audit: 12, roles: 4 } : null);
+
+  const databaseOverview = [
+    { label: "Primary DB", value: "Healthy", tone: "text-emerald-500" },
+    { label: "Replica Lag", value: "1.8s", tone: "text-amber-500" },
+    { label: "Storage Used", value: "62%", tone: "text-slate-600" },
+    { label: "P95 Latency", value: "92ms", tone: "text-slate-600" },
+  ];
+
+  const databaseActivity = [
+    {
+      id: "db-1",
+      query: "SELECT * FROM memory_nodes WHERE updated_at > ...",
+      time: "18s ago",
+      status: "OK",
+    },
+    {
+      id: "db-2",
+      query: "INSERT INTO study_sessions (user_id, duration) VALUES ...",
+      time: "2 min ago",
+      status: "OK",
+    },
+    {
+      id: "db-3",
+      query: "VACUUM ANALYZE knowledge_edges",
+      time: "7 min ago",
+      status: "Running",
+    },
+  ];
+
+  const kpiCards = [
+    {
+      title: "Open Incidents",
+      value: demoMode ? 3 : 0,
+      delta: "+1 this week",
+      icon: <AlertCircle className="w-6 h-6 text-amber-500" />,
+    },
+    {
+      title: "Audit Events",
+      value: demoMode ? 128 : 0,
+      delta: "+14% WoW",
+      icon: <FileText className="w-6 h-6 text-slate-600" />,
+    },
+    {
+      title: "Access Requests",
+      value: demoMode ? 5 : 0,
+      delta: "2 pending",
+      icon: <Users className="w-6 h-6 text-slate-600" />,
+    },
+    {
+      title: "DB Jobs",
+      value: demoMode ? 4 : 0,
+      delta: "1 running",
+      icon: <Database className="w-6 h-6 text-slate-600" />,
+    },
+  ];
+
+  const handleAdminSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const query = adminSearchQuery.trim();
+    if (!query) return;
+    const targetMap: Record<string, string> = {
+      incidents: "/admin/incidents",
+      audit: "/admin/audit",
+      roles: "/admin/roles",
+    };
+    const destination = targetMap[adminSearchTarget] ?? "/admin/incidents";
+    router.push(`${destination}?q=${encodeURIComponent(query)}`);
+  };
+
+  useEffect(() => {
+    if (demoMode) {
+      setAdminSearchCounts({ incidents: 3, audit: 12, roles: 4 });
+      return;
+    }
+    const query = adminSearchQuery.trim();
+    if (!query) {
+      setAdminSearchCounts(null);
+      return;
+    }
+    const handle = setTimeout(async () => {
+      try {
+        const data = await adminGet<{
+          incidents: number;
+          audit: number;
+          roles: number;
+        }>(`/api/v1/admin/search/counts?q=${encodeURIComponent(query)}`, token);
+        setAdminSearchCounts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    }, 300);
+    return () => clearTimeout(handle);
+  }, [adminSearchQuery, demoMode, token]);
 
   // In a real app, strict RBAC check here
   // if (user?.role !== 'SYSTEM_ADMIN') router.push('/dashboard')
 
   useEffect(() => {
     async function loadData() {
+      if (demoMode) {
+        setStats({
+          total_users: 1842,
+          total_institutions: 12,
+          total_interactions: 58214,
+          active_curricula: 43,
+          flagged_feedback: 3,
+        });
+        setFeedback([
+          {
+            id: "demo-1",
+            feature: "Graph Recall",
+            sentiment: "bug",
+            content:
+              "Learner nodes are not clustering after the last ingest run.",
+            created_at: new Date().toISOString(),
+            user_email: "mentor@atlas.edu",
+          },
+          {
+            id: "demo-2",
+            feature: "Studio Sessions",
+            sentiment: "review",
+            content:
+              "Session pacing feels fast for novice learners. Need a slow mode.",
+            created_at: new Date().toISOString(),
+            user_email: "admin@northbay.edu",
+          },
+        ]);
+        setLoading(false);
+        return;
+      }
       try {
-        // Fetch Stats
-        const statsRes = await fetch(
-          "http://localhost:8000/api/v1/admin/stats",
-        );
-        setStats(await statsRes.json());
+        const statsData = await adminGet<Stats>("/api/v1/admin/stats", token);
+        setStats(statsData);
 
-        // Fetch Feedback
-        const fbRes = await fetch(
-          "http://localhost:8000/api/v1/admin/feedback/flagged",
+        const feedbackData = await adminGet<FeedbackItem[]>(
+          "/api/v1/admin/feedback/flagged",
+          token,
         );
-        setFeedback(await fbRes.json());
+        setFeedback(feedbackData);
       } catch (e) {
         console.error(e);
       } finally {
@@ -59,7 +192,7 @@ export default function AdminDashboard() {
       }
     }
     loadData();
-  }, []);
+  }, [demoMode, token]);
 
   if (loading)
     return (
@@ -74,118 +207,305 @@ export default function AdminDashboard() {
         <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
         <div className="relative z-10 p-6">
           <header className="mb-8">
-        <h1 className="text-3xl font-semibold">
-          Ilmora Global Command Center
-        </h1>
-        <p className="text-slate-500 dark:text-white/60">
-          System Status & Multitenant Oversight
-        </p>
-      </header>
+            <h1 className="text-3xl font-semibold">
+              Ilmora Global Command Center
+            </h1>
+            <p className="text-slate-500 dark:text-white/60">
+              System Status & Multitenant Oversight
+            </p>
+          </header>
 
-      {/* Stats Grid */}
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-        <StatCard
-          title="Total Users"
-          value={stats?.total_users}
-          icon={<Users className="w-6 h-6 text-blue-600" />}
-        />
-        <StatCard
-          title="Institutions"
-          value={stats?.total_institutions}
-          icon={<School className="w-6 h-6 text-purple-600" />}
-        />
-        <StatCard
-          title="Total Interactions"
-          value={stats?.total_interactions}
-          sub="AI messages processed"
-          icon={<FileText className="w-6 h-6 text-green-600" />}
-        />
-        <StatCard
-          title="Flagged Issues"
-          value={stats?.flagged_feedback}
-          sub="Requires attention"
-          icon={<AlertCircle className="w-6 h-6 text-red-600" />}
-        />
-      </div>
-
-      {/* Management Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Feed: Flagged Content */}
-        <div className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-          <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-            <h3 className="text-lg font-medium">
-              Priority Review Queue
-            </h3>
-          </div>
-          <ul className="divide-y divide-slate-200 dark:divide-white/10">
-            {feedback.length === 0 ? (
-              <li className="p-6 text-center text-slate-500 dark:text-white/60">
-                No pending issues. System healthy.
-              </li>
-            ) : (
-              feedback.map((item) => (
-                <li key={item.id} className="p-6">
-                  <div className="flex items-start space-x-3">
-                    <div className={`flex-shrink-0 `}>
-                      {item.sentiment === "bug" ? (
-                        <AlertCircle className="h-5 w-5 text-red-500" />
-                      ) : (
-                        <AlertCircle className="h-5 w-5 text-amber-500" />
-                      )}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-slate-900 dark:text-white">
-                        Context:{" "}
-                        <span className="rounded bg-slate-100 px-1 font-mono dark:bg-white/10">
-                          {item.feature}
-                        </span>
-                      </p>
-                      <p className="mb-1 truncate text-sm text-slate-500 dark:text-white/60">
-                        by {item.user_email}
-                      </p>
-                      <p className="rounded bg-slate-50 p-3 text-sm text-slate-700 dark:bg-white/10 dark:text-white/80">
-                        {item.content}
-                      </p>
-                    </div>
-                    <div>
-                      <button className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
-                        Resolve
-                      </button>
-                    </div>
+          <div className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+            <form
+              onSubmit={handleAdminSearch}
+              className="flex flex-col gap-3 lg:flex-row lg:items-center"
+            >
+              <div className="flex-1">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
+                  Global admin search
+                </p>
+                <input
+                  value={adminSearchQuery}
+                  onChange={(event) => setAdminSearchQuery(event.target.value)}
+                  placeholder="Search incidents, audit events, or roles"
+                  className="mt-2 w-full rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                />
+                {adminSearchCounts && (
+                  <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
+                    {adminSearchCounts.incidents} incidents •{" "}
+                    {adminSearchCounts.audit} audit • {adminSearchCounts.roles}{" "}
+                    roles
                   </div>
-                </li>
-              ))
-            )}
-          </ul>
-        </div>
+                )}
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <select
+                  value={adminSearchTarget}
+                  onChange={(event) => setAdminSearchTarget(event.target.value)}
+                  aria-label="Admin search target"
+                  className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
+                >
+                  <option value="incidents">Incidents</option>
+                  <option value="audit">Audit logs</option>
+                  <option value="roles">Role audit</option>
+                </select>
+                <button
+                  type="submit"
+                  className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                >
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
 
-        {/* Quick Actions / Tenants */}
-        <div className="h-fit rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-          <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-            <h3 className="text-lg font-medium">
-              System Actions
-            </h3>
+          {/* Stats Grid */}
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
+            <StatCard
+              title="Total Users"
+              value={stats?.total_users}
+              icon={<Users className="w-6 h-6 text-blue-600" />}
+              delta="+6% WoW"
+            />
+            <StatCard
+              title="Institutions"
+              value={stats?.total_institutions}
+              icon={<School className="w-6 h-6 text-purple-600" />}
+              delta="+1 this month"
+            />
+            <StatCard
+              title="Total Interactions"
+              value={stats?.total_interactions}
+              sub="AI messages processed"
+              icon={<FileText className="w-6 h-6 text-green-600" />}
+              delta="+12% WoW"
+            />
+            <StatCard
+              title="Flagged Issues"
+              value={stats?.flagged_feedback}
+              sub="Requires attention"
+              icon={<AlertCircle className="w-6 h-6 text-red-600" />}
+              delta="-2 since yesterday"
+            />
           </div>
-          <div className="p-6 flex flex-col gap-3">
-            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-              + Provision New Institution
-            </button>
-            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-              Manage Curricula
-            </button>
-            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-              View Server Logs
-            </button>
+
+          <div className="mb-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {kpiCards.map((card) => (
+              <StatCard
+                key={card.title}
+                title={card.title}
+                value={card.value}
+                icon={card.icon}
+                delta={card.delta}
+              />
+            ))}
           </div>
-        </div>
-      </div>
+
+          <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Link
+              href="/admin/database"
+              className="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+            >
+              <div className="flex items-center gap-3">
+                <Database className="h-5 w-5 text-slate-600 dark:text-white/70" />
+                <div>
+                  <p className="text-sm font-medium">Database Console</p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Replicas, performance, jobs
+                  </p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              href="/admin/audit"
+              className="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+            >
+              <div className="flex items-center gap-3">
+                <FileText className="h-5 w-5 text-slate-600 dark:text-white/70" />
+                <div>
+                  <p className="text-sm font-medium">Audit Logs</p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Security, data access, changes
+                  </p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              href="/admin/incidents"
+              className="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+            >
+              <div className="flex items-center gap-3">
+                <AlertCircleIcon className="h-5 w-5 text-slate-600 dark:text-white/70" />
+                <div>
+                  <p className="text-sm font-medium">Incident Log</p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Incidents, mitigations, status
+                  </p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              href="/admin/roles"
+              className="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+            >
+              <div className="flex items-center gap-3">
+                <Users className="h-5 w-5 text-slate-600 dark:text-white/70" />
+                <div>
+                  <p className="text-sm font-medium">Roles & Access</p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Permissions and approvals
+                  </p>
+                </div>
+              </div>
+            </Link>
+            <Link
+              href="/admin/health"
+              className="rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 dark:border-white/10 dark:bg-white/5"
+            >
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="h-5 w-5 text-slate-600 dark:text-white/70" />
+                <div>
+                  <p className="text-sm font-medium">System Health</p>
+                  <p className="text-xs text-slate-500 dark:text-white/60">
+                    Runtime, queues, uptime
+                  </p>
+                </div>
+              </div>
+            </Link>
+          </div>
+
+          {/* Management Sections */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Main Feed: Flagged Content */}
+            <div className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+                <h3 className="text-lg font-medium">Priority Review Queue</h3>
+              </div>
+              <ul className="divide-y divide-slate-200 dark:divide-white/10">
+                {feedback.length === 0 ? (
+                  <li className="p-6 text-center text-slate-500 dark:text-white/60">
+                    No pending issues. System healthy.
+                  </li>
+                ) : (
+                  feedback.map((item) => (
+                    <li key={item.id} className="p-6">
+                      <div className="flex items-start space-x-3">
+                        <div className={`flex-shrink-0 `}>
+                          {item.sentiment === "bug" ? (
+                            <AlertCircle className="h-5 w-5 text-red-500" />
+                          ) : (
+                            <AlertCircle className="h-5 w-5 text-amber-500" />
+                          )}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-slate-900 dark:text-white">
+                            Context:{" "}
+                            <span className="rounded bg-slate-100 px-1 font-mono dark:bg-white/10">
+                              {item.feature}
+                            </span>
+                          </p>
+                          <p className="mb-1 truncate text-sm text-slate-500 dark:text-white/60">
+                            by {item.user_email}
+                          </p>
+                          <p className="rounded bg-slate-50 p-3 text-sm text-slate-700 dark:bg-white/10 dark:text-white/80">
+                            {item.content}
+                          </p>
+                        </div>
+                        <div>
+                          <button className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
+                            Resolve
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                )}
+              </ul>
+            </div>
+
+            {/* Quick Actions / Tenants */}
+            <div className="h-fit rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+                <h3 className="text-lg font-medium">System Actions</h3>
+              </div>
+              <div className="p-6 flex flex-col gap-3">
+                <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
+                  + Provision New Institution
+                </button>
+                <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
+                  Manage Curricula
+                </button>
+                <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
+                  View Server Logs
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+                <h3 className="text-lg font-medium">Database Activity</h3>
+                <p className="text-sm text-slate-500 dark:text-white/60">
+                  Live queries, maintenance jobs, and service health.
+                </p>
+              </div>
+              <div className="divide-y divide-slate-200 dark:divide-white/10">
+                {databaseActivity.map((item) => (
+                  <div key={item.id} className="flex items-center gap-4 p-6">
+                    <div className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2 text-xs font-mono text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
+                      {item.status}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-slate-900 dark:text-white">
+                        {item.query}
+                      </p>
+                      <p className="text-xs text-slate-500 dark:text-white/60">
+                        {item.time}
+                      </p>
+                    </div>
+                    <button className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
+                      Inspect
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+                <h3 className="text-lg font-medium">Database Health</h3>
+                <p className="text-sm text-slate-500 dark:text-white/60">
+                  Replication, storage, latency, and backup status.
+                </p>
+              </div>
+              <div className="grid gap-4 p-6">
+                {databaseOverview.map((item) => (
+                  <div
+                    key={item.label}
+                    className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm dark:border-white/10 dark:bg-white/10"
+                  >
+                    <span className="text-slate-600 dark:text-white/70">
+                      {item.label}
+                    </span>
+                    <span className={`font-semibold ${item.tone}`}>
+                      {item.value}
+                    </span>
+                  </div>
+                ))}
+                <button className="mt-2 w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
+                  Open database console
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-function StatCard({ title, value, sub, icon }: any) {
+function StatCard({ title, value, sub, icon, delta }: any) {
   return (
     <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
       <div className="p-5">
@@ -200,6 +520,11 @@ function StatCard({ title, value, sub, icon }: any) {
                 <div className="text-lg font-semibold text-slate-900 dark:text-white">
                   {value ?? "-"}
                 </div>
+                {delta && (
+                  <div className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
+                    {delta}
+                  </div>
+                )}
               </dd>
             </dl>
           </div>

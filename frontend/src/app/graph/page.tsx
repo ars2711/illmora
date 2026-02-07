@@ -47,25 +47,30 @@ function GraphContent() {
               >
                 <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-white/70" />
               </Link>
-              <h1 className="text-xl font-semibold">Knowledge Graph Explorer</h1>
+              <h1 className="text-xl font-semibold">
+                Knowledge Graph Explorer
+              </h1>
             </div>
           </header>
 
           <main className="flex-1 p-6">
-        {loading ? (
-          <div className="flex h-full items-center justify-center">
-            <Loader2 className="h-8 w-8 animate-spin text-slate-600 dark:text-white/70" />
-          </div>
-        ) : data ? (
-          <KnowledgeGraph initialNodes={data.nodes} initialEdges={data.edges} />
-        ) : (
-          <div className="mt-20 text-center text-slate-500 dark:text-white/60">
-            <p>Could not load knowledge graph.</p>
-            <p className="text-sm">
-              Make sure the backend is running at localhost:8000.
-            </p>
-          </div>
-        )}
+            {loading ? (
+              <div className="flex h-full items-center justify-center">
+                <Loader2 className="h-8 w-8 animate-spin text-slate-600 dark:text-white/70" />
+              </div>
+            ) : data ? (
+              <KnowledgeGraph
+                initialNodes={data.nodes}
+                initialEdges={data.edges}
+              />
+            ) : (
+              <div className="mt-20 text-center text-slate-500 dark:text-white/60">
+                <p>Could not load knowledge graph.</p>
+                <p className="text-sm">
+                  Make sure the backend is running at localhost:8000.
+                </p>
+              </div>
+            )}
           </main>
         </div>
       </div>

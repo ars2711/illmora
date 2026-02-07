@@ -41,6 +41,12 @@ class Settings(BaseSettings):
     
     # AR: Using path for now, in prod use env content directly
     FIREBASE_CREDENTIALS_PATH: str = "firebase-adminsdk.json"
+
+    # Passkey / WebAuthn
+    PASSKEY_RP_ID: str = "localhost"
+    PASSKEY_RP_NAME: str = "Ilmora"
+    PASSKEY_ORIGIN: str = "http://localhost:3000"
+    PASSKEY_TIMEOUT_MS: int = 60000
     
     class Config:
         case_sensitive = True

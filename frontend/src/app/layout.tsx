@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/common/ThemeProvider";
 import QuickActions from "@/components/common/QuickActions";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import ScrollMotion from "@/components/common/ScrollMotion";
+import DemoOverlay from "@/components/common/DemoOverlay";
 
 const display = Playfair_Display({
   subsets: ["latin"],
@@ -40,13 +41,40 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
   icons: {
     icon: [
+      {
+        url: "/favicon-light.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.svg",
+        sizes: "any",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+      { url: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
       { url: "/favicon.ico", sizes: "any", type: "image/x-icon" },
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/icon-192.svg", sizes: "192x192", type: "image/svg+xml" },
-      { url: "/icon-512.svg", sizes: "512x512", type: "image/svg+xml" },
     ],
-    apple: [{ url: "/apple-touch-icon.svg", type: "image/svg+xml" }],
-    shortcut: ["/favicon.ico", "/favicon.svg"],
+    apple: [
+      {
+        url: "/favicon-light.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: light)",
+      },
+      {
+        url: "/favicon-dark.svg",
+        type: "image/svg+xml",
+        media: "(prefers-color-scheme: dark)",
+      },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: [
+      "/favicon-light.svg",
+      "/favicon-dark.svg",
+      "/favicon.svg",
+      "/favicon.ico",
+    ],
   },
   appleWebApp: {
     title: "Ilmora",
@@ -109,6 +137,7 @@ export default function RootLayout({
           <AuthProvider>
             <ToastProvider>
               {children}
+              <DemoOverlay />
               <FeedbackWidget />
               <SyncIndicator />
               <QuickActions />

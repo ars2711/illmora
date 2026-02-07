@@ -11,19 +11,22 @@ export default function manifest(): MetadataRoute.Manifest {
     theme_color: "#4f46e5", // Indigo-600
     icons: [
       {
-        src: "/icon-192.svg",
-        sizes: "192x192",
+        src: "/favicon-light.svg",
+        sizes: "any",
         type: "image/svg+xml",
+        purpose: "any",
       },
       {
-        src: "/icon-512.svg",
-        sizes: "512x512",
+        src: "/favicon-dark.svg",
+        sizes: "any",
         type: "image/svg+xml",
+        purpose: "any",
       },
       {
-        src: "/apple-touch-icon.svg",
-        sizes: "180x180",
+        src: "/favicon.svg",
+        sizes: "any",
         type: "image/svg+xml",
+        purpose: "any",
       },
     ],
   };

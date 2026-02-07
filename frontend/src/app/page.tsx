@@ -3,12 +3,11 @@
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import ThemeToggle from "@/components/common/ThemeToggle";
-import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
 import AmbientOrbs from "@/components/common/AmbientOrbs";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
+  Clock,
   Cpu,
   Download,
   Globe,
@@ -16,13 +15,17 @@ import {
   Move3d,
   Music2,
   Palette,
-  ShieldCheck,
+  Keyboard,
+  Compass,
   Sparkles,
   Stars,
+  ShieldCheck,
 } from "lucide-react";
+import ThemeToggle from "@/components/common/ThemeToggle";
+import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
 
 export default function Home() {
-  const { user, logOut } = useAuth();
+  const { user, logOut, startDemo, demoMode } = useAuth();
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -41,6 +44,178 @@ export default function Home() {
     event.currentTarget.style.setProperty("--parallax-x", `${offsetX}`);
     event.currentTarget.style.setProperty("--parallax-y", `${offsetY}`);
   };
+
+  if (user || demoMode) {
+    return (
+      <main
+        onMouseMove={handleParallax}
+        className="ilmora-ambient min-h-screen bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.35),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.25),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white"
+      >
+        <div className="ilmora-noise">
+          <AmbientOrbs />
+          <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+            <Link href="/dashboard" className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white/80 text-slate-900 shadow-lg dark:bg-white/10 dark:text-white">
+                <span className="font-display text-lg tracking-[0.2em]">I</span>
+              </div>
+              <div>
+                <p className="font-display text-lg tracking-[0.4em]">ILMORA</p>
+                <p className="text-xs uppercase text-slate-500 dark:text-white/60">
+                  Learning cockpit
+                </p>
+              </div>
+            </Link>
+            <div className="flex items-center gap-3">
+              <ThemeToggle />
+              <PwaInstallPrompt />
+              {user && (
+                <button
+                  onClick={handleLogout}
+                  className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                >
+                  Sign out
+                </button>
+              )}
+            </div>
+          </header>
+
+          <section className="mx-auto grid max-w-6xl gap-8 px-6 pb-16 pt-2 lg:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-6">
+              <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
+                <Sparkles size={14} /> Active session
+              </p>
+              <h1 className="font-display text-4xl leading-tight sm:text-5xl">
+                Welcome to your
+                <span className="text-transparent bg-clip-text bg-[linear-gradient(120deg,_#fbbf24,_#38bdf8,_#f8fafc)]">
+                  {" "}
+                  cognitive studio{" "}
+                </span>
+                today.
+              </h1>
+              <p className="text-lg text-slate-600 dark:text-white/70">
+                This is your live cockpit: a memory graph that evolves with
+                every session, rehearsal rituals that adapt to your cadence, and
+                a timeline that keeps your progress easy to revisit.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <Link
+                  href="/dashboard"
+                  className="ilmora-glow inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black"
+                >
+                  Open dashboard <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/dashboard/history"
+                  className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm text-slate-700 hover:bg-slate-200/50 dark:border-white/15 dark:text-white/80 dark:hover:bg-white/10"
+                >
+                  View history <Clock size={16} />
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative flex items-center justify-center">
+              <div className="ilmora-grid absolute inset-0 rounded-[32px] opacity-30" />
+              <div className="ilmora-scroll-accent relative w-full rounded-[32px] border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
+                <div className="pointer-events-none absolute inset-0 overflow-hidden rounded-[32px]">
+                  <div className="ilmora-constellation h-full w-full" />
+                </div>
+                <div className="pointer-events-none absolute inset-0 rounded-[32px] ilmora-sheen" />
+                <div className="relative z-10 space-y-5">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
+                      Studio pulses
+                    </p>
+                    <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/15 dark:bg-white/10 dark:text-white/70">
+                      Live
+                    </span>
+                  </div>
+                  <div className="grid gap-3">
+                    <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                      <p className="text-sm font-medium">Current focus</p>
+                      <p className="text-xs text-slate-500 dark:text-white/60">
+                        Graph recall • 18 min • depth mode
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                      <p className="text-sm font-medium">Next ritual</p>
+                      <p className="text-xs text-slate-500 dark:text-white/60">
+                        Adaptive quiz • 12 prompts • confidence boost
+                      </p>
+                    </div>
+                    <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                      <p className="text-sm font-medium">Momentum</p>
+                      <p className="text-xs text-slate-500 dark:text-white/60">
+                        3 sessions this week • 84% consistency
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-20 lg:grid-cols-3">
+            <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-lg font-semibold">Quick actions</h2>
+              <div className="mt-4 grid gap-3">
+                <Link
+                  href="/chat"
+                  className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
+                >
+                  Start AI session <ArrowRight size={16} />
+                </Link>
+                <Link
+                  href="/graph"
+                  className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
+                >
+                  Explore memory graph <Move3d size={16} />
+                </Link>
+                <Link
+                  href="/upload"
+                  className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
+                >
+                  Upload material <Download size={16} />
+                </Link>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-lg font-semibold">Today&apos;s dashboard</h2>
+              <div className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+                  4 concepts scheduled • 2 urgent reviews
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+                  7 knowledge nodes updated this week
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+                  Momentum score: 84 • streak: 5 days
+                </div>
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-lg font-semibold">Recent history</h2>
+              <div className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+                  Studio: Graph recall • 2 hours ago
+                </div>
+                <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+                  Upload: Lecture 05 • Yesterday
+                </div>
+                <Link
+                  href="/dashboard/history"
+                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 hover:text-slate-700 dark:text-white/60 dark:hover:text-white"
+                >
+                  Open full history <ArrowRight size={12} />
+                </Link>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main
@@ -89,8 +264,6 @@ export default function Home() {
             </Link>
           </nav>
           <div className="flex items-center gap-3">
-            <ThemeToggle />
-            <PwaInstallPrompt />
             {user ? (
               <button
                 onClick={handleLogout}
@@ -99,12 +272,24 @@ export default function Home() {
                 Sign out
               </button>
             ) : (
-              <Link
-                href="/login"
-                className="rounded-full bg-slate-900 px-4 py-2 text-xs uppercase tracking-wide text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
-              >
-                Sign in
-              </Link>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    startDemo();
+                    router.push("/dashboard");
+                  }}
+                  className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
+                >
+                  Explore demo
+                </button>
+                <Link
+                  href="/login"
+                  className="rounded-full bg-slate-900 px-4 py-2 text-xs uppercase tracking-wide text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                >
+                  Sign in
+                </Link>
+              </div>
             )}
           </div>
         </header>

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 
 function UploadContent() {
-  const { user } = useAuth();
+  const { user, demoMode } = useAuth();
   const router = useRouter();
   const { showToast } = useToast();
   const [file, setFile] = useState<File | null>(null);
@@ -22,6 +22,10 @@ function UploadContent() {
     "idle" | "uploading" | "success" | "error"
   >("idle");
   const [message, setMessage] = useState("");
+  const [drafts, setDrafts] = useState<{ name: string; createdAt: string }[]>([
+    { name: "Demo_Lecture_03.pdf", createdAt: "Today" },
+    { name: "Study_Notes_Systems.txt", createdAt: "Yesterday" },
+  ]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -32,11 +36,31 @@ function UploadContent() {
   };
 
   const handleUpload = async () => {
-    if (!file || !user) return;
+    if (!file || (!user && !demoMode)) return;
+
+    if (demoMode) {
+      setStatus("uploading");
+      setTimeout(() => {
+        setStatus("success");
+        setDrafts((prev) => [
+          { name: file.name, createdAt: "Just now" },
+          ...prev,
+        ]);
+        showToast("Draft saved locally (demo).", "success");
+        setFile(null);
+      }, 600);
+      return;
+    }
 
     setStatus("uploading");
     const formData = new FormData();
     formData.append("file", file);
+
+    if (!user) {
+      showToast("You must be logged in to upload.", "error");
+      setStatus("idle");
+      return;
+    }
 
     try {
       const token = await user.getIdToken();
@@ -65,6 +89,12 @@ function UploadContent() {
   return (
     <div className="mx-auto max-w-2xl p-6">
       <h1 className="mb-6 text-2xl font-semibold">Add Material</h1>
+
+      {demoMode && (
+        <div className="mb-6 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-sm text-amber-800 dark:border-amber-200/20 dark:bg-amber-200/10 dark:text-amber-100/90">
+          Demo mode stores uploads as drafts only. No processing or syncing.
+        </div>
+      )}
 
       <div className="ilmora-scroll-accent rounded-3xl border border-slate-200 bg-white/70 p-8 text-center backdrop-blur dark:border-white/10 dark:bg-white/5">
         <div className="mb-6 flex justify-center">
@@ -117,7 +147,13 @@ function UploadContent() {
                 disabled={status === "uploading"}
                 className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-6 py-3 font-medium text-white transition hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
               >
-                {status === "uploading" ? "Analyzing..." : "Start Extraction"}
+                {status === "uploading"
+                  ? demoMode
+                    ? "Saving draft..."
+                    : "Analyzing..."
+                  : demoMode
+                    ? "Save Draft"
+                    : "Start Extraction"}
               </button>
             )}
           </div>
@@ -127,22 +163,26 @@ function UploadContent() {
           <div className="mt-4 flex flex-col gap-3">
             <div className="flex items-center justify-center gap-2 rounded-lg bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
               <CheckCircle className="h-5 w-5" />
-              <span className="text-sm font-medium">Document processed!</span>
+              <span className="text-sm font-medium">
+                {demoMode ? "Draft saved!" : "Document processed!"}
+              </span>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={() => router.push("/notes")}
-                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/80 dark:hover:bg-white/10"
-              >
-                View Notes
-              </button>
-              <button
-                onClick={() => router.push("/practice")}
-                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
-              >
-                Start Quiz
-              </button>
-            </div>
+            {!demoMode && (
+              <div className="grid grid-cols-2 gap-3">
+                <button
+                  onClick={() => router.push("/notes")}
+                  className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/80 dark:hover:bg-white/10"
+                >
+                  View Notes
+                </button>
+                <button
+                  onClick={() => router.push("/practice")}
+                  className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
+                >
+                  Start Quiz
+                </button>
+              </div>
+            )}
             <button
               onClick={() => setStatus("idle")}
               className="mt-2 text-center text-xs text-slate-500 underline hover:text-slate-700 dark:text-white/60 dark:hover:text-white"
@@ -177,6 +217,27 @@ function UploadContent() {
           </li>
         </ul>
       </div>
+
+      {demoMode && (
+        <div className="mt-8 rounded-2xl border border-slate-200 bg-white/70 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
+          <p className="mb-3 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
+            Draft uploads
+          </p>
+          <div className="space-y-2">
+            {drafts.map((draft) => (
+              <div
+                key={`${draft.name}-${draft.createdAt}`}
+                className="flex items-center justify-between rounded-xl border border-slate-200 bg-white/80 px-3 py-2 dark:border-white/10 dark:bg-white/10"
+              >
+                <span className="text-sm font-medium">{draft.name}</span>
+                <span className="text-xs text-slate-500 dark:text-white/60">
+                  {draft.createdAt}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

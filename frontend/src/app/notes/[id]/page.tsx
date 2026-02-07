@@ -112,6 +112,7 @@ export default function NoteDetailPage() {
             <main className="mx-auto max-w-3xl p-6">
               {isEditing ? (
                 <textarea
+                  aria-label="Note content"
                   className="h-[80vh] w-full rounded-2xl border border-slate-200 bg-white/80 p-4 font-mono text-sm leading-relaxed outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                   value={content}
                   onChange={(e) => setContent(e.target.value)}

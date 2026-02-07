@@ -9,6 +9,7 @@ interface ChatLayoutProps {
   onSendMessage: (content: string) => void;
   isOnline: boolean;
   isProcessing?: boolean;
+  demoMode?: boolean;
 }
 
 export function ChatLayout({
@@ -16,6 +17,7 @@ export function ChatLayout({
   onSendMessage,
   isOnline,
   isProcessing,
+  demoMode,
 }: ChatLayoutProps) {
   const bottomRef = React.useRef<HTMLDivElement>(null);
 
@@ -26,27 +28,34 @@ export function ChatLayout({
   return (
     <div className="flex flex-col h-screen bg-gray-50">
       {/* Header */}
-      <header className="flex items-center justify-between px-6 py-4 bg-white border-b border-gray-200 shadow-sm z-10">
+      <header className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 bg-white border-b border-gray-200 shadow-sm z-10">
         <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
           Ilmora{" "}
           <span className="text-xs font-medium text-gray-400 ml-2 tracking-wide">
             PHASE 1 PROTO
           </span>
         </h1>
-        <div
-          className={cn(
-            "flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium",
-            isOnline
-              ? "bg-green-100 text-green-700"
-              : "bg-orange-100 text-orange-700",
+        <div className="flex items-center gap-2">
+          {demoMode && (
+            <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-700">
+              Demo drafts
+            </span>
           )}
-        >
-          {isOnline ? (
-            <Wifi className="w-3 h-3" />
-          ) : (
-            <WifiOff className="w-3 h-3" />
-          )}
-          {isOnline ? "Online" : "Offline Mode"}
+          <div
+            className={cn(
+              "flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium",
+              isOnline
+                ? "bg-green-100 text-green-700"
+                : "bg-orange-100 text-orange-700",
+            )}
+          >
+            {isOnline ? (
+              <Wifi className="w-3 h-3" />
+            ) : (
+              <WifiOff className="w-3 h-3" />
+            )}
+            {isOnline ? "Online" : "Offline Mode"}
+          </div>
         </div>
       </header>
 

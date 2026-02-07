@@ -9,6 +9,8 @@ export default function OnboardingPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [curricula, setCurricula] = useState<any[]>([]);
+  const displayName =
+    user?.displayName ?? user?.email?.split("@")[0] ?? "Scholar";
   const [formData, setFormData] = useState({
     full_name: "",
     curriculum_id: "",
@@ -104,238 +106,257 @@ export default function OnboardingPage() {
             </p>
           </div>
 
+          <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="rounded-2xl border border-slate-200 bg-white/70 p-4 text-sm text-slate-600 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/10 dark:text-white/70">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
+                Before you step in
+              </p>
+              <p className="mt-2">
+                {displayName}, we are about to build a studio around your goals:
+                a memory graph that grows with each session, practice rituals
+                tuned to your pace, and a dashboard that captures every win.
+              </p>
+            </div>
+          </div>
+
           <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
             <div className="ilmora-scroll-accent rounded-3xl border border-slate-200 bg-white/70 px-4 py-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:px-10">
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            {/* Full Name */}
-            <div>
-              <label
-                htmlFor="full_name"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Full Name
-              </label>
-              <div className="mt-1">
-                <input
-                  id="full_name"
-                  name="full_name"
-                  type="text"
-                  required
-                  value={formData.full_name}
-                  onChange={handleChange}
-                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                />
-              </div>
-            </div>
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {/* Full Name */}
+                <div>
+                  <label
+                    htmlFor="full_name"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Full Name
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="full_name"
+                      name="full_name"
+                      type="text"
+                      required
+                      value={formData.full_name}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
 
-            {/* Curriculum Selection */}
-            <div>
-              <label
-                htmlFor="curriculum_id"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Curriculum / Board
-              </label>
-              <div className="mt-1">
-                <select
-                  id="curriculum_id"
-                  name="curriculum_id"
-                  required
-                  className="block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                  value={formData.curriculum_id}
-                  onChange={handleChange}
-                >
-                  <option value="" disabled>
-                    Select your curriculum...
-                  </option>
-                  {curricula.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
-                <p className="mt-1 text-xs text-slate-500 dark:text-white/60">
-                  This tailors your learning path and assessment style.
-                </p>
-              </div>
-            </div>
+                {/* Curriculum Selection */}
+                <div>
+                  <label
+                    htmlFor="curriculum_id"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Curriculum / Board
+                  </label>
+                  <div className="mt-1">
+                    <select
+                      id="curriculum_id"
+                      name="curriculum_id"
+                      required
+                      className="block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                      value={formData.curriculum_id}
+                      onChange={handleChange}
+                    >
+                      <option value="" disabled>
+                        Select your curriculum...
+                      </option>
+                      {curricula.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="mt-1 text-xs text-slate-500 dark:text-white/60">
+                      This tailors your learning path and assessment style.
+                    </p>
+                  </div>
+                </div>
 
-            {/* Degree */}
-            <div>
-              <label
-                htmlFor="degree"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Degree Program
-              </label>
-              <div className="mt-1">
-                <input
-                  id="degree"
-                  name="degree"
-                  type="text"
-                  placeholder="e.g. BS Computer Science"
-                  required
-                  value={formData.degree}
-                  onChange={handleChange}
-                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                />
-              </div>
-            </div>
+                {/* Degree */}
+                <div>
+                  <label
+                    htmlFor="degree"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Degree Program
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="degree"
+                      name="degree"
+                      type="text"
+                      placeholder="e.g. BS Computer Science"
+                      required
+                      value={formData.degree}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
 
-            {/* Semester */}
-            <div>
-              <label
-                htmlFor="semester"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Current Semester
-              </label>
-              <div className="mt-1">
-                <select
-                  id="semester"
-                  name="semester"
-                  required
-                  value={formData.semester}
-                  onChange={handleChange}
-                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                >
-                  <option value="">Select Semester</option>
-                  {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-                    <option key={n} value={`${n}th Semester`}>
-                      {n}th Semester
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
+                {/* Semester */}
+                <div>
+                  <label
+                    htmlFor="semester"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Current Semester
+                  </label>
+                  <div className="mt-1">
+                    <select
+                      id="semester"
+                      name="semester"
+                      required
+                      value={formData.semester}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    >
+                      <option value="">Select Semester</option>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
+                        <option key={n} value={`${n}th Semester`}>
+                          {n}th Semester
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
 
-            {/* Subjects */}
-            <div>
-              <label
-                htmlFor="subjects"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Current Subjects
-              </label>
-              <p className="mb-1 text-xs text-slate-500 dark:text-white/60">Comma separated</p>
-              <div className="mt-1">
-                <input
-                  id="subjects"
-                  name="subjects"
-                  type="text"
-                  placeholder="e.g. DSA, Linear Algebra, Psychology"
-                  required
-                  value={formData.subjects}
-                  onChange={handleChange}
-                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                />
-              </div>
-            </div>
+                {/* Subjects */}
+                <div>
+                  <label
+                    htmlFor="subjects"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Current Subjects
+                  </label>
+                  <p className="mb-1 text-xs text-slate-500 dark:text-white/60">
+                    Comma separated
+                  </p>
+                  <div className="mt-1">
+                    <input
+                      id="subjects"
+                      name="subjects"
+                      type="text"
+                      placeholder="e.g. DSA, Linear Algebra, Psychology"
+                      required
+                      value={formData.subjects}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
 
-            {/* Language */}
-            <div>
-              <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
-                Preferred Language
-              </span>
-              <div className="flex gap-4">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="preferred_language"
-                    value="English"
-                    checked={formData.preferred_language === "English"}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  English
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="preferred_language"
-                    value="Urdu"
-                    checked={formData.preferred_language === "Urdu"}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  Urdu
-                </label>
-              </div>
-            </div>
+                {/* Language */}
+                <div>
+                  <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
+                    Preferred Language
+                  </span>
+                  <div className="flex gap-4">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="preferred_language"
+                        value="English"
+                        checked={formData.preferred_language === "English"}
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      English
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="preferred_language"
+                        value="Urdu"
+                        checked={formData.preferred_language === "Urdu"}
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      Urdu
+                    </label>
+                  </div>
+                </div>
 
-            {/* Learning Style */}
-            <div>
-              <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
-                Learning Style
-              </span>
-              <div className="flex flex-col gap-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="learning_style"
-                    value="Visual"
-                    checked={formData.learning_style === "Visual"}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  <span className="text-sm">Visual (Diagrams, Graphs)</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="learning_style"
-                    value="Socratic"
-                    checked={formData.learning_style === "Socratic"}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  <span className="text-sm">Socratic (Ask me questions)</span>
-                </label>
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="learning_style"
-                    value="Explain Like I'm 5"
-                    checked={formData.learning_style === "Explain Like I'm 5"}
-                    onChange={handleChange}
-                    className="mr-2"
-                  />
-                  <span className="text-sm">ELI5 (Simple Analogies)</span>
-                </label>
-              </div>
-            </div>
+                {/* Learning Style */}
+                <div>
+                  <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
+                    Learning Style
+                  </span>
+                  <div className="flex flex-col gap-2">
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="learning_style"
+                        value="Visual"
+                        checked={formData.learning_style === "Visual"}
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">Visual (Diagrams, Graphs)</span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="learning_style"
+                        value="Socratic"
+                        checked={formData.learning_style === "Socratic"}
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">
+                        Socratic (Ask me questions)
+                      </span>
+                    </label>
+                    <label className="flex items-center">
+                      <input
+                        type="radio"
+                        name="learning_style"
+                        value="Explain Like I'm 5"
+                        checked={
+                          formData.learning_style === "Explain Like I'm 5"
+                        }
+                        onChange={handleChange}
+                        className="mr-2"
+                      />
+                      <span className="text-sm">ELI5 (Simple Analogies)</span>
+                    </label>
+                  </div>
+                </div>
 
-            {/* Career Goals */}
-            <div>
-              <label
-                htmlFor="career_goals"
-                className="block text-sm font-medium text-slate-700 dark:text-white/70"
-              >
-                Dream Career (Comma separated)
-              </label>
-              <div className="mt-1">
-                <input
-                  id="career_goals"
-                  name="career_goals"
-                  type="text"
-                  placeholder="e.g. AI Architect, Civil Engineer, Product Manager"
-                  value={formData.career_goals}
-                  onChange={handleChange}
-                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                />
-              </div>
-            </div>
+                {/* Career Goals */}
+                <div>
+                  <label
+                    htmlFor="career_goals"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Dream Career (Comma separated)
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="career_goals"
+                      name="career_goals"
+                      type="text"
+                      placeholder="e.g. AI Architect, Civil Engineer, Product Manager"
+                      value={formData.career_goals}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
-              >
-                {loading ? "Saving Profile..." : "Start Learning"}
-              </button>
-            </div>
-          </form>
+                <div>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+                  >
+                    {loading ? "Saving Profile..." : "Start Learning"}
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

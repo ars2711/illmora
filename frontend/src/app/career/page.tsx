@@ -28,10 +28,10 @@ export default function CareerPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            target_role: customGoal || undefined
+          target_role: customGoal || undefined,
         }),
       });
-      
+
       if (res.ok) {
         setRoadmap(await res.json());
       }

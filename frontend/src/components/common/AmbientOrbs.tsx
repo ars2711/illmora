@@ -12,7 +12,9 @@ export default function AmbientOrbs() {
 
     const load = async () => {
       const mod = await import("animejs");
-      animeLib = (mod as any).default ?? mod;
+      animeLib = (mod as any).default ?? (mod as any).anime ?? mod;
+
+      if (typeof animeLib !== "function") return;
 
       const targets = [orbOne.current, orbTwo.current, orbThree.current].filter(
         Boolean,
