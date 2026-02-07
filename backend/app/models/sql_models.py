@@ -265,10 +265,10 @@ class UserConceptMastery(Base):
     """
     __tablename__ = "user_concept_mastery"
     __table_args__ = (
-        {"schema": None}, # Explicitly set schema if needed
         # COMPOSITE INDEX: Critical for performance (fetching all mastery for a user)
         # Unique constraint prevents duplicate mastery entries for same user/node
         Index("ix_user_node_mastery", "user_id", "node_id", unique=True),
+        {"schema": None}, # Explicitly set schema if needed
     )
 
     id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
