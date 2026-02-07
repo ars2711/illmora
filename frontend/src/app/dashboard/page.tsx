@@ -14,7 +14,7 @@ interface ProfileData {
 
 export default function DashboardPage() {
   const t = useTranslations("dashboard");
-  const { user, demoMode } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,10 @@ export default function DashboardPage() {
         return;
       }
       try {
-        const token = await user.getIdToken();
+        if (!token) {
+          router.push("/login");
+          return;
+        }
         const res = await fetch("http://localhost:8000/api/v1/users/me", {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -51,7 +54,7 @@ export default function DashboardPage() {
       }
     };
     checkProfile();
-  }, [user, router, demoMode, t]);
+  }, [user, token, router, demoMode, t]);
 
   if (loading)
     return (

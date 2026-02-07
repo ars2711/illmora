@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
 from app.api.v1 import router as v1_router
-from app.core.security import init_firebase
 from app.core.logging import logger
 
 app = FastAPI(
@@ -15,8 +14,6 @@ app = FastAPI(
 @app.on_event("startup")
 async def startup_event():
     logger.info("Ilmora Backend Starting...")
-    init_firebase()
-    logger.info("Firebase Admin Initialized.")
 
 
 # Set all CORS enabled origins

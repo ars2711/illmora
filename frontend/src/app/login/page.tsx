@@ -1,33 +1,19 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  signInWithCustomToken,
-  GoogleAuthProvider,
-  GithubAuthProvider,
-  OAuthProvider,
-} from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { Loader2, Sparkles, KeyRound } from "lucide-react";
-import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import { useAuth } from "@/context/AuthContext";
 import { credentialToJSON, normalizePublicKeyOptions } from "@/lib/passkey";
 import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const t = useTranslations("login");
-  const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [providerLoading, setProviderLoading] = useState<string | null>(null);
   const [error, setError] = useState("");
   const router = useRouter();
-  const { startDemo } = useAuth();
+  const { startDemo, signInWithToken } = useAuth();
 
   const IconBadge = ({
     children,
@@ -43,45 +29,6 @@ export default function LoginPage() {
     </span>
   );
 
-  const handleAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
-
-    try {
-      if (isLogin) {
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        await createUserWithEmailAndPassword(auth, email, password);
-      }
-      router.push("/chat");
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleProviderLogin = async (
-    provider: "google" | "github" | "apple",
-  ) => {
-    setProviderLoading(provider);
-    setError("");
-    try {
-      const providerMap = {
-        google: new GoogleAuthProvider(),
-        github: new GithubAuthProvider(),
-        apple: new OAuthProvider("apple.com"),
-      };
-      await signInWithPopup(auth, providerMap[provider]);
-      router.push("/chat");
-    } catch (err: any) {
-      setError(err.message ?? t("errors.providerFailed"));
-    } finally {
-      setProviderLoading(null);
-    }
-  };
-
   const handlePasskeyLogin = async () => {
     if (!email) {
       setError(t("errors.missingEmail"));
@@ -91,7 +38,7 @@ export default function LoginPage() {
       setError(t("errors.unsupportedPasskey"));
       return;
     }
-    setProviderLoading("passkey");
+    setLoading(true);
     setError("");
     try {
       const optionsRes = await fetch(
@@ -128,12 +75,12 @@ export default function LoginPage() {
         throw new Error(t("errors.passkeyVerify"));
       }
       const verifyData = await verifyRes.json();
-      await signInWithCustomToken(auth, verifyData.token);
+      signInWithToken(verifyData.token);
       router.push("/chat");
     } catch (err: any) {
       setError(err.message ?? t("errors.passkeyFailed"));
     } finally {
-      setProviderLoading(null);
+      setLoading(false);
     }
   };
 
@@ -144,7 +91,7 @@ export default function LoginPage() {
           <Sparkles size={14} /> {t("badge")}
         </p>
         <h2 className="text-2xl font-bold mb-2 text-center text-slate-900 dark:text-white">
-          {isLogin ? t("title.login") : t("title.signup")}
+          {t("title.login")}
         </h2>
         <p className="mb-6 text-center text-sm text-slate-600 dark:text-white/70">
           {t("subtitle")}
@@ -163,7 +110,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        <form onSubmit={handleAuth} className="space-y-4">
+        <div className="space-y-4">
           <div>
             <label
               htmlFor="login-email"
@@ -180,37 +127,7 @@ export default function LoginPage() {
               className="w-full rounded-lg border border-slate-200 bg-white/90 p-2 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
             />
           </div>
-          <div>
-            <label
-              htmlFor="login-password"
-              className="block text-sm font-medium text-slate-700 dark:text-white/70 mb-1"
-            >
-              {t("fields.password")}
-            </label>
-            <input
-              id="login-password"
-              type="password"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-slate-200 bg-white/90 p-2 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-lg bg-slate-900 py-2 text-white transition hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90 flex justify-center items-center"
-          >
-            {loading ? (
-              <Loader2 className="w-5 h-5 animate-spin" />
-            ) : isLogin ? (
-              t("actions.signIn")
-            ) : (
-              t("actions.createAccount")
-            )}
-          </button>
-        </form>
+        </div>
 
         <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/40">
           <span className="h-px flex-1 bg-slate-200 dark:bg-white/10" />
@@ -221,56 +138,11 @@ export default function LoginPage() {
         <div className="grid gap-3">
           <button
             type="button"
-            onClick={() => handleProviderLogin("google")}
-            disabled={!!providerLoading}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/80 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-          >
-            {providerLoading === "google" ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <IconBadge>
-                <FaGoogle className="h-4 w-4" />
-              </IconBadge>
-            )}
-            {t("providers.google")}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleProviderLogin("github")}
-            disabled={!!providerLoading}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/80 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-          >
-            {providerLoading === "github" ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <IconBadge>
-                <FaGithub className="h-4 w-4" />
-              </IconBadge>
-            )}
-            {t("providers.github")}
-          </button>
-          <button
-            type="button"
-            onClick={() => handleProviderLogin("apple")}
-            disabled={!!providerLoading}
-            className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/80 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-          >
-            {providerLoading === "apple" ? (
-              <Loader2 className="h-4 w-4 animate-spin" />
-            ) : (
-              <IconBadge>
-                <FaApple className="h-4 w-4" />
-              </IconBadge>
-            )}
-            {t("providers.apple")}
-          </button>
-          <button
-            type="button"
             onClick={handlePasskeyLogin}
-            disabled={!!providerLoading}
+            disabled={loading}
             className="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white/80 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
           >
-            {providerLoading === "passkey" ? (
+            {loading ? (
               <Loader2 className="h-4 w-4 animate-spin" />
             ) : (
               <IconBadge>
@@ -278,15 +150,6 @@ export default function LoginPage() {
               </IconBadge>
             )}
             {t("providers.passkey")}
-          </button>
-        </div>
-
-        <div className="mt-4 text-center">
-          <button
-            onClick={() => setIsLogin(!isLogin)}
-            className="text-sm text-slate-700 hover:underline dark:text-white/70"
-          >
-            {isLogin ? t("switch.signup") : t("switch.login")}
           </button>
         </div>
 

@@ -9,7 +9,7 @@ import { useTranslations } from "next-intl";
 
 export function FeedbackWidget() {
   const t = useTranslations("feedback");
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { showToast } = useToast();
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,10 @@ export function FeedbackWidget() {
 
     setSending(true);
     try {
-      const token = await user.getIdToken();
+      if (!token) {
+        showToast(t("toast.failure"), "error");
+        return;
+      }
       const res = await fetch("http://localhost:8000/api/v1/feedback", {
         method: "POST",
         headers: {

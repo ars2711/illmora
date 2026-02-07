@@ -1,18 +1,29 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { onAuthStateChanged, User, signOut } from "firebase/auth";
-import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
+import {
+  clearStoredAuthToken,
+  decodeJwtPayload,
+  getStoredAuthToken,
+  setStoredAuthToken,
+} from "@/lib/auth";
+
+interface AuthUser {
+  id: string;
+  email?: string;
+  displayName?: string;
+}
 
 interface AuthContextType {
-  user: User | null;
+  user: AuthUser | null;
   loading: boolean;
   token: string | null;
   demoMode: boolean;
   logOut: () => Promise<void>;
   startDemo: () => void;
   exitDemo: () => void;
+  signInWithToken: (token: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -23,16 +34,28 @@ const AuthContext = createContext<AuthContextType>({
   logOut: async () => {},
   startDemo: () => {},
   exitDemo: () => {},
+  signInWithToken: () => {},
 });
 
 export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState<string | null>(null);
   const [demoMode, setDemoMode] = useState(false);
   const router = useRouter();
+
+  const buildUserFromToken = (value: string) => {
+    const payload = decodeJwtPayload(value);
+    if (!payload?.sub) return null;
+    if (payload.exp && payload.exp * 1000 < Date.now()) return null;
+    return {
+      id: payload.sub,
+      email: payload.email,
+      displayName: payload.name ?? payload.email?.split("@")[0],
+    } as AuthUser;
+  };
 
   useEffect(() => {
     // Persist demo mode across refreshes
@@ -46,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const logOut = async () => {
     try {
-      await signOut(auth);
+      clearStoredAuthToken();
       setUser(null);
       setToken(null);
       exitDemo();
@@ -78,28 +101,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser(user);
-        const t = await user.getIdToken();
-        setToken(t);
-        exitDemo();
-      } else {
-        setUser(null);
-        setToken(null);
-      }
+    const stored = getStoredAuthToken();
+    if (!stored) {
       setLoading(false);
-    });
-
-    return () => unsubscribe();
+      return;
+    }
+    const nextUser = buildUserFromToken(stored);
+    if (nextUser) {
+      setUser(nextUser);
+      setToken(stored);
+    } else {
+      clearStoredAuthToken();
+    }
+    setLoading(false);
   }, []);
+
+  const signInWithToken = (value: string) => {
+    const nextUser = buildUserFromToken(value);
+    if (!nextUser) {
+      clearStoredAuthToken();
+      return;
+    }
+    setStoredAuthToken(value);
+    setUser(nextUser);
+    setToken(value);
+    exitDemo();
+    setLoading(false);
+  };
 
   // Removed conflicting useEffect that was clearing localStorage
   // The persistence logic is now handled solely in the first useEffect and startDemo/exitDemo
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, token, demoMode, logOut, startDemo, exitDemo }}
+      value={{
+        user,
+        loading,
+        token,
+        demoMode,
+        logOut,
+        startDemo,
+        exitDemo,
+        signInWithToken,
+      }}
     >
       {children}
     </AuthContext.Provider>

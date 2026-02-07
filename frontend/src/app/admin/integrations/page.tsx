@@ -29,7 +29,7 @@ interface Webhook {
 }
 
 export default function IntegrationsPage() {
-  const { user, demoMode } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState<"integrations" | "webhooks">(
     "integrations",
@@ -74,7 +74,6 @@ export default function IntegrationsPage() {
         return;
       }
       try {
-        const token = await user?.getIdToken();
         const [intRes, hookRes] = await Promise.all([
           adminGet<Integration[]>("/api/v1/integrations/", token ?? null),
           adminGet<Webhook[]>("/api/v1/webhooks/", token ?? null),
@@ -88,8 +87,8 @@ export default function IntegrationsPage() {
         setLoading(false);
       }
     }
-    if (user) loadData();
-  }, [user, demoMode, showToast]);
+    if (user && token) loadData();
+  }, [user, token, demoMode, showToast]);
 
   const handleCreate = async () => {
     if (activeTab === "integrations" && !newItemName.trim()) {
@@ -131,7 +130,6 @@ export default function IntegrationsPage() {
     }
 
     try {
-      const token = await user?.getIdToken();
       if (activeTab === "integrations") {
         const created = await adminPost<Integration>(
           "/api/v1/integrations/",
@@ -167,7 +165,6 @@ export default function IntegrationsPage() {
       return;
     }
     try {
-      const token = await user?.getIdToken();
       const endpoint =
         activeTab === "integrations"
           ? `/api/v1/integrations/${id}`

@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 
 function UploadContent() {
-  const { user, demoMode } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const router = useRouter();
   const { showToast } = useToast();
   const [file, setFile] = useState<File | null>(null);
@@ -63,7 +63,11 @@ function UploadContent() {
     }
 
     try {
-      const token = await user.getIdToken();
+      if (!token) {
+        showToast("Session expired. Please sign in again.", "error");
+        setStatus("idle");
+        return;
+      }
       const res = await fetch("http://localhost:8000/api/v1/documents/upload", {
         method: "POST",
         headers: {

@@ -7,7 +7,7 @@ import { BrainCircuit, Send, Check } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 
 export default function PracticePage() {
-  const { user, demoMode } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const [topic, setTopic] = useState("");
   const [step, setStep] = useState<"setup" | "question" | "result">("setup");
   const [question, setQuestion] = useState("");
@@ -41,7 +41,9 @@ export default function PracticePage() {
       return;
     }
     try {
-      const token = await user?.getIdToken();
+      if (!token) {
+        return;
+      }
       const res = await fetch("http://localhost:8000/api/v1/chat", {
         method: "POST",
         headers: {
@@ -78,7 +80,9 @@ export default function PracticePage() {
       return;
     }
     try {
-      const token = await user?.getIdToken();
+      if (!token) {
+        return;
+      }
       const res = await fetch("http://localhost:8000/api/v1/chat", {
         method: "POST",
         headers: {

@@ -14,6 +14,8 @@ import ScrollMotion from "@/components/common/ScrollMotion";
 import DemoOverlay from "@/components/common/DemoOverlay";
 import { localeDirection } from "@/i18n/config";
 
+export const dynamic = "force-dynamic";
+
 const display = Playfair_Display({
   subsets: ["latin"],
   variable: "--font-display",

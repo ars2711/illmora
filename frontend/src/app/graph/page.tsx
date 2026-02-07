@@ -10,12 +10,11 @@ import { useAuth } from "@/context/AuthContext";
 function GraphContent() {
   const [data, setData] = useState<{ nodes: any[]; edges: any[] } | null>(null);
   const [loading, setLoading] = useState(true);
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const token = await user?.getIdToken();
         const res = await fetch("http://localhost:8000/api/v1/graph", {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
@@ -31,8 +30,8 @@ function GraphContent() {
       }
     };
 
-    if (user) fetchData();
-  }, [user]);
+    if (user && token) fetchData();
+  }, [user, token]);
 
   return (
     <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">

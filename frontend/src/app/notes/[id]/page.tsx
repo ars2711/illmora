@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function NoteDetailPage() {
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [note, setNote] = useState<{ title: string; content: string } | null>(
     null,
   );
@@ -19,12 +19,11 @@ export default function NoteDetailPage() {
 
   useEffect(() => {
     const fetchNote = async () => {
-      if (!user || !id) return;
+      if (!user || !id || !token) return;
       const cacheKey = `note_cache_${id}`;
 
       try {
         // Network First Strategy
-        const token = await user.getIdToken();
         const res = await fetch(
           `http://localhost:8000/api/v1/documents/${id}`,
           {

@@ -36,7 +36,7 @@ def get_current_user(
     
     try:
         decoded = verify_token(token)
-        uid = decoded.get("uid")
+        uid = decoded.get("sub") or decoded.get("uid")
         email = decoded.get("email")
     except Exception as e:
         raise HTTPException(

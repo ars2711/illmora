@@ -12,7 +12,7 @@ interface RoadmapResponse {
 }
 
 export default function CareerPage() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [roadmap, setRoadmap] = useState<RoadmapResponse | null>(null);
   const [customGoal, setCustomGoal] = useState("");
@@ -20,7 +20,9 @@ export default function CareerPage() {
   const generateRoadmap = async () => {
     setLoading(true);
     try {
-      const token = await user?.getIdToken();
+      if (!token) {
+        return;
+      }
       const res = await fetch("http://localhost:8000/api/v1/career/roadmap", {
         method: "POST",
         headers: {

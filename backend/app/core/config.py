@@ -39,8 +39,9 @@ class Settings(BaseSettings):
     MODEL_NAME: str = "gpt-4-turbo-preview"
     OPENAI_API_KEY: str = ""
     
-    # AR: Using path for now, in prod use env content directly
-    FIREBASE_CREDENTIALS_PATH: str = "firebase-adminsdk.json"
+    JWT_SECRET_KEY: str = "change-me"
+    JWT_ALGORITHM: str = "HS256"
+    JWT_EXPIRE_MINUTES: int = 60
 
     # Passkey / WebAuthn
     PASSKEY_RP_ID: str = "localhost"

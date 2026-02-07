@@ -2,7 +2,6 @@ import json
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from firebase_admin import auth as firebase_auth
 from webauthn import (
     generate_registration_options,
     generate_authentication_options,
@@ -30,6 +29,7 @@ from app.schemas.auth import (
     PasskeyTokenResponse,
 )
 from app.services.passkey_challenges import set_challenge, pop_challenge
+from app.core.security import create_access_token
 
 router = APIRouter()
 
@@ -176,5 +176,11 @@ def passkey_authenticate_verify(
     db.add(passkey)
     db.commit()
 
-    token = firebase_auth.create_custom_token(user.id).decode("utf-8")
+    token = create_access_token(
+        {
+            "sub": user.id,
+            "email": user.email,
+            "name": user.full_name or user.email,
+        }
+    )
     return PasskeyTokenResponse(token=token)

@@ -10,7 +10,7 @@ import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import { useState } from "react";
 
 export default function SecuritySettingsPage() {
-  const { user, demoMode } = useAuth();
+  const { user, demoMode, token } = useAuth();
   const { showToast } = useToast();
   const [passkeyLoading, setPasskeyLoading] = useState(false);
 
@@ -22,7 +22,10 @@ export default function SecuritySettingsPage() {
     }
     setPasskeyLoading(true);
     try {
-      const token = await user.getIdToken();
+      if (!token) {
+        showToast("Session expired. Please sign in again.", "error");
+        return;
+      }
       const optionsRes = await fetch(
         "http://localhost:8000/api/v1/auth/passkeys/register/options",
         {
@@ -135,7 +138,7 @@ export default function SecuritySettingsPage() {
               <h2 className="text-lg font-semibold">Linked providers</h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
                 You can use these providers on the login screen when enabled in
-                Firebase.
+                your identity provider.
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-3">
                 {[

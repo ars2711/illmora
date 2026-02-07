@@ -15,7 +15,6 @@
     "animejs": "^4.3.5",
     "classnames": "^2.5.1",
     "clsx": "^2.0.0",
-    "firebase": "^10.0.0",
     "framer-motion": "^11.0.0",
     "idb": "^8.0.0",
     "lucide-react": "^0.300.0",

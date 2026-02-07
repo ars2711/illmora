@@ -1,6 +1,6 @@
 import { initDB } from "./db";
 import { v4 as uuidv4 } from "uuid";
-import { auth } from "@/lib/firebase";
+import { getStoredAuthToken } from "@/lib/auth";
 
 // Simple listener type for sync status changes
 type SyncCallback = (isSyncing: boolean) => void;
@@ -90,8 +90,7 @@ export class SyncManager {
   }
 
   private static async executeMutation(mutation: Mutation) {
-    const user = auth.currentUser;
-    const token = user ? await user.getIdToken() : null;
+    const token = getStoredAuthToken();
 
     if (mutation.type === "SEND_MESSAGE") {
       const response = await fetch("http://localhost:8000/api/v1/chat", {

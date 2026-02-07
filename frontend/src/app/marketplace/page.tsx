@@ -14,14 +14,13 @@ interface StudyPack {
 }
 
 export default function MarketplacePage() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const [packs, setPacks] = useState<StudyPack[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadPacks() {
       try {
-        const token = await user?.getIdToken();
         const res = await fetch(
           "http://localhost:8000/api/v1/marketplace/packs?scope=institution",
           {
@@ -37,8 +36,8 @@ export default function MarketplacePage() {
         setLoading(false);
       }
     }
-    if (user) loadPacks();
-  }, [user]);
+    if (user && token) loadPacks();
+  }, [user, token]);
 
   return (
     <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">

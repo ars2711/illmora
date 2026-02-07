@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 export default function OnboardingPage() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [curricula, setCurricula] = useState<any[]>([]);
@@ -56,7 +56,9 @@ export default function OnboardingPage() {
     setLoading(true);
 
     try {
-      const token = await user?.getIdToken();
+      if (!token) {
+        throw new Error("Session expired");
+      }
       const subjectsArray = formData.subjects
         .split(",")
         .map((s) => s.trim())
