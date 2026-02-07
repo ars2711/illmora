@@ -32,9 +32,12 @@ export default function OnboardingPage() {
           setCurricula(data);
           // Seed if empty (dev quality of life)
           if (data.length === 0) {
-            const seedRes = await fetch(buildApiUrl("/api/v1/curriculum/seed"), {
-              method: "POST",
-            });
+            const seedRes = await fetch(
+              buildApiUrl("/api/v1/curriculum/seed"),
+              {
+                method: "POST",
+              },
+            );
             if (seedRes.ok) setCurricula(await seedRes.json());
           }
         }
