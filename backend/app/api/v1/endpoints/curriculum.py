@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from typing import List
-from app.api import deps
+from app.api import dependencies as deps
 from app.models import sql_models as models
 from app.schemas import curriculum as schemas
 

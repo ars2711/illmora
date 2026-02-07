@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, or_
 from typing import List, Dict, Any, Optional
 from uuid import uuid4
-from app.api import deps
+from app.api import dependencies as deps
 from app.models import sql_models as models
 from pydantic import BaseModel, Field
 from datetime import datetime
