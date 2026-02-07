@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages } from "next-intl/server";
+import { cookies, headers } from "next/headers";
 import { Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
@@ -12,7 +12,7 @@ import QuickActions from "@/components/common/QuickActions";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import ScrollMotion from "@/components/common/ScrollMotion";
 import DemoOverlay from "@/components/common/DemoOverlay";
-import { defaultLocale, localeDirection, type Locale } from "@/i18n/config";
+import { defaultLocale, localeDirection, locales, type Locale } from "@/i18n/config";
 
 export const dynamic = "force-dynamic";
 
@@ -135,15 +135,21 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  let locale: Locale = defaultLocale;
-  let messages: Record<string, any> = {};
+  const cookieLocale = cookies().get("NEXT_LOCALE")?.value;
+  const acceptLanguage = headers().get("accept-language") ?? "";
 
-  try {
-    locale = (await getLocale()) as Locale;
-    messages = await getMessages();
-  } catch {
-    messages = (await import(`../../messages/${defaultLocale}.json`)).default;
-  }
+  const pickLocale = (value: string | undefined) => {
+    if (!value) return defaultLocale;
+    const match = value
+      .split(",")
+      .map((part) => part.trim().split(";")[0])
+      .map((part) => part.split("-")[0])
+      .find((part) => locales.includes(part as Locale));
+    return (match as Locale) ?? defaultLocale;
+  };
+
+  const locale = cookieLocale ? pickLocale(cookieLocale) : pickLocale(acceptLanguage);
+  const messages = (await import(`../../messages/${locale}.json`)).default;
   const direction =
     localeDirection[locale as keyof typeof localeDirection] ?? "ltr";
 
