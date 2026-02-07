@@ -1,40 +1,80 @@
-# Ilmora: Student-First AI Learning Operating System
+# Ilmora
 
-**Mission:** Create the world’s most powerful ethical AI learning operating system for students — starting from NUST, expanding to Pakistan, then globally.
+Ilmora is an ethical, student-first learning operating system. It blends an offline-ready PWA, memory graph intelligence, and a timeless studio experience that makes study feel like a live performance.
 
-## Core Principles
+## Vision
 
-1.  **Explain, never just answer**: We build understanding, not homework completion bots.
-2.  **Academic Integrity**: Architecture explicitly discourages cheating and shortcuts.
-3.  **Offline-first**: Designed for low-bandwidth environments with robust sync capabilities.
-4.  **Persistent Memory**: The system grows with the student, remembering past struggles and successes.
-5.  **Mental Health & Growth**: Features designed to reduce anxiety and promote disciplined study habits.
-6.  **Ethical Alignment**: Respectful, beneficial, and inclusive knowledge dissemination.
+- Explain, never just answer.
+- Protect academic integrity and long-term mastery.
+- Stay offline-first and resilient in low-bandwidth contexts.
+- Build a persistent memory graph that grows with the learner.
+- Keep the human in the loop with transparent, respectful AI.
+
+## Product Highlights
+
+- Immersive studio UI with ambient motion and tactile interactions.
+- Memory graph workflows for concept linking, recall, and synthesis.
+- Practice rituals with timed recall and Socratic prompts.
+- PWA install support for desktop and mobile (offline-ready).
+- Ethical alignment and privacy-respecting defaults.
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (PWA)
-- **Backend**: FastAPI (Python)
-- **Database**: PostgreSQL (with pgvector)
-- **Caching**: Redis (Rate Limiting, Marketplace Feed)
-- **Auth**: Firebase
-- **Infrastructure**: Docker Compose, Webhooks
-- **Offline**: IndexedDB + Service Workers
+- Frontend: Next.js 14, React 18, TypeScript, Tailwind CSS
+- Backend: FastAPI (Python)
+- Database: PostgreSQL + pgvector
+- Caching: Redis
+- Auth: Firebase
+- Infra: Docker Compose + Webhooks
+- Offline: IndexedDB + Service Workers
 
-## Phase 3: Global Platform (Completed Features)
+## Repository Layout
 
-*   **Multi-tenancy**: Institution-isolated data with `InstitutionAdmin` and `SystemAdmin` roles.
-*   **Marketplace**: Buy/Sell Study Packs mechanism with content ownership verification.
-*   **Career Intelligence**: AI Mentor mode that maps academic curriculum to industry career goals.
-*   **Extensibility**: Webhook system for LMS and external tool integrations.
-*   **Optimization**: Redis caching for high-traffic endpoints.
+- frontend: Next.js application (PWA)
+- backend: FastAPI service for AI and persistence
+- docs: Architecture decision records and notes
 
-## Architecture Overview
+## Getting Started
 
-The project follows a modular, scalable architecture separating the client-side PWA and the server-side AI orchestration layer.
+### Frontend (Next.js)
 
-### Directory Structure
+From the repo root:
 
-- `/frontend`: Next.js application (PWA)
-- `/backend`: FastAPI service for AI logic, Heavy Compute, and Data persistence
-- `/docs`: Architectural documentation and decision logs
+```powershell
+cd frontend
+npm install
+npm run dev
+```
+
+Then open http://localhost:3000.
+
+### Backend (FastAPI)
+
+From the repo root:
+
+```powershell
+cd backend
+python -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+uvicorn app.main:app --reload
+```
+
+The API runs at http://localhost:8000.
+
+## Environment Variables
+
+- frontend/.env.local: Firebase keys, public site URL, and client config.
+- backend/.env: database connection string, API keys, and service configuration.
+
+## PWA Notes
+
+PWA install prompts appear only when the browser determines the app is installable (HTTPS + service worker + manifest). In local development, install behavior can vary by browser.
+
+## Contributing
+
+Design and product direction are curated to keep Ilmora timeless and student-first. If you are contributing, prioritize clarity, accessibility, and respectful AI behavior.
+
+## Credits
+
+Ilmora Studio by Arsalan — building ethical learning systems for the long arc of mastery.

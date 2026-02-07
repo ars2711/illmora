@@ -61,15 +61,25 @@ export default function AdminDashboard() {
     loadData();
   }, []);
 
-  if (loading) return <div className="p-8">Loading System Admin...</div>;
+  if (loading)
+    return (
+      <div className="min-h-screen bg-slate-50 p-8 text-slate-600 dark:bg-slate-950 dark:text-white/70">
+        Loading System Admin...
+      </div>
+    );
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">
+    <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
+      <div className="ilmora-noise relative">
+        <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+        <div className="relative z-10 p-6">
+          <header className="mb-8">
+        <h1 className="text-3xl font-semibold">
           Ilmora Global Command Center
         </h1>
-        <p className="text-gray-500">System Status & Multitenant Oversight</p>
+        <p className="text-slate-500 dark:text-white/60">
+          System Status & Multitenant Oversight
+        </p>
       </header>
 
       {/* Stats Grid */}
@@ -101,15 +111,15 @@ export default function AdminDashboard() {
       {/* Management Sections */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Feed: Flagged Content */}
-        <div className="lg:col-span-2 bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
+        <div className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+          <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+            <h3 className="text-lg font-medium">
               Priority Review Queue
             </h3>
           </div>
-          <ul className="divide-y divide-gray-200">
+          <ul className="divide-y divide-slate-200 dark:divide-white/10">
             {feedback.length === 0 ? (
-              <li className="p-6 text-center text-gray-500">
+              <li className="p-6 text-center text-slate-500 dark:text-white/60">
                 No pending issues. System healthy.
               </li>
             ) : (
@@ -124,21 +134,21 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900">
+                      <p className="text-sm font-medium text-slate-900 dark:text-white">
                         Context:{" "}
-                        <span className="font-mono bg-gray-100 px-1 rounded">
+                        <span className="rounded bg-slate-100 px-1 font-mono dark:bg-white/10">
                           {item.feature}
                         </span>
                       </p>
-                      <p className="text-sm text-gray-500 truncate mb-1">
+                      <p className="mb-1 truncate text-sm text-slate-500 dark:text-white/60">
                         by {item.user_email}
                       </p>
-                      <p className="text-sm text-gray-700 bg-gray-50 p-3 rounded">
+                      <p className="rounded bg-slate-50 p-3 text-sm text-slate-700 dark:bg-white/10 dark:text-white/80">
                         {item.content}
                       </p>
                     </div>
                     <div>
-                      <button className="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
+                      <button className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
                         Resolve
                       </button>
                     </div>
@@ -150,23 +160,25 @@ export default function AdminDashboard() {
         </div>
 
         {/* Quick Actions / Tenants */}
-        <div className="bg-white rounded-lg shadow h-fit">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">
+        <div className="h-fit rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+          <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
+            <h3 className="text-lg font-medium">
               System Actions
             </h3>
           </div>
           <div className="p-6 flex flex-col gap-3">
-            <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md border border-gray-300">
+            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
               + Provision New Institution
             </button>
-            <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md border border-gray-300">
+            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
               Manage Curricula
             </button>
-            <button className="w-full text-left px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-md border border-gray-300">
+            <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
               View Server Logs
             </button>
           </div>
+        </div>
+      </div>
         </div>
       </div>
     </div>
@@ -175,17 +187,17 @@ export default function AdminDashboard() {
 
 function StatCard({ title, value, sub, icon }: any) {
   return (
-    <div className="bg-white overflow-hidden shadow rounded-lg">
+    <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
       <div className="p-5">
         <div className="flex items-center">
           <div className="flex-shrink-0">{icon}</div>
           <div className="ml-5 w-0 flex-1">
             <dl>
-              <dt className="text-sm font-medium text-gray-500 truncate">
+              <dt className="truncate text-sm font-medium text-slate-500 dark:text-white/60">
                 {title}
               </dt>
               <dd>
-                <div className="text-lg font-medium text-gray-900">
+                <div className="text-lg font-semibold text-slate-900 dark:text-white">
                   {value ?? "-"}
                 </div>
               </dd>
@@ -194,9 +206,9 @@ function StatCard({ title, value, sub, icon }: any) {
         </div>
       </div>
       {sub && (
-        <div className="bg-gray-50 px-5 py-3">
+        <div className="bg-white/80 px-5 py-3 dark:bg-white/10">
           <div className="text-sm">
-            <span className="text-gray-500">{sub}</span>
+            <span className="text-slate-500 dark:text-white/60">{sub}</span>
           </div>
         </div>
       )}

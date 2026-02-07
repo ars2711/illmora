@@ -16,6 +16,7 @@ export default function OnboardingPage() {
     semester: "",
     subjects: "",
     preferred_language: "English",
+    learning_style: "Visual",
     career_goals: "",
   });
 
@@ -58,7 +59,7 @@ export default function OnboardingPage() {
         .split(",")
         .map((s) => s.trim())
         .filter(Boolean);
-      
+
       const careerArray = formData.career_goals
         .split(",")
         .map((s) => s.trim())
@@ -73,7 +74,7 @@ export default function OnboardingPage() {
         body: JSON.stringify({
           ...formData,
           subjects: subjectsArray,
-          career_goals: careerArray
+          career_goals: careerArray,
         }),
       });
 
@@ -90,24 +91,27 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-          Welcome to Ilmora
-        </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
-          Let's tailor the experience to your academic needs.
-        </p>
-      </div>
+    <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] py-12 text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white sm:px-6 lg:px-8">
+      <div className="ilmora-noise relative">
+        <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+        <div className="relative z-10">
+          <div className="sm:mx-auto sm:w-full sm:max-w-md">
+            <h2 className="mt-6 text-center text-3xl font-semibold">
+              Welcome to Ilmora
+            </h2>
+            <p className="mt-2 text-center text-sm text-slate-600 dark:text-white/60">
+              Let's tailor the experience to your academic needs.
+            </p>
+          </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+            <div className="ilmora-scroll-accent rounded-3xl border border-slate-200 bg-white/70 px-4 py-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {/* Full Name */}
             <div>
               <label
                 htmlFor="full_name"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Full Name
               </label>
@@ -119,7 +123,7 @@ export default function OnboardingPage() {
                   required
                   value={formData.full_name}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
               </div>
             </div>
@@ -128,7 +132,7 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="curriculum_id"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Curriculum / Board
               </label>
@@ -137,7 +141,7 @@ export default function OnboardingPage() {
                   id="curriculum_id"
                   name="curriculum_id"
                   required
-                  className="block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                   value={formData.curriculum_id}
                   onChange={handleChange}
                 >
@@ -150,7 +154,7 @@ export default function OnboardingPage() {
                     </option>
                   ))}
                 </select>
-                <p className="mt-1 text-xs text-gray-500">
+                <p className="mt-1 text-xs text-slate-500 dark:text-white/60">
                   This tailors your learning path and assessment style.
                 </p>
               </div>
@@ -160,7 +164,7 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="degree"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Degree Program
               </label>
@@ -173,7 +177,7 @@ export default function OnboardingPage() {
                   required
                   value={formData.degree}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
               </div>
             </div>
@@ -182,7 +186,7 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="semester"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Current Semester
               </label>
@@ -193,7 +197,7 @@ export default function OnboardingPage() {
                   required
                   value={formData.semester}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
                   <option value="">Select Semester</option>
                   {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
@@ -209,11 +213,11 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="subjects"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Current Subjects
               </label>
-              <p className="text-xs text-gray-500 mb-1">Comma separated</p>
+              <p className="mb-1 text-xs text-slate-500 dark:text-white/60">Comma separated</p>
               <div className="mt-1">
                 <input
                   id="subjects"
@@ -223,14 +227,14 @@ export default function OnboardingPage() {
                   required
                   value={formData.subjects}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
               </div>
             </div>
 
             {/* Language */}
             <div>
-              <span className="block text-sm font-medium text-gray-700 mb-2">
+              <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
                 Preferred Language
               </span>
               <div className="flex gap-4">
@@ -261,7 +265,7 @@ export default function OnboardingPage() {
 
             {/* Learning Style */}
             <div>
-              <span className="block text-sm font-medium text-gray-700 mb-2">
+              <span className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
                 Learning Style
               </span>
               <div className="flex flex-col gap-2">
@@ -305,7 +309,7 @@ export default function OnboardingPage() {
             <div>
               <label
                 htmlFor="career_goals"
-                className="block text-sm font-medium text-gray-700"
+                className="block text-sm font-medium text-slate-700 dark:text-white/70"
               >
                 Dream Career (Comma separated)
               </label>
@@ -317,7 +321,7 @@ export default function OnboardingPage() {
                   placeholder="e.g. AI Architect, Civil Engineer, Product Manager"
                   value={formData.career_goals}
                   onChange={handleChange}
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
               </div>
             </div>
@@ -332,6 +336,8 @@ export default function OnboardingPage() {
               </button>
             </div>
           </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -58,40 +58,45 @@ export default function IntegrationsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <header className="mb-8 flex justify-between items-center">
-        <div>
-            <h1 className="text-3xl font-bold text-gray-900">System Integrations</h1>
-            <p className="text-gray-500">Connect Ilmora to external LMS and Event Listeners</p>
-        </div>
-      </header>
+    <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
+      <div className="ilmora-noise relative">
+        <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+        <div className="relative z-10 p-6">
+          <header className="mb-8 flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold">System Integrations</h1>
+              <p className="text-slate-500 dark:text-white/60">
+                Connect Ilmora to external LMS and event listeners.
+              </p>
+            </div>
+          </header>
 
       {/* Tabs */}
-      <div className="border-b border-gray-200 mb-6">
+        <div className="mb-6 border-b border-slate-200 dark:border-white/10">
           <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveTab("integrations")}
-                className={`${activeTab === "integrations" ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${activeTab === "integrations" ? "border-slate-900 text-slate-900 dark:border-white dark:text-white" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-white/60 dark:hover:text-white"} whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
               >
                   LMS & Tools
               </button>
               <button
                 onClick={() => setActiveTab("webhooks")}
-                className={`${activeTab === "webhooks" ? "border-indigo-500 text-indigo-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"} whitespace-nowrap pb-4 px-1 border-b-2 font-medium text-sm`}
+            className={`${activeTab === "webhooks" ? "border-slate-900 text-slate-900 dark:border-white dark:text-white" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-white/60 dark:hover:text-white"} whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
               >
                   Webhooks
               </button>
           </nav>
       </div>
 
-      <div className="bg-white shadow rounded-lg p-6 mb-8">
-          <h3 className="text-lg font-medium leading-6 text-gray-900 mb-4">Add New {activeTab === "integrations" ? "Integration" : "Webhook"}</h3>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
+        <div className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+          <h3 className="mb-4 text-lg font-medium">Add New {activeTab === "integrations" ? "Integration" : "Webhook"}</h3>
+          <div className="grid grid-cols-1 items-end gap-4 md:grid-cols-4">
               <div className="md:col-span-1">
-                  <label className="block text-sm font-medium text-gray-700">Type</label>
+              <label className="block text-sm font-medium text-slate-700 dark:text-white/70">Type</label>
                   {activeTab === "integrations" ? (
                       <select 
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 py-2 pl-3 pr-10 text-base focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                         value={newItemType}
                         onChange={(e) => setNewItemType(e.target.value)}
                       >
@@ -101,7 +106,7 @@ export default function IntegrationsPage() {
                       </select>
                   ) : (
                       <select 
-                        className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                        className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 py-2 pl-3 pr-10 text-base focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                         value={newItemType}
                         onChange={(e) => setNewItemType(e.target.value)}
                       >
@@ -111,12 +116,12 @@ export default function IntegrationsPage() {
                   )}
               </div>
               <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-white/70">
                       {activeTab === "integrations" ? "Name" : "Target URL"}
                   </label>
                   <input 
                     type="text" 
-                    className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                     placeholder={activeTab === "integrations" ? "e.g. Canvas NUST" : "https://api.mysite.com/webhook"}
                     value={activeTab === "integrations" ? newItemName : newItemUrl}
                     onChange={(e) => activeTab === "integrations" ? setNewItemName(e.target.value) : setNewItemUrl(e.target.value)}
@@ -125,7 +130,7 @@ export default function IntegrationsPage() {
               <div>
                   <button 
                     onClick={handleCreate}
-                    className="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none"
+                  className="inline-flex w-full justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none dark:bg-white dark:text-black dark:hover:bg-white/90"
                   >
                       <Plus className="h-5 w-5 mr-2" />
                       Create
@@ -134,45 +139,47 @@ export default function IntegrationsPage() {
           </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-          <ul className="divide-y divide-gray-200">
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <ul className="divide-y divide-slate-200 dark:divide-white/10">
               {activeTab === "integrations" && integrations.map((item) => (
-                  <li key={item.id} className="px-6 py-4 flex items-center justify-between">
-                      <div className="flex items-center">
-                          <Server className="h-6 w-6 text-gray-400 mr-3" />
+                  <li key={item.id} className="flex items-center justify-between px-6 py-4">
+                    <div className="flex items-center">
+                      <Server className="mr-3 h-6 w-6 text-slate-400 dark:text-white/40" />
                           <div>
-                              <p className="text-sm font-medium text-gray-900">{item.name}</p>
-                              <p className="text-sm text-gray-500">{item.type}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{item.name}</p>
+                        <p className="text-sm text-slate-500 dark:text-white/60">{item.type}</p>
                           </div>
                       </div>
                       <div className="flex items-center">
-                          {item.is_active ? <CheckCircle className="h-5 w-5 text-green-500 mr-4" /> : <XCircle className="h-5 w-5 text-gray-300 mr-4" />}
-                          <button className="text-red-600 hover:text-red-900"><Trash2 className="h-5 w-5" /></button>
+                      {item.is_active ? <CheckCircle className="mr-4 h-5 w-5 text-emerald-500" /> : <XCircle className="mr-4 h-5 w-5 text-slate-300 dark:text-white/20" />}
+                      <button className="text-rose-600 hover:text-rose-700"><Trash2 className="h-5 w-5" /></button>
                       </div>
                   </li>
               ))}
               {activeTab === "webhooks" && webhooks.map((item) => (
-                  <li key={item.id} className="px-6 py-4 flex items-center justify-between">
-                      <div className="flex items-center">
-                          <Globe className="h-6 w-6 text-gray-400 mr-3" />
+                  <li key={item.id} className="flex items-center justify-between px-6 py-4">
+                    <div className="flex items-center">
+                      <Globe className="mr-3 h-6 w-6 text-slate-400 dark:text-white/40" />
                           <div className="overflow-hidden">
-                              <p className="text-sm font-medium text-gray-900">{item.event_type}</p>
-                              <p className="text-sm text-gray-500 truncate max-w-xs">{item.target_url}</p>
+                        <p className="text-sm font-medium text-slate-900 dark:text-white">{item.event_type}</p>
+                        <p className="max-w-xs truncate text-sm text-slate-500 dark:text-white/60">{item.target_url}</p>
                           </div>
                       </div>
                       <div className="flex items-center">
-                          {item.is_active ? <CheckCircle className="h-5 w-5 text-green-500 mr-4" /> : <XCircle className="h-5 w-5 text-gray-300 mr-4" />}
-                          <button className="text-red-600 hover:text-red-900"><Trash2 className="h-5 w-5" /></button>
+                      {item.is_active ? <CheckCircle className="mr-4 h-5 w-5 text-emerald-500" /> : <XCircle className="mr-4 h-5 w-5 text-slate-300 dark:text-white/20" />}
+                      <button className="text-rose-600 hover:text-rose-700"><Trash2 className="h-5 w-5" /></button>
                       </div>
                   </li>
               ))}
               {((activeTab === "integrations" && integrations.length === 0) || (activeTab === "webhooks" && webhooks.length === 0)) && (
-                   <li className="px-6 py-8 text-center text-gray-500">
+                   <li className="px-6 py-8 text-center text-slate-500 dark:text-white/60">
                        No {activeTab} configured yet.
                    </li>
               )}
           </ul>
       </div>
-    </div>
+            </div>
+            </div>
+          </div>
   );
 }

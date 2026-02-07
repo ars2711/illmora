@@ -7,12 +7,8 @@ type SyncCallback = (isSyncing: boolean) => void;
 
 export type Mutation = {
   id: string;
-  type: "SEND_MESSAGE";
-  payload: {
-    sessionId: string;
-    content: string;
-    tempId: string;
-  };
+  type: "SEND_MESSAGE" | "UPDATE_TITLE" | "DELETE_SESSION";
+  payload: any;
   timestamp: number;
 };
 

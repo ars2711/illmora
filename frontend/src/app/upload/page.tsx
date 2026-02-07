@@ -63,12 +63,12 @@ function UploadContent() {
   };
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Add Material</h1>
+    <div className="mx-auto max-w-2xl p-6">
+      <h1 className="mb-6 text-2xl font-semibold">Add Material</h1>
 
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200 text-center">
+      <div className="ilmora-scroll-accent rounded-3xl border border-slate-200 bg-white/70 p-8 text-center backdrop-blur dark:border-white/10 dark:bg-white/5">
         <div className="mb-6 flex justify-center">
-          <div className="p-4 bg-indigo-50 rounded-full text-indigo-600">
+          <div className="rounded-full bg-slate-900/5 p-4 text-slate-700 dark:bg-white/10 dark:text-white/80">
             {status === "uploading" ? (
               <Loader2 className="w-8 h-8 animate-spin" />
             ) : (
@@ -77,8 +77,8 @@ function UploadContent() {
           </div>
         </div>
 
-        <h3 className="text-lg font-medium mb-2">Upload Lectures or Notes</h3>
-        <p className="text-gray-500 text-sm mb-6">
+        <h3 className="mb-2 text-lg font-semibold">Upload Lectures or Notes</h3>
+        <p className="mb-6 text-sm text-slate-500 dark:text-white/60">
           Supported formats: PDF, TXT (Max 10MB)
         </p>
 
@@ -94,18 +94,18 @@ function UploadContent() {
         {!file ? (
           <label
             htmlFor="file-upload"
-            className="inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg cursor-pointer hover:bg-indigo-700 transition"
+            className="inline-block cursor-pointer rounded-full bg-slate-900 px-6 py-3 font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
           >
             Select Document
           </label>
         ) : (
           <div className="flex flex-col items-center gap-4">
-            <div className="flex items-center gap-2 p-3 bg-gray-50 rounded-lg border border-gray-200">
-              <FileText className="w-5 h-5 text-gray-500" />
+            <div className="flex items-center gap-2 rounded-lg border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
+              <FileText className="h-5 w-5 text-slate-500 dark:text-white/60" />
               <span className="text-sm font-medium">{file.name}</span>
               <button
                 onClick={() => setFile(null)}
-                className="text-xs text-red-500 hover:text-red-700 ml-2"
+                className="ml-2 text-xs text-rose-500 hover:text-rose-600"
               >
                 Remove
               </button>
@@ -115,7 +115,7 @@ function UploadContent() {
               <button
                 onClick={handleUpload}
                 disabled={status === "uploading"}
-                className="w-full px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition disabled:opacity-50 flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-lg bg-slate-900 px-6 py-3 font-medium text-white transition hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
               >
                 {status === "uploading" ? "Analyzing..." : "Start Extraction"}
               </button>
@@ -125,27 +125,27 @@ function UploadContent() {
 
         {status === "success" && (
           <div className="mt-4 flex flex-col gap-3">
-            <div className="p-3 bg-green-50 text-green-700 rounded-lg flex items-center justify-center gap-2">
-              <CheckCircle className="w-5 h-5" />
+            <div className="flex items-center justify-center gap-2 rounded-lg bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
+              <CheckCircle className="h-5 w-5" />
               <span className="text-sm font-medium">Document processed!</span>
             </div>
             <div className="grid grid-cols-2 gap-3">
               <button
                 onClick={() => router.push("/notes")}
-                className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 text-sm font-medium"
+                className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/80 dark:hover:bg-white/10"
               >
                 View Notes
               </button>
               <button
                 onClick={() => router.push("/practice")}
-                className="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 text-sm font-medium"
+                className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
               >
                 Start Quiz
               </button>
             </div>
             <button
               onClick={() => setStatus("idle")}
-              className="text-xs text-center text-gray-500 hover:text-indigo-600 mt-2 underline"
+              className="mt-2 text-center text-xs text-slate-500 underline hover:text-slate-700 dark:text-white/60 dark:hover:text-white"
             >
               Upload another file
             </button>
@@ -153,26 +153,26 @@ function UploadContent() {
         )}
 
         {status === "error" && (
-          <div className="mt-4 p-3 bg-red-50 text-red-700 rounded-lg flex items-center justify-center gap-2">
-            <AlertCircle className="w-5 h-5" />
+          <div className="mt-4 flex items-center justify-center gap-2 rounded-lg bg-rose-50 p-3 text-rose-700 dark:bg-rose-500/10 dark:text-rose-200">
+            <AlertCircle className="h-5 w-5" />
             {message}
           </div>
         )}
       </div>
 
       <div className="mt-8">
-        <h3 className="font-semibold mb-4">Why upload?</h3>
-        <ul className="space-y-3 text-sm text-gray-600">
+        <h3 className="mb-4 font-semibold">Why upload?</h3>
+        <ul className="space-y-3 text-sm text-slate-600 dark:text-white/60">
           <li className="flex gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
+            <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
             Generate revision notes instantly.
           </li>
           <li className="flex gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
+            <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
             Chat with your documents (RAG).
           </li>
           <li className="flex gap-2">
-            <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
+            <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
             Create practice quizzes automatically.
           </li>
         </ul>
@@ -184,9 +184,13 @@ function UploadContent() {
 export default function UploadPage() {
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 pb-20">
-        <UploadContent />
-        {/* Can add BottomNav here if we wrap with DashboardLayout, but let's assume it's standalone or wrapped */}
+      <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
+        <div className="ilmora-noise relative">
+          <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+          <div className="relative z-10 pb-20">
+            <UploadContent />
+          </div>
+        </div>
       </div>
     </ProtectedRoute>
   );

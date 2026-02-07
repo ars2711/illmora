@@ -72,23 +72,26 @@ export default function PracticePage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-50 flex flex-col items-center p-6">
-        <header className="w-full max-w-2xl mb-8 flex items-center gap-3">
-          <div className="p-3 bg-indigo-600 rounded-xl text-white">
-            <BrainCircuit className="w-6 h-6" />
-          </div>
-          <div>
-            <h1 className="text-xl font-bold text-gray-900">Practice Mode</h1>
-            <p className="text-sm text-gray-500">
-              Test your mastery without the pressure.
-            </p>
-          </div>
-        </header>
+      <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
+        <div className="ilmora-noise relative">
+          <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+          <div className="relative z-10 flex min-h-screen flex-col items-center p-6">
+            <header className="mb-8 flex w-full max-w-2xl items-center gap-3">
+              <div className="rounded-xl bg-slate-900/5 p-3 text-slate-700 dark:bg-white/10 dark:text-white/80">
+                <BrainCircuit className="h-6 w-6" />
+              </div>
+              <div>
+                <h1 className="text-xl font-semibold">Practice Mode</h1>
+                <p className="text-sm text-slate-500 dark:text-white/60">
+                  Test your mastery without the pressure.
+                </p>
+              </div>
+            </header>
 
-        <main className="w-full max-w-2xl">
+            <main className="w-full max-w-2xl">
           {step === "setup" && (
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+            <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
                 What do you want to practice?
               </label>
               <div className="flex gap-2">
@@ -97,12 +100,12 @@ export default function PracticePage() {
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
                   placeholder="e.g. Recursion, Thermodynamics, Organic Chemistry"
-                  className="flex-1 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none"
+                  className="flex-1 rounded-lg border border-slate-200 bg-white/90 p-3 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
                 <button
                   onClick={generateQuestion}
                   disabled={loading || !topic}
-                  className="px-6 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50 flex items-center gap-2"
+                  className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
                   {loading ? "Thinking..." : "Start"}
                   {!loading && <Send className="w-4 h-4" />}
@@ -112,30 +115,30 @@ export default function PracticePage() {
           )}
 
           {step === "question" && (
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
+            <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="mb-6">
-                <h3 className="text-sm font-bold text-indigo-600 uppercase tracking-wide mb-2">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-white/60">
                   Question
                 </h3>
-                <p className="text-lg text-gray-900 leading-relaxed whitespace-pre-wrap">
+                <p className="whitespace-pre-wrap text-lg leading-relaxed text-slate-900 dark:text-white">
                   {question}
                 </p>
               </div>
 
               <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
                   Your Answer
                 </label>
                 <textarea
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
                   placeholder="Type your explanation here..."
-                  className="w-full p-4 h-32 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 outline-none resize-none"
+                  className="h-32 w-full resize-none rounded-lg border border-slate-200 bg-white/90 p-4 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
                 <button
                   onClick={submitAnswer}
                   disabled={loading || !userAnswer}
-                  className="mt-4 w-full py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 disabled:opacity-50"
+                  className="mt-4 w-full rounded-lg bg-slate-900 py-3 font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
                   {loading ? "Grading..." : "Submit Answer"}
                 </button>
@@ -144,19 +147,21 @@ export default function PracticePage() {
           )}
 
           {step === "result" && (
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-              <div className="mb-6 pb-6 border-b border-gray-100">
-                <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-2 text-xs">
+            <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <div className="mb-6 border-b border-slate-200 pb-6 dark:border-white/10">
+                <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-white/50">
                   Question
                 </h3>
-                <p className="text-gray-600 text-sm line-clamp-2">{question}</p>
+                <p className="line-clamp-2 text-sm text-slate-600 dark:text-white/60">
+                  {question}
+                </p>
               </div>
 
               <div className="mb-6">
-                <h3 className="text-sm font-bold text-green-600 uppercase tracking-wide mb-2 flex items-center gap-2">
+                <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-300">
                   <Check className="w-4 h-4" /> Feedback
                 </h3>
-                <article className="prose prose-sm max-w-none text-gray-900">
+                <article className="prose prose-sm max-w-none text-slate-900 dark:prose-invert">
                   <div className="whitespace-pre-wrap">{feedback}</div>
                 </article>
               </div>
@@ -168,13 +173,15 @@ export default function PracticePage() {
                   setUserAnswer("");
                   setQuestion("");
                 }}
-                className="w-full py-3 bg-gray-100 text-gray-700 rounded-lg font-medium hover:bg-gray-200"
+                className="w-full rounded-lg border border-slate-200 bg-white/80 py-3 font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/80 dark:hover:bg-white/20"
               >
                 Practice Another Topic
               </button>
             </div>
           )}
-        </main>
+            </main>
+          </div>
+        </div>
       </div>
     </ProtectedRoute>
   );

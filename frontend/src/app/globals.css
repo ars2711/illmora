@@ -4,17 +4,194 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --bg: 210 40% 98%;
+    --fg: 222 47% 11%;
+    --muted: 220 14% 96%;
+    --muted-fg: 215 16% 47%;
+    --accent: 44 96% 56%;
+    --accent-2: 193 90% 52%;
+    --card: 0 0% 100%;
+    --ring: 44 96% 56%;
+    --shadow: 222 47% 11%;
+  }
+
+  .dark {
+    --bg: 222 47% 6%;
+    --fg: 210 40% 98%;
+    --muted: 223 20% 12%;
+    --muted-fg: 220 10% 70%;
+    --accent: 44 96% 56%;
+    --accent-2: 193 90% 52%;
+    --card: 222 47% 9%;
+    --ring: 44 96% 56%;
+    --shadow: 0 0% 0%;
   }
 }
 
 body {
-  @apply bg-gray-50 text-gray-900;
+  @apply antialiased;
+  background: hsl(var(--bg));
+  color: hsl(var(--fg));
+  font-family:
+    var(--font-sans),
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+
+.font-display {
+  font-family: var(--font-display), "Georgia", serif;
+}
+
+::selection {
+  background: hsl(var(--accent) / 0.35);
+}
+
+.ilmora-glow {
+  box-shadow:
+    0 10px 30px -10px hsl(var(--accent) / 0.55),
+    0 0 40px hsl(var(--accent-2) / 0.35);
+}
+
+.ilmora-grid {
+  background-image:
+    linear-gradient(to right, hsl(var(--fg) / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, hsl(var(--fg) / 0.07) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.ilmora-ambient {
+  position: relative;
+  overflow: hidden;
+}
+
+.ilmora-orb {
+  position: absolute;
+  border-radius: 999px;
+  background:
+    radial-gradient(
+      circle at 30% 30%,
+      rgba(251, 191, 36, 0.6),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 20%,
+      rgba(56, 189, 248, 0.55),
+      transparent 60%
+    );
+  filter: blur(8px);
+  opacity: 0.65;
+}
+
+.ilmora-constellation {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(248, 250, 252, 0.6), transparent 35%),
+    radial-gradient(circle at 75% 30%, rgba(56, 189, 248, 0.45), transparent 40%),
+    radial-gradient(circle at 40% 70%, rgba(251, 191, 36, 0.5), transparent 45%),
+    radial-gradient(circle at 80% 75%, rgba(248, 250, 252, 0.35), transparent 45%),
+    linear-gradient(120deg, rgba(15, 23, 42, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0.7;
+  animation: constellation-drift 14s ease-in-out infinite;
+}
+
+.ilmora-sheen {
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(251, 191, 36, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 20%, rgba(56, 189, 248, 0.2), transparent 45%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.1), transparent 60%);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  animation: sheen-sweep 10s ease-in-out infinite;
+}
+
+.ilmora-parallax-layer {
+  transform: translate3d(
+    calc(var(--parallax-x, 0) * 1px),
+    calc(var(--parallax-y, 0) * 1px),
+    0
+  );
+  transition: transform 0.3s ease-out;
+}
+
+.ilmora-noise {
+  position: relative;
+}
+
+.ilmora-noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.ilmora-scroll-accent {
+  transform: translate3d(0, calc(var(--scroll-y, 0) * -0.015px), 0);
+  transition: transform 0.4s ease;
+  will-change: transform;
+}
+
+@keyframes floaty {
+  0% {
+    transform: translateY(0) rotateX(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotateX(4deg);
+  }
+  100% {
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes constellation-drift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0) scale(1.02);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes sheen-sweep {
+  0% {
+    transform: translate3d(-4px, 0, 0);
+    opacity: 0.45;
+  }
+  50% {
+    transform: translate3d(6px, -4px, 0);
+    opacity: 0.75;
+  }
+  100% {
+    transform: translate3d(-4px, 0, 0);
+    opacity: 0.45;
+  }
 }
 
 /* Cleanup PWA scrollbars */
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ilmora-scroll-accent {
+    transform: none;
+    transition: none;
+  }
 }

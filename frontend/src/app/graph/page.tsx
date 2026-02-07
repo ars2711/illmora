@@ -35,32 +35,40 @@ function GraphContent() {
   }, [user]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
-      <header className="px-6 py-4 bg-white border-b border-gray-200">
-        <div className="flex items-center gap-4">
-          <Link href="/" className="p-2 hover:bg-gray-100 rounded-full">
-            <ArrowLeft className="w-5 h-5 text-gray-600" />
-          </Link>
-          <h1 className="text-xl font-bold">Knowledge Graph Explorer</h1>
-        </div>
-      </header>
+    <div className="relative min-h-screen ilmora-ambient bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.2),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.15),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
+      <div className="ilmora-noise relative">
+        <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
+        <div className="relative z-10 flex min-h-screen flex-col">
+          <header className="px-6 py-4 border-b border-slate-200 bg-white/70 backdrop-blur dark:border-white/10 dark:bg-white/5">
+            <div className="flex items-center gap-4">
+              <Link
+                href="/"
+                className="rounded-full p-2 hover:bg-slate-900/5 dark:hover:bg-white/10"
+              >
+                <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-white/70" />
+              </Link>
+              <h1 className="text-xl font-semibold">Knowledge Graph Explorer</h1>
+            </div>
+          </header>
 
-      <main className="flex-1 p-6">
+          <main className="flex-1 p-6">
         {loading ? (
-          <div className="flex items-center justify-center h-full">
-            <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
+          <div className="flex h-full items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-slate-600 dark:text-white/70" />
           </div>
         ) : data ? (
           <KnowledgeGraph initialNodes={data.nodes} initialEdges={data.edges} />
         ) : (
-          <div className="text-center text-gray-500 mt-20">
+          <div className="mt-20 text-center text-slate-500 dark:text-white/60">
             <p>Could not load knowledge graph.</p>
             <p className="text-sm">
               Make sure the backend is running at localhost:8000.
             </p>
           </div>
         )}
-      </main>
+          </main>
+        </div>
+      </div>
     </div>
   );
 }
