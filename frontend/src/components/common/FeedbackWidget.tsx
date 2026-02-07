@@ -72,6 +72,7 @@ export function FeedbackWidget() {
           onClick={() => setIsOpen(true)}
           className="p-3 bg-white text-gray-600 rounded-full shadow-lg border border-gray-200 hover:text-indigo-600 transition-colors flex items-center gap-2 group"
           title={t("open")}
+          aria-label={t("open")}
         >
           <MessageSquarePlus className="w-6 h-6" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap text-sm font-medium">
@@ -106,6 +107,7 @@ export function FeedbackWidget() {
                   type="button"
                   onClick={() => setSentiment("happy")}
                   className={`p-2 rounded-lg transition-colors ${sentiment === "happy" ? "bg-green-100 text-green-600" : "text-gray-400 hover:bg-gray-50"}`}
+                  aria-label={t("sentiment.happy", { defaultMessage: "Happy" })}
                 >
                   <Smile className="w-6 h-6" />
                 </button>
@@ -113,6 +115,7 @@ export function FeedbackWidget() {
                   type="button"
                   onClick={() => setSentiment("confused")}
                   className={`p-2 rounded-lg transition-colors ${sentiment === "confused" ? "bg-amber-100 text-amber-600" : "text-gray-400 hover:bg-gray-50"}`}
+                  aria-label={t("sentiment.confused", { defaultMessage: "Confused" })}
                 >
                   <Meh className="w-6 h-6" />
                 </button>
@@ -120,6 +123,7 @@ export function FeedbackWidget() {
                   type="button"
                   onClick={() => setSentiment("bug")}
                   className={`p-2 rounded-lg transition-colors ${sentiment === "bug" ? "bg-red-100 text-red-600" : "text-gray-400 hover:bg-gray-50"}`}
+                  aria-label={t("sentiment.bug", { defaultMessage: "Bug" })}
                 >
                   <Frown className="w-6 h-6" />
                 </button>

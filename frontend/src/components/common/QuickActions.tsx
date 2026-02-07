@@ -194,7 +194,7 @@ export default function QuickActions() {
           isAnimating ? "animate-controls-orbit" : ""
         }`}
         aria-label={isExpanded ? t("collapse") : t("expand")}
-        aria-expanded={isExpanded}
+        aria-expanded={isExpanded ? "true" : "false"}
       >
         {isExpanded ? <X size={16} /> : <Menu size={16} />}
       </button>
