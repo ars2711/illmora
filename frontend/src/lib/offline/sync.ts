@@ -1,6 +1,7 @@
 import { initDB } from "./db";
 import { v4 as uuidv4 } from "uuid";
 import { getStoredAuthToken } from "@/lib/auth";
+import { buildApiUrl } from "@/lib/api";
 
 // Simple listener type for sync status changes
 type SyncCallback = (isSyncing: boolean) => void;
@@ -93,7 +94,7 @@ export class SyncManager {
     const token = getStoredAuthToken();
 
     if (mutation.type === "SEND_MESSAGE") {
-      const response = await fetch("http://localhost:8000/api/v1/chat", {
+      const response = await fetch(buildApiUrl("/api/v1/chat"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

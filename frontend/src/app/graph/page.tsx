@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
+import { buildApiUrl } from "@/lib/api";
 
 function GraphContent() {
   const [data, setData] = useState<{ nodes: any[]; edges: any[] } | null>(null);
@@ -15,7 +16,7 @@ function GraphContent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/graph", {
+        const res = await fetch(buildApiUrl("/api/v1/graph"), {
           headers: {
             Authorization: token ? `Bearer ${token}` : "",
           },

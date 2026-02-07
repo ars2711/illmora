@@ -6,6 +6,7 @@ import { Loader2, Sparkles, KeyRound } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { credentialToJSON, normalizePublicKeyOptions } from "@/lib/passkey";
 import { useTranslations } from "next-intl";
+import { buildApiUrl } from "@/lib/api";
 
 export default function LoginPage() {
   const t = useTranslations("login");
@@ -42,7 +43,7 @@ export default function LoginPage() {
     setError("");
     try {
       const optionsRes = await fetch(
-        "http://localhost:8000/api/v1/auth/passkeys/authenticate/options",
+        buildApiUrl("/api/v1/auth/passkeys/authenticate/options"),
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -60,7 +61,7 @@ export default function LoginPage() {
       }
 
       const verifyRes = await fetch(
-        "http://localhost:8000/api/v1/auth/passkeys/authenticate/verify",
+        buildApiUrl("/api/v1/auth/passkeys/authenticate/verify"),
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

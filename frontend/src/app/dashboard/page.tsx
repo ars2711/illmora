@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Book, Clock, AlertTriangle, Plus } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
+import { buildApiUrl } from "@/lib/api";
 
 interface ProfileData {
   full_name: string;
@@ -36,7 +37,7 @@ export default function DashboardPage() {
           router.push("/login");
           return;
         }
-        const res = await fetch("http://localhost:8000/api/v1/users/me", {
+        const res = await fetch(buildApiUrl("/api/v1/users/me"), {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (res.ok) {

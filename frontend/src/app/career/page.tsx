@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useState } from "react";
 import ReactMarkdown from "react-markdown"; // Assuming installed or will be
 import { Target, Map, ArrowRight, Loader } from "lucide-react";
+import { buildApiUrl } from "@/lib/api";
 
 interface RoadmapResponse {
   roadmap_content: string;
@@ -23,7 +24,7 @@ export default function CareerPage() {
       if (!token) {
         return;
       }
-      const res = await fetch("http://localhost:8000/api/v1/career/roadmap", {
+      const res = await fetch(buildApiUrl("/api/v1/career/roadmap"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

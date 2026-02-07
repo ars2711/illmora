@@ -12,6 +12,7 @@ import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
+import { buildApiUrl } from "@/lib/api";
 
 function UploadContent() {
   const { user, demoMode, token } = useAuth();
@@ -68,7 +69,7 @@ function UploadContent() {
         setStatus("idle");
         return;
       }
-      const res = await fetch("http://localhost:8000/api/v1/documents/upload", {
+      const res = await fetch(buildApiUrl("/api/v1/documents/upload"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

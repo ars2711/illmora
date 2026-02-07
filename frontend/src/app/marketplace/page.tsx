@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { Lock, Star, BookOpen, ShoppingBag } from "lucide-react";
+import { buildApiUrl } from "@/lib/api";
 
 interface StudyPack {
   id: string;
@@ -22,7 +23,7 @@ export default function MarketplacePage() {
     async function loadPacks() {
       try {
         const res = await fetch(
-          "http://localhost:8000/api/v1/marketplace/packs?scope=institution",
+          buildApiUrl("/api/v1/marketplace/packs?scope=institution"),
           {
             headers: { Authorization: `Bearer ${token}` },
           },

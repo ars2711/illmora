@@ -5,6 +5,7 @@ import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 import { BrainCircuit, Send, Check } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
+import { buildApiUrl } from "@/lib/api";
 
 export default function PracticePage() {
   const { user, demoMode, token } = useAuth();
@@ -44,7 +45,7 @@ export default function PracticePage() {
       if (!token) {
         return;
       }
-      const res = await fetch("http://localhost:8000/api/v1/chat", {
+      const res = await fetch(buildApiUrl("/api/v1/chat"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,7 +84,7 @@ export default function PracticePage() {
       if (!token) {
         return;
       }
-      const res = await fetch("http://localhost:8000/api/v1/chat", {
+      const res = await fetch(buildApiUrl("/api/v1/chat"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

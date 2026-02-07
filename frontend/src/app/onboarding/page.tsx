@@ -3,6 +3,7 @@
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { buildApiUrl } from "@/lib/api";
 
 export default function OnboardingPage() {
   const { user, token } = useAuth();
@@ -25,16 +26,15 @@ export default function OnboardingPage() {
   useEffect(() => {
     async function getCurricula() {
       try {
-        const res = await fetch("http://localhost:8000/api/v1/curriculum/");
+        const res = await fetch(buildApiUrl("/api/v1/curriculum/"));
         if (res.ok) {
           const data = await res.json();
           setCurricula(data);
           // Seed if empty (dev quality of life)
           if (data.length === 0) {
-            const seedRes = await fetch(
-              "http://localhost:8000/api/v1/curriculum/seed",
-              { method: "POST" },
-            );
+            const seedRes = await fetch(buildApiUrl("/api/v1/curriculum/seed"), {
+              method: "POST",
+            });
             if (seedRes.ok) setCurricula(await seedRes.json());
           }
         }
@@ -69,7 +69,7 @@ export default function OnboardingPage() {
         .map((s) => s.trim())
         .filter(Boolean);
 
-      const res = await fetch("http://localhost:8000/api/v1/users/me/profile", {
+      const res = await fetch(buildApiUrl("/api/v1/users/me/profile"), {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

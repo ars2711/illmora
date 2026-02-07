@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useParams, useRouter } from "next/navigation";
 import { Loader2, ArrowLeft, Wand2, Save } from "lucide-react";
 import Link from "next/link";
+import { buildApiUrl } from "@/lib/api";
 
 export default function NoteDetailPage() {
   const { id } = useParams();
@@ -24,12 +25,9 @@ export default function NoteDetailPage() {
 
       try {
         // Network First Strategy
-        const res = await fetch(
-          `http://localhost:8000/api/v1/documents/${id}`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          },
-        );
+        const res = await fetch(buildApiUrl(`/api/v1/documents/${id}`), {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (res.ok) {
           const data = await res.json();
           setNote(data);

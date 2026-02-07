@@ -1,6 +1,4 @@
-const API_BASE =
-  process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ??
-  "http://localhost:8000";
+import { buildApiUrl } from "@/lib/api";
 
 type FetchOptions = Omit<RequestInit, "headers"> & {
   headers?: Record<string, string>;
@@ -18,7 +16,7 @@ async function adminFetch<T>(
 
   if (token) headers.Authorization = `Bearer ${token}`;
 
-  const response = await fetch(`${API_BASE}${path}`, {
+  const response = await fetch(buildApiUrl(path), {
     ...options,
     headers,
   });

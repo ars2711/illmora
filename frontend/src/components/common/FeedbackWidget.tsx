@@ -6,6 +6,7 @@ import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 import { useTranslations } from "next-intl";
+import { buildApiUrl } from "@/lib/api";
 
 export function FeedbackWidget() {
   const t = useTranslations("feedback");
@@ -33,7 +34,7 @@ export function FeedbackWidget() {
         showToast(t("toast.failure"), "error");
         return;
       }
-      const res = await fetch("http://localhost:8000/api/v1/feedback", {
+      const res = await fetch(buildApiUrl("/api/v1/feedback"), {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

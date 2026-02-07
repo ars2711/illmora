@@ -20,6 +20,7 @@ class BaseEthicsExamine(ABC):
             Tuple[bool, str]: (is_safe, refusal_reason)
             - is_safe: True if the prompt is allowed.
             - refusal_reason: The explanation to give the user if denied. None if safe.
+        """
     @abstractmethod
     def construct_system_prompt(self, context_str: str, language: str = "English", curriculum: str = "General") -> str:
         """

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Shield, ArrowLeft, Loader2, KeyRound } from "lucide-react";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import { useState } from "react";
+import { buildApiUrl } from "@/lib/api";
 
 export default function SecuritySettingsPage() {
   const { user, demoMode, token } = useAuth();
@@ -27,7 +28,7 @@ export default function SecuritySettingsPage() {
         return;
       }
       const optionsRes = await fetch(
-        "http://localhost:8000/api/v1/auth/passkeys/register/options",
+        buildApiUrl("/api/v1/auth/passkeys/register/options"),
         {
           method: "POST",
           headers: {
@@ -46,7 +47,7 @@ export default function SecuritySettingsPage() {
         throw new Error("Passkey request canceled.");
       }
       const verifyRes = await fetch(
-        "http://localhost:8000/api/v1/auth/passkeys/register/verify",
+        buildApiUrl("/api/v1/auth/passkeys/register/verify"),
         {
           method: "POST",
           headers: {
