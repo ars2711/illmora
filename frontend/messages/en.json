@@ -1,0 +1,378 @@
+{
+  "quickActions": {
+    "expand": "Expand controls",
+    "collapse": "Collapse controls",
+    "theme": "Toggle theme",
+    "install": "Install app",
+    "back": "Go back",
+    "refresh": "Refresh",
+    "top": "Scroll to top",
+    "language": "Language",
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "ur": "Urdu",
+      "ar": "Arabic",
+      "fr": "French",
+      "hi": "Hindi"
+    }
+  },
+  "sidebar": {
+    "brand": "Ilmora",
+    "nav": {
+      "dashboard": "Dashboard",
+      "graph": "My Graph",
+      "tutor": "AI Tutor",
+      "upload": "Upload Content",
+      "marketplace": "Marketplace",
+      "career": "Career Roadmap",
+      "history": "History",
+      "profile": "Profile",
+      "adminDashboard": "Admin Dashboard",
+      "database": "Database Console",
+      "audit": "Audit Logs",
+      "incidents": "Incident Log",
+      "roles": "Roles & Access",
+      "health": "System Health",
+      "integrations": "Integrations"
+    },
+    "adminSearch": {
+      "title": "Global admin search",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "placeholder": "Search",
+      "submit": "Search",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles"
+    },
+    "demoWorkspace": "Demo workspace",
+    "exitDemo": "Exit demo"
+  },
+  "pwaInstall": {
+    "install": "Install",
+    "installApp": "Install app",
+    "installLabel": "Install app",
+    "unavailableLabel": "Install app (unavailable)",
+    "unavailableTitle": "Install unavailable"
+  },
+  "feedback": {
+    "open": "Send Feedback",
+    "cta": "Feedback?",
+    "title": "Help us improve Ilmora",
+    "close": "Close feedback",
+    "sent": "Thanks! Your feedback helps your fellow students.",
+    "placeholders": {
+      "happy": "What's working well?",
+      "confused": "What's confusing you?",
+      "bug": "Describe the bug or issue..."
+    },
+    "submit": "Submit",
+    "sending": "Sending...",
+    "toast": {
+      "success": "Feedback sent! Thank you.",
+      "failure": "Failed to send feedback. Try again.",
+      "network": "Network error. Please try again later."
+    }
+  },
+  "login": {
+    "badge": "Access",
+    "title": {
+      "login": "Welcome Back",
+      "signup": "Join Ilmora"
+    },
+    "subtitle": "Secure sign-in for your memory graph and studio sessions.",
+    "afterLogin": {
+      "title": "What opens up after login",
+      "body": "You are about to enter a guided learning studio: a living memory graph, rehearsal rituals, and AI sessions that feel more like a performance than a dashboard. Every page after this is designed to remember context and keep your momentum."
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password"
+    },
+    "actions": {
+      "signIn": "Sign In",
+      "createAccount": "Create Account"
+    },
+    "divider": "Or continue with",
+    "providers": {
+      "google": "Continue with Google",
+      "github": "Continue with GitHub",
+      "apple": "Continue with Apple",
+      "passkey": "Use a passkey"
+    },
+    "switch": {
+      "signup": "Don't have an account? Sign Up",
+      "login": "Already have an account? Log In"
+    },
+    "demo": {
+      "cta": "Explore demo",
+      "note": "No account required. Browse with sample data."
+    },
+    "errors": {
+      "missingEmail": "Enter your email to use passkeys.",
+      "unsupportedPasskey": "Passkeys are not supported in this browser.",
+      "passkeyStart": "Unable to start passkey login.",
+      "passkeyCanceled": "Passkey request canceled.",
+      "passkeyVerify": "Passkey verification failed.",
+      "passkeyFailed": "Passkey login failed.",
+      "providerFailed": "Provider login failed."
+    }
+  },
+  "dashboard": {
+    "loading": "Loading Ilmora...",
+    "welcome": "Welcome back, {name}.",
+    "fallbackName": "Scholar",
+    "subtitle": "Ready to master your concepts today?",
+    "demo": {
+      "name": "Demo Scholar",
+      "title": "Demo workspace",
+      "body": "You can explore flows and save drafts locally. Syncing and personalized insights unlock after sign in.",
+      "cta": "Sign in"
+    },
+    "security": {
+      "title": "Security",
+      "body": "Manage passkeys and provider sign-in preferences.",
+      "cta": "Open security"
+    },
+    "focus": {
+      "title": "Focus Area Detected",
+      "body": "You seem to be struggling with <topic>Recursion</topic> based on your last chat. Recommended: 15 min review.",
+      "topic": "Recursion",
+      "cta": "Start Review Session"
+    },
+    "subjects": {
+      "title": "Your Subjects",
+      "edit": "Edit",
+      "stats": "3 notes • 85% mastery",
+      "add": "Add Material",
+      "items": {
+        "dataStructures": "Data Structures",
+        "linearAlgebra": "Linear Algebra",
+        "psychology": "Psychology"
+      }
+    },
+    "activity": {
+      "title": "Recent Activity",
+      "items": {
+        "chat": {
+          "title": "Chat Session: Linked Lists",
+          "time": "2 hours ago"
+        },
+        "upload": {
+          "title": "Uploaded \"Lecture_05.pdf\"",
+          "time": "Yesterday"
+        }
+      }
+    },
+    "demoStudio": {
+      "title": "Demo studio",
+      "items": {
+        "drafts": {
+          "title": "Draft queue",
+          "detail": "2 uploads staged • 1 quiz prompt ready"
+        },
+        "graph": {
+          "title": "Sample memory graph",
+          "detail": "Explore 12 curated nodes for recursion"
+        }
+      }
+    }
+  },
+  "home": {
+    "session": {
+      "brandTag": "Learning cockpit",
+      "signOut": "Sign out",
+      "badge": "Active session",
+      "titlePrefix": "Welcome to your",
+      "titleHighlight": "cognitive studio",
+      "titleSuffix": "today.",
+      "lede": "This is your live cockpit: a memory graph that evolves with every session, rehearsal rituals that adapt to your cadence, and a timeline that keeps your progress easy to revisit.",
+      "ctaPrimary": "Open dashboard",
+      "ctaSecondary": "View history",
+      "pulses": {
+        "title": "Studio pulses",
+        "live": "Live"
+      },
+      "cards": {
+        "focus": {
+          "title": "Current focus",
+          "detail": "Graph recall • 18 min • depth mode"
+        },
+        "ritual": {
+          "title": "Next ritual",
+          "detail": "Adaptive quiz • 12 prompts • confidence boost"
+        },
+        "momentum": {
+          "title": "Momentum",
+          "detail": "3 sessions this week • 84% consistency"
+        }
+      },
+      "quickActions": {
+        "title": "Quick actions",
+        "items": {
+          "chat": "Start AI session",
+          "graph": "Explore memory graph",
+          "upload": "Upload material"
+        }
+      },
+      "today": {
+        "title": "Today's dashboard",
+        "items": {
+          "one": "4 concepts scheduled • 2 urgent reviews",
+          "two": "7 knowledge nodes updated this week",
+          "three": "Momentum score: 84 • streak: 5 days"
+        }
+      },
+      "history": {
+        "title": "Recent history",
+        "items": {
+          "one": "Studio: Graph recall • 2 hours ago",
+          "two": "Upload: Lecture 05 • Yesterday"
+        },
+        "cta": "Open full history"
+      }
+    },
+    "public": {
+      "brandTag": "Cognitive Engine",
+      "nav": {
+        "studio": "Studio",
+        "graph": "Memory Graph",
+        "practice": "Practice",
+        "marketplace": "Marketplace"
+      },
+      "signOut": "Sign out",
+      "demo": "Explore demo",
+      "signIn": "Sign in",
+      "hero": {
+        "badge": "Welcome to the studio",
+        "titlePrefix": "A jazz-infused",
+        "titleHighlight": "learning OS",
+        "titleSuffix": "for memory, mastery, and momentum.",
+        "lede": "Ilmora is an ethical cognitive engine that feels like a live performance: adaptive, intimate, and improvisational. Build knowledge constellations, rehearse skills, and weave a memory map that remembers your story.",
+        "ctaPrimary": "Begin the experience",
+        "ctaSecondary": "Enter studio",
+        "tagline": {
+          "one": "Offline-first",
+          "two": "Human-centered",
+          "three": "System-aware"
+        }
+      },
+      "heroCard": {
+        "badge": "Live memory",
+        "nowPlaying": "Now playing",
+        "title": "Midnight Knowledge",
+        "body": "The assistant harmonizes your study beats into a living memory graph. No lost context, no cold starts.",
+        "stats": {
+          "one": "3D scenes",
+          "two": "Themes",
+          "three": "Rituals"
+        }
+      },
+      "subjects": {
+        "title": "Subjects",
+        "headline": "Every discipline, one studio.",
+        "body": "Math, physics, chemistry, biology, calculus, statistics, linear algebra, discrete math, CS, programming, economics, finance, business, history, literature, languages, design, music, medicine, engineering, law, and more.",
+        "list": {
+          "math": "Math",
+          "physics": "Physics",
+          "chemistry": "Chemistry",
+          "biology": "Biology",
+          "calculus": "Calculus",
+          "statistics": "Statistics",
+          "linearAlgebra": "Linear Algebra",
+          "discreteMath": "Discrete Math",
+          "cs": "CS",
+          "programming": "Programming",
+          "economics": "Economics",
+          "finance": "Finance",
+          "history": "History",
+          "literature": "Literature",
+          "languages": "Languages",
+          "design": "Design",
+          "music": "Music",
+          "medicine": "Medicine",
+          "engineering": "Engineering",
+          "law": "Law",
+          "art": "Art",
+          "psychology": "Psychology",
+          "philosophy": "Philosophy",
+          "astronomy": "Astronomy"
+        }
+      },
+      "ai": {
+        "title": "AI Features",
+        "headline": "The neural toolkit.",
+        "items": {
+          "one": "Adaptive study plans, tuned per subject and pace.",
+          "two": "Concept graph expansion with memory-safe summarization.",
+          "three": "Exam rehearsal mode with timed recall and Socratic prompts.",
+          "four": "Deep-dive explanations, proofs, and derivations.",
+          "five": "Cross-topic synthesis to connect ideas across disciplines."
+        }
+      },
+      "cards": {
+        "memory": {
+          "title": "Memory Graph",
+          "body": "A living map of concepts, notes, and goals that grows with every session."
+        },
+        "ethics": {
+          "title": "Ethical AI",
+          "body": "Grounded responses, privacy-respecting, transparent control over what is stored."
+        },
+        "practice": {
+          "title": "Layered Practice",
+          "body": "Drills, reflections, and immersive tasks that sync across devices."
+        },
+        "offline": {
+          "title": "Offline-first",
+          "body": "Keep studying even without signal. Syncs elegantly when you return."
+        }
+      },
+      "experience": {
+        "title": "The Experience",
+        "headline": "Remember like a musician.",
+        "body": "Ilmora orchestrates your study ritual into a performance. Each note you take becomes a reusable motif in your knowledge graph.",
+        "quotes": {
+          "one": {
+            "text": "\"Turn my notes into a practice flow.\"",
+            "label": "Studio prompt"
+          },
+          "two": {
+            "text": "\"Rehearse concepts with a Socratic cadence.\"",
+            "label": "Learning style"
+          }
+        }
+      },
+      "install": {
+        "title": "Install everywhere",
+        "body": "Ilmora is PWA-ready. Pin it to your desktop or phone like a native app and keep your momentum offline.",
+        "badges": {
+          "one": "Add to Home Screen",
+          "two": "Immersive UI"
+        }
+      },
+      "ritual": {
+        "title": "Your custom ritual",
+        "body": "Switch between light and dark, adjust your focus ambience, and tailor the rhythm to match your study flow.",
+        "tags": {
+          "one": "Theme",
+          "two": "Tempo",
+          "three": "Focus"
+        }
+      },
+      "credits": {
+        "title": "Credits",
+        "headline": "Crafted with",
+        "stack": "Next.js, FastAPI, Firebase, Postgres + pgvector, Framer Motion and a lot of late-night jazz.",
+        "byline": "Ilmora Studio by Arsalan — building ethical learning systems for the long arc of mastery. Follow the work on",
+        "link": "GitHub",
+        "robots": "Robots",
+        "sitemap": "Sitemap",
+        "manifest": "Manifest"
+      }
+    }
+  }
+}

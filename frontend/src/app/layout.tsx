@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Playfair_Display, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
@@ -10,6 +12,7 @@ import QuickActions from "@/components/common/QuickActions";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import ScrollMotion from "@/components/common/ScrollMotion";
 import DemoOverlay from "@/components/common/DemoOverlay";
+import { localeDirection } from "@/i18n/config";
 
 const display = Playfair_Display({
   subsets: ["latin"],
@@ -125,27 +128,34 @@ export const viewport: Viewport = {
   userScalable: false, // Prevent zoom on mobile for native-like feel
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+  const direction =
+    localeDirection[locale as keyof typeof localeDirection] ?? "ltr";
+
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} dir={direction} suppressHydrationWarning>
       <body className={`${display.variable} ${sans.variable} font-sans`}>
-        <ThemeProvider>
-          <AuthProvider>
-            <ToastProvider>
-              {children}
-              <DemoOverlay />
-              <FeedbackWidget />
-              <SyncIndicator />
-              <QuickActions />
-              <ServiceWorkerRegister />
-              <ScrollMotion />
-            </ToastProvider>
-          </AuthProvider>
-        </ThemeProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <ThemeProvider>
+            <AuthProvider>
+              <ToastProvider>
+                {children}
+                <DemoOverlay />
+                <FeedbackWidget />
+                <SyncIndicator />
+                <QuickActions />
+                <ServiceWorkerRegister />
+                <ScrollMotion />
+              </ToastProvider>
+            </AuthProvider>
+          </ThemeProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

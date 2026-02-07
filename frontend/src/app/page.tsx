@@ -23,8 +23,10 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
+import { useTranslations } from "next-intl";
 
 export default function Home() {
+  const t = useTranslations("home");
   const { user, logOut, startDemo, demoMode } = useAuth();
   const router = useRouter();
 
@@ -61,7 +63,7 @@ export default function Home() {
               <div>
                 <p className="font-display text-lg tracking-[0.4em]">ILMORA</p>
                 <p className="text-xs uppercase text-slate-500 dark:text-white/60">
-                  Learning cockpit
+                  {t("session.brandTag")}
                 </p>
               </div>
             </Link>
@@ -73,7 +75,7 @@ export default function Home() {
                   onClick={handleLogout}
                   className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                 >
-                  Sign out
+                  {t("session.signOut")}
                 </button>
               )}
             </div>
@@ -82,33 +84,31 @@ export default function Home() {
           <section className="mx-auto grid max-w-6xl gap-8 px-6 pb-16 pt-2 lg:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-6">
               <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-                <Sparkles size={14} /> Active session
+                <Sparkles size={14} /> {t("session.badge")}
               </p>
               <h1 className="font-display text-4xl leading-tight sm:text-5xl">
-                Welcome to your
+                {t("session.titlePrefix")}
                 <span className="text-transparent bg-clip-text bg-[linear-gradient(120deg,_#fbbf24,_#38bdf8,_#f8fafc)]">
                   {" "}
-                  cognitive studio{" "}
+                  {t("session.titleHighlight")}{" "}
                 </span>
-                today.
+                {t("session.titleSuffix")}
               </h1>
               <p className="text-lg text-slate-600 dark:text-white/70">
-                This is your live cockpit: a memory graph that evolves with
-                every session, rehearsal rituals that adapt to your cadence, and
-                a timeline that keeps your progress easy to revisit.
+                {t("session.lede")}
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/dashboard"
                   className="ilmora-glow inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black"
                 >
-                  Open dashboard <ArrowRight size={16} />
+                  {t("session.ctaPrimary")} <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/dashboard/history"
                   className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm text-slate-700 hover:bg-slate-200/50 dark:border-white/15 dark:text-white/80 dark:hover:bg-white/10"
                 >
-                  View history <Clock size={16} />
+                  {t("session.ctaSecondary")} <Clock size={16} />
                 </Link>
               </div>
             </div>
@@ -123,29 +123,35 @@ export default function Home() {
                 <div className="relative z-10 space-y-5">
                   <div className="flex items-center justify-between">
                     <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                      Studio pulses
+                      {t("session.pulses.title")}
                     </p>
                     <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/15 dark:bg-white/10 dark:text-white/70">
-                      Live
+                      {t("session.pulses.live")}
                     </span>
                   </div>
                   <div className="grid gap-3">
                     <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
-                      <p className="text-sm font-medium">Current focus</p>
+                      <p className="text-sm font-medium">
+                        {t("session.cards.focus.title")}
+                      </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        Graph recall • 18 min • depth mode
+                        {t("session.cards.focus.detail")}
                       </p>
                     </div>
                     <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
-                      <p className="text-sm font-medium">Next ritual</p>
+                      <p className="text-sm font-medium">
+                        {t("session.cards.ritual.title")}
+                      </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        Adaptive quiz • 12 prompts • confidence boost
+                        {t("session.cards.ritual.detail")}
                       </p>
                     </div>
                     <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
-                      <p className="text-sm font-medium">Momentum</p>
+                      <p className="text-sm font-medium">
+                        {t("session.cards.momentum.title")}
+                      </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        3 sessions this week • 84% consistency
+                        {t("session.cards.momentum.detail")}
                       </p>
                     </div>
                   </div>
@@ -156,58 +162,66 @@ export default function Home() {
 
           <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-20 lg:grid-cols-3">
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h2 className="text-lg font-semibold">Quick actions</h2>
+              <h2 className="text-lg font-semibold">
+                {t("session.quickActions.title")}
+              </h2>
               <div className="mt-4 grid gap-3">
                 <Link
                   href="/chat"
                   className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
-                  Start AI session <ArrowRight size={16} />
+                  {t("session.quickActions.items.chat")}{" "}
+                  <ArrowRight size={16} />
                 </Link>
                 <Link
                   href="/graph"
                   className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
-                  Explore memory graph <Move3d size={16} />
+                  {t("session.quickActions.items.graph")} <Move3d size={16} />
                 </Link>
                 <Link
                   href="/upload"
                   className="flex items-center justify-between rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 text-sm text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
-                  Upload material <Download size={16} />
+                  {t("session.quickActions.items.upload")}{" "}
+                  <Download size={16} />
                 </Link>
               </div>
             </div>
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h2 className="text-lg font-semibold">Today&apos;s dashboard</h2>
+              <h2 className="text-lg font-semibold">
+                {t("session.today.title")}
+              </h2>
               <div className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
-                  4 concepts scheduled • 2 urgent reviews
+                  {t("session.today.items.one")}
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
-                  7 knowledge nodes updated this week
+                  {t("session.today.items.two")}
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
-                  Momentum score: 84 • streak: 5 days
+                  {t("session.today.items.three")}
                 </div>
               </div>
             </div>
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h2 className="text-lg font-semibold">Recent history</h2>
+              <h2 className="text-lg font-semibold">
+                {t("session.history.title")}
+              </h2>
               <div className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
-                  Studio: Graph recall • 2 hours ago
+                  {t("session.history.items.one")}
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 dark:border-white/10 dark:bg-white/10">
-                  Upload: Lecture 05 • Yesterday
+                  {t("session.history.items.two")}
                 </div>
                 <Link
                   href="/dashboard/history"
                   className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 hover:text-slate-700 dark:text-white/60 dark:hover:text-white"
                 >
-                  Open full history <ArrowRight size={12} />
+                  {t("session.history.cta")} <ArrowRight size={12} />
                 </Link>
               </div>
             </div>
@@ -233,7 +247,7 @@ export default function Home() {
             <div>
               <p className="font-display text-lg tracking-[0.4em]">ILMORA</p>
               <p className="text-xs uppercase text-slate-500 dark:text-white/60">
-                Cognitive Engine
+                {t("public.brandTag")}
               </p>
             </div>
           </Link>
@@ -242,25 +256,25 @@ export default function Home() {
               href="/chat"
               className="hover:text-slate-900 dark:hover:text-white"
             >
-              Studio
+              {t("public.nav.studio")}
             </Link>
             <Link
               href="/graph"
               className="hover:text-slate-900 dark:hover:text-white"
             >
-              Memory Graph
+              {t("public.nav.graph")}
             </Link>
             <Link
               href="/practice"
               className="hover:text-slate-900 dark:hover:text-white"
             >
-              Practice
+              {t("public.nav.practice")}
             </Link>
             <Link
               href="/marketplace"
               className="hover:text-slate-900 dark:hover:text-white"
             >
-              Marketplace
+              {t("public.nav.marketplace")}
             </Link>
           </nav>
           <div className="flex items-center gap-3">
@@ -269,7 +283,7 @@ export default function Home() {
                 onClick={handleLogout}
                 className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Sign out
+                {t("public.signOut")}
               </button>
             ) : (
               <div className="flex items-center gap-2">
@@ -281,13 +295,13 @@ export default function Home() {
                   }}
                   className="rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                 >
-                  Explore demo
+                  {t("public.demo")}
                 </button>
                 <Link
                   href="/login"
                   className="rounded-full bg-slate-900 px-4 py-2 text-xs uppercase tracking-wide text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
-                  Sign in
+                  {t("public.signIn")}
                 </Link>
               </div>
             )}
@@ -303,40 +317,37 @@ export default function Home() {
           >
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
               <Sparkles size={14} />
-              Welcome to the studio
+              {t("public.hero.badge")}
             </p>
             <h1 className="font-display text-5xl leading-tight sm:text-6xl">
-              A jazz-infused
+              {t("public.hero.titlePrefix")}
               <span className="text-transparent bg-clip-text bg-[linear-gradient(120deg,_#fbbf24,_#38bdf8,_#f8fafc)]">
                 {" "}
-                learning OS{" "}
+                {t("public.hero.titleHighlight")}{" "}
               </span>
-              for memory, mastery, and momentum.
+              {t("public.hero.titleSuffix")}
             </h1>
             <p className="text-lg text-slate-600 dark:text-white/70">
-              Ilmora is an ethical cognitive engine that feels like a live
-              performance: adaptive, intimate, and improvisational. Build
-              knowledge constellations, rehearse skills, and weave a memory map
-              that remembers your story.
+              {t("public.hero.lede")}
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
                 href="/onboarding"
                 className="ilmora-glow inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black"
               >
-                Begin the experience <ArrowRight size={16} />
+                {t("public.hero.ctaPrimary")} <ArrowRight size={16} />
               </Link>
               <Link
                 href="/chat"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm text-slate-700 hover:bg-slate-200/50 dark:border-white/15 dark:text-white/80 dark:hover:bg-white/10"
               >
-                Enter studio <Music2 size={16} />
+                {t("public.hero.ctaSecondary")} <Music2 size={16} />
               </Link>
             </div>
             <div className="flex flex-wrap gap-6 text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-white/50">
-              <span>Offline-first</span>
-              <span>Human-centered</span>
-              <span>System-aware</span>
+              <span>{t("public.hero.tagline.one")}</span>
+              <span>{t("public.hero.tagline.two")}</span>
+              <span>{t("public.hero.tagline.three")}</span>
             </div>
           </motion.div>
 
@@ -354,31 +365,32 @@ export default function Home() {
               <div className="pointer-events-none absolute inset-0 rounded-[36px] ilmora-sheen" />
               <div className="absolute inset-0 rounded-[36px] bg-gradient-to-b from-white/40 via-transparent to-white/30 dark:from-black/20 dark:via-transparent dark:to-black/50" />
               <div className="absolute right-6 top-6 rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/15 dark:bg-white/10 dark:text-white/70">
-                Live memory
+                {t("public.heroCard.badge")}
               </div>
               <div className="relative z-10 flex h-full flex-col justify-between">
                 <div className="space-y-3">
                   <p className="text-xs uppercase text-slate-500 dark:text-white/50">
-                    Now playing
+                    {t("public.heroCard.nowPlaying")}
                   </p>
-                  <h2 className="font-display text-3xl">Midnight Knowledge</h2>
+                  <h2 className="font-display text-3xl">
+                    {t("public.heroCard.title")}
+                  </h2>
                   <p className="text-sm text-slate-600 dark:text-white/70">
-                    The assistant harmonizes your study beats into a living
-                    memory graph. No lost context, no cold starts.
+                    {t("public.heroCard.body")}
                   </p>
                 </div>
                 <div className="grid grid-cols-3 gap-3 text-center text-xs text-slate-600 dark:text-white/60">
                   <div className="rounded-2xl border border-slate-200 bg-white/70 px-3 py-4 dark:border-white/10 dark:bg-white/5">
                     <Move3d className="mx-auto mb-2" size={18} />
-                    3D scenes
+                    {t("public.heroCard.stats.one")}
                   </div>
                   <div className="rounded-2xl border border-slate-200 bg-white/70 px-3 py-4 dark:border-white/10 dark:bg-white/5">
                     <Palette className="mx-auto mb-2" size={18} />
-                    Themes
+                    {t("public.heroCard.stats.two")}
                   </div>
                   <div className="rounded-2xl border border-slate-200 bg-white/70 px-3 py-4 dark:border-white/10 dark:bg-white/5">
                     <Stars className="mx-auto mb-2" size={18} />
-                    Rituals
+                    {t("public.heroCard.stats.three")}
                   </div>
                 </div>
               </div>
@@ -389,43 +401,40 @@ export default function Home() {
         <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-12 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="ilmora-scroll-accent rounded-[32px] border border-slate-200 bg-white/70 p-8 transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
-              Subjects
+              {t("public.subjects.title")}
             </p>
             <h3 className="mt-4 font-display text-3xl">
-              Every discipline, one studio.
+              {t("public.subjects.headline")}
             </h3>
             <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-              Math, physics, chemistry, biology, calculus, statistics, linear
-              algebra, discrete math, CS, programming, economics, finance,
-              business, history, literature, languages, design, music, medicine,
-              engineering, law, and more.
+              {t("public.subjects.body")}
             </p>
             <div className="mt-6 flex flex-wrap gap-2 text-xs text-slate-600 dark:text-white/70">
               {[
-                "Math",
-                "Physics",
-                "Chemistry",
-                "Biology",
-                "Calculus",
-                "Statistics",
-                "Linear Algebra",
-                "Discrete Math",
-                "CS",
-                "Programming",
-                "Economics",
-                "Finance",
-                "History",
-                "Literature",
-                "Languages",
-                "Design",
-                "Music",
-                "Medicine",
-                "Engineering",
-                "Law",
-                "Art",
-                "Psychology",
-                "Philosophy",
-                "Astronomy",
+                t("public.subjects.list.math"),
+                t("public.subjects.list.physics"),
+                t("public.subjects.list.chemistry"),
+                t("public.subjects.list.biology"),
+                t("public.subjects.list.calculus"),
+                t("public.subjects.list.statistics"),
+                t("public.subjects.list.linearAlgebra"),
+                t("public.subjects.list.discreteMath"),
+                t("public.subjects.list.cs"),
+                t("public.subjects.list.programming"),
+                t("public.subjects.list.economics"),
+                t("public.subjects.list.finance"),
+                t("public.subjects.list.history"),
+                t("public.subjects.list.literature"),
+                t("public.subjects.list.languages"),
+                t("public.subjects.list.design"),
+                t("public.subjects.list.music"),
+                t("public.subjects.list.medicine"),
+                t("public.subjects.list.engineering"),
+                t("public.subjects.list.law"),
+                t("public.subjects.list.art"),
+                t("public.subjects.list.psychology"),
+                t("public.subjects.list.philosophy"),
+                t("public.subjects.list.astronomy"),
               ].map((subject) => (
                 <span
                   key={subject}
@@ -439,19 +448,17 @@ export default function Home() {
 
           <div className="ilmora-scroll-accent rounded-[32px] border border-slate-200 bg-white/70 p-8 transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
-              AI Features
+              {t("public.ai.title")}
             </p>
-            <h3 className="mt-4 font-display text-3xl">The neural toolkit.</h3>
+            <h3 className="mt-4 font-display text-3xl">
+              {t("public.ai.headline")}
+            </h3>
             <ul className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
-              <li>Adaptive study plans, tuned per subject and pace.</li>
-              <li>Concept graph expansion with memory-safe summarization.</li>
-              <li>
-                Exam rehearsal mode with timed recall and Socratic prompts.
-              </li>
-              <li>Deep-dive explanations, proofs, and derivations.</li>
-              <li>
-                Cross-topic synthesis to connect ideas across disciplines.
-              </li>
+              <li>{t("public.ai.items.one")}</li>
+              <li>{t("public.ai.items.two")}</li>
+              <li>{t("public.ai.items.three")}</li>
+              <li>{t("public.ai.items.four")}</li>
+              <li>{t("public.ai.items.five")}</li>
             </ul>
           </div>
         </section>
@@ -460,23 +467,23 @@ export default function Home() {
           {[
             {
               icon: <Cpu size={20} />,
-              title: "Memory Graph",
-              body: "A living map of concepts, notes, and goals that grows with every session.",
+              title: t("public.cards.memory.title"),
+              body: t("public.cards.memory.body"),
             },
             {
               icon: <ShieldCheck size={20} />,
-              title: "Ethical AI",
-              body: "Grounded responses, privacy-respecting, transparent control over what is stored.",
+              title: t("public.cards.ethics.title"),
+              body: t("public.cards.ethics.body"),
             },
             {
               icon: <Layers size={20} />,
-              title: "Layered Practice",
-              body: "Drills, reflections, and immersive tasks that sync across devices.",
+              title: t("public.cards.practice.title"),
+              body: t("public.cards.practice.body"),
             },
             {
               icon: <Globe size={20} />,
-              title: "Offline-first",
-              body: "Keep studying even without signal. Syncs elegantly when you return.",
+              title: t("public.cards.offline.title"),
+              body: t("public.cards.offline.body"),
             },
           ].map((card) => (
             <div
@@ -497,30 +504,29 @@ export default function Home() {
         <section className="mx-auto grid max-w-6xl gap-10 px-6 py-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div className="rounded-[32px] border border-slate-200 bg-white/70 p-8 backdrop-blur transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5">
             <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
-              The Experience
+              {t("public.experience.title")}
             </p>
             <h2 className="mt-4 font-display text-4xl">
-              Remember like a musician.
+              {t("public.experience.headline")}
             </h2>
             <p className="mt-4 text-slate-600 dark:text-white/70">
-              Ilmora orchestrates your study ritual into a performance. Each
-              note you take becomes a reusable motif in your knowledge graph.
+              {t("public.experience.body")}
             </p>
             <div className="mt-6 grid gap-4">
               <div className="rounded-2xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
                 <p className="text-sm text-slate-700 dark:text-white/80">
-                  "Turn my notes into a practice flow."
+                  {t("public.experience.quotes.one.text")}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-white/50">
-                  Studio prompt
+                  {t("public.experience.quotes.one.label")}
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white/70 p-4 dark:border-white/10 dark:bg-white/5">
                 <p className="text-sm text-slate-700 dark:text-white/80">
-                  "Rehearse concepts with a Socratic cadence."
+                  {t("public.experience.quotes.two.text")}
                 </p>
                 <p className="text-xs text-slate-500 dark:text-white/50">
-                  Learning style
+                  {t("public.experience.quotes.two.label")}
                 </p>
               </div>
             </div>
@@ -528,30 +534,32 @@ export default function Home() {
 
           <div className="space-y-6">
             <div className="rounded-[32px] border border-slate-200 bg-gradient-to-br from-white/80 via-white/60 to-transparent p-8 transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:from-white/10 dark:via-white/5">
-              <h3 className="font-display text-2xl">Install everywhere</h3>
+              <h3 className="font-display text-2xl">
+                {t("public.install.title")}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                Ilmora is PWA-ready. Pin it to your desktop or phone like a
-                native app and keep your momentum offline.
+                {t("public.install.body")}
               </p>
               <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-600 dark:text-white/70">
                 <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 dark:border-white/15">
-                  <Download size={14} /> Add to Home Screen
+                  <Download size={14} /> {t("public.install.badges.one")}
                 </span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-3 py-2 dark:border-white/15">
-                  <Move3d size={14} /> Immersive UI
+                  <Move3d size={14} /> {t("public.install.badges.two")}
                 </span>
               </div>
             </div>
             <div className="rounded-[32px] border border-slate-200 bg-white/70 p-8 transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5">
-              <h3 className="font-display text-2xl">Your custom ritual</h3>
+              <h3 className="font-display text-2xl">
+                {t("public.ritual.title")}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                Switch between light and dark, adjust your focus ambience, and
-                tailor the rhythm to match your study flow.
+                {t("public.ritual.body")}
               </p>
               <div className="mt-4 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/50">
-                <span>Theme</span>
-                <span>Tempo</span>
-                <span>Focus</span>
+                <span>{t("public.ritual.tags.one")}</span>
+                <span>{t("public.ritual.tags.two")}</span>
+                <span>{t("public.ritual.tags.three")}</span>
               </div>
             </div>
           </div>
@@ -562,20 +570,16 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-between gap-6">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/50">
-                  Credits
+                  {t("public.credits.title")}
                 </p>
                 <h3 className="font-display text-2xl text-slate-900 dark:text-white">
-                  Crafted with
+                  {t("public.credits.headline")}
                 </h3>
-                <p className="mt-2 text-sm">
-                  Next.js, FastAPI, Firebase, Postgres + pgvector, Framer Motion
-                  and a lot of late-night jazz.
-                </p>
+                <p className="mt-2 text-sm">{t("public.credits.stack")}</p>
                 <p className="mt-2 text-xs text-slate-500 dark:text-white/50">
-                  Ilmora Studio by Arsalan — building ethical learning systems
-                  for the long arc of mastery. Follow the work on{" "}
+                  {t("public.credits.byline")}{" "}
                   <Link href="https://github.com/ars2711" className="underline">
-                    GitHub
+                    {t("public.credits.link")}
                   </Link>
                   .
                 </p>
@@ -585,19 +589,19 @@ export default function Home() {
                   href="/robots.txt"
                   className="hover:text-slate-900 dark:hover:text-white"
                 >
-                  Robots
+                  {t("public.credits.robots")}
                 </Link>
                 <Link
                   href="/sitemap.xml"
                   className="hover:text-slate-900 dark:hover:text-white"
                 >
-                  Sitemap
+                  {t("public.credits.sitemap")}
                 </Link>
                 <Link
                   href="/manifest.webmanifest"
                   className="hover:text-slate-900 dark:hover:text-white"
                 >
-                  Manifest
+                  {t("public.credits.manifest")}
                 </Link>
               </div>
             </div>

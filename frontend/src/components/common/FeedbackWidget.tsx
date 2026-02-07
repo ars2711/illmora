@@ -5,8 +5,10 @@ import { MessageSquarePlus, X, Send, Smile, Frown, Meh } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { usePathname } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
+import { useTranslations } from "next-intl";
 
 export function FeedbackWidget() {
+  const t = useTranslations("feedback");
   const { user } = useAuth();
   const { showToast } = useToast();
   const pathname = usePathname();
@@ -42,18 +44,18 @@ export function FeedbackWidget() {
       });
       if (res.ok) {
         setSent(true);
-        showToast("Feedback sent! Thank you.", "success");
+        showToast(t("toast.success"), "success");
         setTimeout(() => {
           setIsOpen(false);
           setSent(false);
           setContent("");
         }, 2000);
       } else {
-        showToast("Failed to send feedback. Try again.", "error");
+        showToast(t("toast.failure"), "error");
       }
     } catch (err) {
       console.error(err);
-      showToast("Network error. Please try again later.", "error");
+      showToast(t("toast.network"), "error");
     } finally {
       setSending(false);
     }
@@ -65,11 +67,11 @@ export function FeedbackWidget() {
         <button
           onClick={() => setIsOpen(true)}
           className="p-3 bg-white text-gray-600 rounded-full shadow-lg border border-gray-200 hover:text-indigo-600 transition-colors flex items-center gap-2 group"
-          title="Send Feedback"
+          title={t("open")}
         >
           <MessageSquarePlus className="w-6 h-6" />
           <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 whitespace-nowrap text-sm font-medium">
-            Feedback?
+            {t("cta")}
           </span>
         </button>
       )}
@@ -78,11 +80,12 @@ export function FeedbackWidget() {
         <div className="bg-white rounded-xl shadow-2xl border border-gray-200 w-80 p-4 animate-in fade-in slide-in-from-bottom-4">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-gray-900 text-sm">
-              Help us improve Ilmora
+              {t("title")}
             </h3>
             <button
               onClick={() => setIsOpen(false)}
               className="text-gray-400 hover:text-gray-600"
+              aria-label={t("close")}
             >
               <X className="w-4 h-4" />
             </button>
@@ -90,7 +93,7 @@ export function FeedbackWidget() {
 
           {sent ? (
             <div className="text-center py-6 text-green-600 text-sm font-medium">
-              Thanks! Your feedback helps your fellow students.
+              {t("sent")}
             </div>
           ) : (
             <form onSubmit={handleSubmit}>
@@ -123,10 +126,10 @@ export function FeedbackWidget() {
                 rows={3}
                 placeholder={
                   sentiment === "happy"
-                    ? "What's working well?"
+                    ? t("placeholders.happy")
                     : sentiment === "confused"
-                      ? "What's confusing you?"
-                      : "Describe the bug or issue..."
+                      ? t("placeholders.confused")
+                      : t("placeholders.bug")
                 }
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
@@ -137,7 +140,7 @@ export function FeedbackWidget() {
                 disabled={sending || !content.trim()}
                 className="w-full py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 disabled:opacity-50 flex justify-center items-center gap-2"
               >
-                {sending ? "Sending..." : "Submit"}
+                {sending ? t("sending") : t("submit")}
                 <Send className="w-3 h-3" />
               </button>
             </form>

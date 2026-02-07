@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 type BeforeInstallPromptEvent = Event & {
   prompt: () => Promise<void>;
@@ -15,6 +16,7 @@ export default function PwaInstallPrompt({
   variant?: "button" | "pill" | "icon";
   showUnavailable?: boolean;
 }) {
+  const t = useTranslations("pwaInstall");
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
   const [dismissed, setDismissed] = useState(false);
@@ -46,8 +48,8 @@ export default function PwaInstallPrompt({
           type="button"
           disabled
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/60 text-slate-400 shadow-lg backdrop-blur"
-          aria-label="Install app (unavailable)"
-          title="Install unavailable"
+          aria-label={t("unavailableLabel")}
+          title={t("unavailableTitle")}
         >
           <Download size={16} />
         </button>
@@ -62,7 +64,7 @@ export default function PwaInstallPrompt({
         type="button"
         onClick={handleClick}
         className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
-        aria-label="Install app"
+        aria-label={t("installLabel")}
       >
         <Download size={16} />
       </button>
@@ -77,7 +79,7 @@ export default function PwaInstallPrompt({
         className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
       >
         <Download size={14} />
-        Install
+        {t("install")}
       </button>
     );
   }
@@ -89,7 +91,7 @@ export default function PwaInstallPrompt({
       className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-wide text-slate-900 hover:bg-white/90 dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
     >
       <Download size={16} />
-      Install app
+      {t("installApp")}
     </button>
   );
 }

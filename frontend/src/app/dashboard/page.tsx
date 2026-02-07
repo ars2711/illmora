@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Book, Clock, AlertTriangle, Plus } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface ProfileData {
   full_name: string;
@@ -12,6 +13,7 @@ interface ProfileData {
 }
 
 export default function DashboardPage() {
+  const t = useTranslations("dashboard");
   const { user, demoMode } = useAuth();
   const router = useRouter();
   const [profile, setProfile] = useState<ProfileData | null>(null);
@@ -20,7 +22,7 @@ export default function DashboardPage() {
   useEffect(() => {
     const checkProfile = async () => {
       if (demoMode) {
-        setProfile({ full_name: "Demo Scholar", profile_completed: true });
+        setProfile({ full_name: t("demo.name"), profile_completed: true });
         setLoading(false);
         return;
       }
@@ -49,12 +51,12 @@ export default function DashboardPage() {
       }
     };
     checkProfile();
-  }, [user, router, demoMode]);
+  }, [user, router, demoMode, t]);
 
   if (loading)
     return (
       <div className="min-h-screen bg-slate-50 p-6 text-slate-600 dark:bg-slate-950 dark:text-white/70">
-        Loading Ilmora...
+        {t("loading")}
       </div>
     );
 
@@ -65,11 +67,11 @@ export default function DashboardPage() {
         <div className="relative z-10 mx-auto max-w-4xl p-6">
           <header className="mb-8">
             <h1 className="text-2xl font-semibold">
-              Welcome back, {profile?.full_name?.split(" ")[0] || "Scholar"}.
+              {t("welcome", {
+                name: profile?.full_name?.split(" ")[0] || t("fallbackName"),
+              })}
             </h1>
-            <p className="text-slate-500 dark:text-white/60">
-              Ready to master your concepts today?
-            </p>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
           </header>
 
           {demoMode && (
@@ -77,18 +79,15 @@ export default function DashboardPage() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-amber-700/80 dark:text-amber-100/80">
-                    Demo workspace
+                    {t("demo.title")}
                   </p>
-                  <p className="mt-2">
-                    You can explore flows and save drafts locally. Syncing and
-                    personalized insights unlock after sign in.
-                  </p>
+                  <p className="mt-2">{t("demo.body")}</p>
                 </div>
                 <Link
                   href="/login"
                   className="rounded-full bg-amber-600 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white shadow-sm hover:bg-amber-500"
                 >
-                  Sign in
+                  {t("demo.cta")}
                 </Link>
               </div>
             </section>
@@ -99,17 +98,15 @@ export default function DashboardPage() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
-                    Security
+                    {t("security.title")}
                   </p>
-                  <p className="mt-2">
-                    Manage passkeys and provider sign-in preferences.
-                  </p>
+                  <p className="mt-2">{t("security.body")}</p>
                 </div>
                 <Link
                   href="/settings/security"
                   className="rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
-                  Open security
+                  {t("security.cta")}
                 </Link>
               </div>
             </section>
@@ -121,15 +118,17 @@ export default function DashboardPage() {
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
               <div>
                 <h3 className="font-semibold text-amber-900 dark:text-amber-100">
-                  Focus Area Detected
+                  {t("focus.title")}
                 </h3>
                 <p className="mt-1 text-sm text-amber-800 dark:text-amber-100/80">
-                  You seem to be struggling with{" "}
-                  <span className="font-bold">Recursion</span> based on your
-                  last chat. Recommended: 15 min review.
+                  {t.rich("focus.body", {
+                    topic: (chunks) => (
+                      <span className="font-bold">{chunks}</span>
+                    ),
+                  })}
                 </p>
                 <button className="mt-3 text-sm font-medium text-amber-700 underline hover:text-amber-900 dark:text-amber-100/80 dark:hover:text-amber-100">
-                  Start Review Session
+                  {t("focus.cta")}
                 </button>
               </div>
             </div>
@@ -138,61 +137,65 @@ export default function DashboardPage() {
           {/* Subjects Grid */}
           <section className="mb-8">
             <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-lg font-semibold">Your Subjects</h2>
+              <h2 className="text-lg font-semibold">{t("subjects.title")}</h2>
               <Link
                 href="/onboarding"
                 className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
               >
-                Edit
+                {t("subjects.edit")}
               </Link>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {/* Example Cards - Phase 1 MVP Mock */}
-              {["Data Structures", "Linear Algebra", "Psychology"].map(
-                (subj, i) => (
-                  <div
-                    key={i}
-                    className="rounded-2xl border border-slate-200 bg-white/70 p-4 backdrop-blur transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
-                  >
-                    <div className="mb-3 flex items-center gap-3">
-                      <div className="rounded-xl bg-slate-900/5 p-2 text-slate-700 dark:bg-white/10 dark:text-white/80">
-                        <Book className="h-5 w-5" />
-                      </div>
-                      <h3 className="font-medium text-slate-900 dark:text-white">
-                        {subj}
-                      </h3>
+              {[
+                t("subjects.items.dataStructures"),
+                t("subjects.items.linearAlgebra"),
+                t("subjects.items.psychology"),
+              ].map((subj, i) => (
+                <div
+                  key={i}
+                  className="rounded-2xl border border-slate-200 bg-white/70 p-4 backdrop-blur transition-transform duration-500 hover:-translate-y-1 dark:border-white/10 dark:bg-white/5"
+                >
+                  <div className="mb-3 flex items-center gap-3">
+                    <div className="rounded-xl bg-slate-900/5 p-2 text-slate-700 dark:bg-white/10 dark:text-white/80">
+                      <Book className="h-5 w-5" />
                     </div>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-xs text-slate-500 dark:text-white/60">
-                        3 notes • 85% mastery
-                      </span>
-                    </div>
+                    <h3 className="font-medium text-slate-900 dark:text-white">
+                      {subj}
+                    </h3>
                   </div>
-                ),
-              )}
+                  <div className="mt-4 flex items-center justify-between">
+                    <span className="text-xs text-slate-500 dark:text-white/60">
+                      {t("subjects.stats")}
+                    </span>
+                  </div>
+                </div>
+              ))}
 
               <Link
                 href="/upload"
                 className="flex flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-200 p-4 text-slate-400 transition-colors hover:border-slate-300 hover:text-slate-600 dark:border-white/10 dark:text-white/50 dark:hover:border-white/30 dark:hover:text-white/70"
               >
                 <Plus className="mb-2 h-6 w-6" />
-                <span className="text-sm font-medium">Add Material</span>
+                <span className="text-sm font-medium">{t("subjects.add")}</span>
               </Link>
             </div>
           </section>
 
           {/* Recent Activity */}
           <section>
-            <h2 className="mb-4 text-lg font-semibold">Recent Activity</h2>
+            <h2 className="mb-4 text-lg font-semibold">
+              {t("activity.title")}
+            </h2>
             <div className="divide-y divide-slate-200 rounded-2xl border border-slate-200 bg-white/70 shadow-sm dark:divide-white/10 dark:border-white/10 dark:bg-white/5">
               <div className="flex items-center gap-3 p-4">
                 <Clock className="h-4 w-4 text-slate-400 dark:text-white/50" />
                 <div>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">
-                    Chat Session: Linked Lists
+                    {t("activity.items.chat.title")}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    2 hours ago
+                    {t("activity.items.chat.time")}
                   </p>
                 </div>
               </div>
@@ -200,10 +203,10 @@ export default function DashboardPage() {
                 <Clock className="h-4 w-4 text-slate-400 dark:text-white/50" />
                 <div>
                   <p className="text-sm font-medium text-slate-900 dark:text-white">
-                    Uploaded "Lecture_05.pdf"
+                    {t("activity.items.upload.title")}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Yesterday
+                    {t("activity.items.upload.time")}
                   </p>
                 </div>
               </div>
@@ -212,16 +215,18 @@ export default function DashboardPage() {
 
           {demoMode && (
             <section className="mt-8">
-              <h2 className="mb-4 text-lg font-semibold">Demo studio</h2>
+              <h2 className="mb-4 text-lg font-semibold">
+                {t("demoStudio.title")}
+              </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {[
                   {
-                    title: "Draft queue",
-                    detail: "2 uploads staged • 1 quiz prompt ready",
+                    title: t("demoStudio.items.drafts.title"),
+                    detail: t("demoStudio.items.drafts.detail"),
                   },
                   {
-                    title: "Sample memory graph",
-                    detail: "Explore 12 curated nodes for recursion",
+                    title: t("demoStudio.items.graph.title"),
+                    detail: t("demoStudio.items.graph.detail"),
                   },
                 ].map((item) => (
                   <div

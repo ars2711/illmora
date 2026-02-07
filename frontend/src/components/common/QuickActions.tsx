@@ -4,23 +4,22 @@ import { ArrowUp, Globe, Menu, RotateCcw, Undo2, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
+import { useLocale, useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { locales } from "@/i18n/config";
 
 const defaultOrder = ["theme", "install", "back", "refresh", "top", "language"];
 
-const languageOptions = [
-  { value: "en", label: "English" },
-  { value: "es", label: "Spanish" },
-  { value: "fr", label: "French" },
-  { value: "de", label: "German" },
-  { value: "ar", label: "Arabic" },
-  { value: "ur", label: "Urdu" },
-];
+const localeOrder = ["en", "es", "fr", "hi", "ur", "ar"] as const;
 
 export default function QuickActions() {
+  const t = useTranslations("quickActions");
+  const locale = useLocale();
+  const router = useRouter();
   const [isExpanded, setIsExpanded] = useState(true);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [order, setOrder] = useState<string[]>(defaultOrder);
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState(locale);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const getCookie = (name: string) => {
@@ -67,18 +66,8 @@ export default function QuickActions() {
         }
       }
     }
-    const storedLanguage = localStorage.getItem("ilmora-lang");
-    if (storedLanguage) {
-      setLanguage(storedLanguage);
-      document.documentElement.lang = storedLanguage;
-    } else {
-      const cookieLang = getCookie("ilmora-lang");
-      if (cookieLang) {
-        setLanguage(cookieLang);
-        document.documentElement.lang = cookieLang;
-      }
-    }
-  }, []);
+    setLanguage(locale);
+  }, [locale]);
 
   useEffect(() => {
     localStorage.setItem("ilmora-controls-expanded", String(isExpanded));
@@ -91,10 +80,11 @@ export default function QuickActions() {
   }, [order]);
 
   useEffect(() => {
+    if (!language || language === locale) return;
     localStorage.setItem("ilmora-lang", language);
-    setCookie("ilmora-lang", language);
-    document.documentElement.lang = language;
-  }, [language]);
+    setCookie("NEXT_LOCALE", language);
+    router.refresh();
+  }, [language, locale, router]);
 
   const actions = useMemo(
     () => ({
@@ -108,7 +98,7 @@ export default function QuickActions() {
           type="button"
           onClick={() => window.history.back()}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
-          aria-label="Go back"
+          aria-label={t("back")}
         >
           <Undo2 size={16} />
         </button>
@@ -119,7 +109,7 @@ export default function QuickActions() {
           type="button"
           onClick={() => window.location.reload()}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
-          aria-label="Refresh page"
+          aria-label={t("refresh")}
         >
           <RotateCcw size={16} />
         </button>
@@ -130,7 +120,7 @@ export default function QuickActions() {
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
-          aria-label="Scroll to top"
+          aria-label={t("top")}
         >
           <ArrowUp size={16} />
         </button>
@@ -145,18 +135,20 @@ export default function QuickActions() {
             value={language}
             onChange={(event) => setLanguage(event.target.value)}
             className="absolute inset-0 cursor-pointer appearance-none bg-transparent opacity-0"
-            aria-label="Language"
+            aria-label={t("language")}
           >
-            {languageOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
+            {localeOrder
+              .filter((option) => locales.includes(option))
+              .map((option) => (
+                <option key={option} value={option}>
+                  {t(`languages.${option}`)}
+                </option>
+              ))}
           </select>
         </div>
       ),
     }),
-    [language],
+    [language, t],
   );
 
   const orderedActions = order
@@ -201,8 +193,8 @@ export default function QuickActions() {
         className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white ${
           isAnimating ? "animate-controls-orbit" : ""
         }`}
-        aria-label={isExpanded ? "Collapse controls" : "Expand controls"}
-        aria-expanded={isExpanded ? "true" : "false"}
+        aria-label={isExpanded ? t("collapse") : t("expand")}
+        aria-expanded={isExpanded}
       >
         {isExpanded ? <X size={16} /> : <Menu size={16} />}
       </button>
@@ -222,17 +214,14 @@ export default function QuickActions() {
             className={`group relative flex items-center gap-2 ${
               draggingId === key ? "opacity-70" : "opacity-100"
             }`}
-            aria-grabbed={draggingId === key ? "true" : "false"}
           >
             <span className="controls-tooltip pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full border border-white/10 bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-700 opacity-0 shadow-lg backdrop-blur transition-all duration-200 ease-out group-hover:opacity-100 group-hover:-translate-x-1 dark:bg-slate-900/90 dark:text-white">
-              {key === "theme" && "Toggle theme"}
-              {key === "install" && "Install app"}
-              {key === "back" && "Go back"}
-              {key === "refresh" && "Refresh"}
-              {key === "top" && "Scroll to top"}
-              {key === "language" &&
-                languageOptions.find((option) => option.value === language)
-                  ?.label}
+              {key === "theme" && t("theme")}
+              {key === "install" && t("install")}
+              {key === "back" && t("back")}
+              {key === "refresh" && t("refresh")}
+              {key === "top" && t("top")}
+              {key === "language" && t(`languages.${language}`)}
             </span>
             {node}
           </div>

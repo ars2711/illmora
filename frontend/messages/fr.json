@@ -1,0 +1,378 @@
+{
+  "quickActions": {
+    "expand": "Déployer les commandes",
+    "collapse": "Réduire les commandes",
+    "theme": "Changer de thème",
+    "install": "Installer l'app",
+    "back": "Retour",
+    "refresh": "Actualiser",
+    "top": "Remonter en haut",
+    "language": "Langue",
+    "languages": {
+      "en": "Anglais",
+      "es": "Espagnol",
+      "ur": "Ourdou",
+      "ar": "Arabe",
+      "fr": "Français",
+      "hi": "Hindi"
+    }
+  },
+  "sidebar": {
+    "brand": "Ilmora",
+    "nav": {
+      "dashboard": "Tableau de bord",
+      "graph": "Mon graphe",
+      "tutor": "Tuteur IA",
+      "upload": "Importer du contenu",
+      "marketplace": "Marketplace",
+      "career": "Parcours carrière",
+      "history": "Historique",
+      "profile": "Profil",
+      "adminDashboard": "Tableau admin",
+      "database": "Console de base de données",
+      "audit": "Journaux d'audit",
+      "incidents": "Journal des incidents",
+      "roles": "Rôles et accès",
+      "health": "Santé du système",
+      "integrations": "Intégrations"
+    },
+    "adminSearch": {
+      "title": "Recherche admin globale",
+      "targetLabel": "Cible de recherche admin",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Journaux d'audit",
+        "roles": "Audit des rôles"
+      },
+      "placeholder": "Rechercher",
+      "submit": "Rechercher",
+      "counts": "{incidents} incidents • {audit} audit • {roles} rôles"
+    },
+    "demoWorkspace": "Espace démo",
+    "exitDemo": "Quitter la démo"
+  },
+  "pwaInstall": {
+    "install": "Installer",
+    "installApp": "Installer l'app",
+    "installLabel": "Installer l'app",
+    "unavailableLabel": "Installer l'app (indisponible)",
+    "unavailableTitle": "Installation indisponible"
+  },
+  "feedback": {
+    "open": "Envoyer un retour",
+    "cta": "Feedback ?",
+    "title": "Aidez-nous a améliorer Ilmora",
+    "close": "Fermer le retour",
+    "sent": "Merci ! Vos retours aident les autres étudiants.",
+    "placeholders": {
+      "happy": "Qu'est-ce qui fonctionne bien ?",
+      "confused": "Qu'est-ce qui vous trouble ?",
+      "bug": "Décrivez le bug ou le souci..."
+    },
+    "submit": "Envoyer",
+    "sending": "Envoi...",
+    "toast": {
+      "success": "Retour envoyé ! Merci.",
+      "failure": "Échec de l'envoi. Réessayez.",
+      "network": "Erreur réseau. Réessayez plus tard."
+    }
+  },
+  "login": {
+    "badge": "Accès",
+    "title": {
+      "login": "Bon retour",
+      "signup": "Rejoindre Ilmora"
+    },
+    "subtitle": "Connexion sécurisée pour votre graphe mémoire et vos sessions studio.",
+    "afterLogin": {
+      "title": "Ce qui s'ouvre après la connexion",
+      "body": "Vous entrez dans un studio guidé : un graphe mémoire vivant, des rituels de révision et des sessions IA proches d'une performance. Chaque page est conçue pour mémoriser le contexte et maintenir votre élan."
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Mot de passe"
+    },
+    "actions": {
+      "signIn": "Se connecter",
+      "createAccount": "Créer un compte"
+    },
+    "divider": "Ou continuer avec",
+    "providers": {
+      "google": "Continuer avec Google",
+      "github": "Continuer avec GitHub",
+      "apple": "Continuer avec Apple",
+      "passkey": "Utiliser une passkey"
+    },
+    "switch": {
+      "signup": "Pas de compte ? Inscrivez-vous",
+      "login": "Déjà un compte ? Connectez-vous"
+    },
+    "demo": {
+      "cta": "Explorer la démo",
+      "note": "Pas de compte requis. Parcourez avec des données d'exemple."
+    },
+    "errors": {
+      "missingEmail": "Saisissez votre email pour utiliser les passkeys.",
+      "unsupportedPasskey": "Les passkeys ne sont pas prises en charge par ce navigateur.",
+      "passkeyStart": "Impossible de démarrer la connexion passkey.",
+      "passkeyCanceled": "Demande de passkey annulée.",
+      "passkeyVerify": "Échec de vérification passkey.",
+      "passkeyFailed": "Échec de connexion passkey.",
+      "providerFailed": "Échec de connexion via fournisseur."
+    }
+  },
+  "dashboard": {
+    "loading": "Chargement d'Ilmora...",
+    "welcome": "Bon retour, {name}.",
+    "fallbackName": "Étudiant",
+    "subtitle": "Prêt à maîtriser vos concepts aujourd'hui ?",
+    "demo": {
+      "name": "Étudiant démo",
+      "title": "Espace démo",
+      "body": "Vous pouvez explorer les flux et sauvegarder localement. La synchronisation et les insights se débloquent après connexion.",
+      "cta": "Se connecter"
+    },
+    "security": {
+      "title": "Sécurité",
+      "body": "Gérez les passkeys et les préférences de connexion.",
+      "cta": "Ouvrir la sécurité"
+    },
+    "focus": {
+      "title": "Zone de focus détectée",
+      "body": "Vous semblez avoir des difficultés avec <topic>Récursion</topic> selon votre dernier chat. Recommandé : 15 min de révision.",
+      "topic": "Récursion",
+      "cta": "Démarrer une session de révision"
+    },
+    "subjects": {
+      "title": "Vos matières",
+      "edit": "Modifier",
+      "stats": "3 notes • 85 % de maîtrise",
+      "add": "Ajouter du contenu",
+      "items": {
+        "dataStructures": "Structures de données",
+        "linearAlgebra": "Algèbre linéaire",
+        "psychology": "Psychologie"
+      }
+    },
+    "activity": {
+      "title": "Activité récente",
+      "items": {
+        "chat": {
+          "title": "Session chat : Listes chaînées",
+          "time": "Il y a 2 heures"
+        },
+        "upload": {
+          "title": "Téléchargé \"Lecture_05.pdf\"",
+          "time": "Hier"
+        }
+      }
+    },
+    "demoStudio": {
+      "title": "Studio démo",
+      "items": {
+        "drafts": {
+          "title": "File de brouillons",
+          "detail": "2 uploads en attente • 1 quiz prêt"
+        },
+        "graph": {
+          "title": "Graphe mémoire d'exemple",
+          "detail": "Explorez 12 nœuds dédiés à la récursion"
+        }
+      }
+    }
+  },
+  "home": {
+    "session": {
+      "brandTag": "Cockpit d'apprentissage",
+      "signOut": "Se déconnecter",
+      "badge": "Session active",
+      "titlePrefix": "Bienvenue dans votre",
+      "titleHighlight": "studio cognitif",
+      "titleSuffix": "aujourd'hui.",
+      "lede": "Voici votre cockpit en direct : un graphe mémoire qui évolue à chaque session, des rituels de révision adaptés à votre cadence et une chronologie facile à revisiter.",
+      "ctaPrimary": "Ouvrir le tableau",
+      "ctaSecondary": "Voir l'historique",
+      "pulses": {
+        "title": "Pulsations du studio",
+        "live": "En direct"
+      },
+      "cards": {
+        "focus": {
+          "title": "Focus actuel",
+          "detail": "Rappel du graphe • 18 min • mode profondeur"
+        },
+        "ritual": {
+          "title": "Prochain rituel",
+          "detail": "Quiz adaptatif • 12 questions • boost de confiance"
+        },
+        "momentum": {
+          "title": "Momentum",
+          "detail": "3 sessions cette semaine • 84 % de constance"
+        }
+      },
+      "quickActions": {
+        "title": "Actions rapides",
+        "items": {
+          "chat": "Démarrer une session IA",
+          "graph": "Explorer le graphe mémoire",
+          "upload": "Importer du contenu"
+        }
+      },
+      "today": {
+        "title": "Tableau du jour",
+        "items": {
+          "one": "4 concepts planifiés • 2 révisions urgentes",
+          "two": "7 nœuds mis à jour cette semaine",
+          "three": "Score de momentum : 84 • série : 5 jours"
+        }
+      },
+      "history": {
+        "title": "Historique récent",
+        "items": {
+          "one": "Studio : rappel du graphe • Il y a 2 heures",
+          "two": "Import : Leçon 05 • Hier"
+        },
+        "cta": "Ouvrir l'historique complet"
+      }
+    },
+    "public": {
+      "brandTag": "Moteur cognitif",
+      "nav": {
+        "studio": "Studio",
+        "graph": "Graphe mémoire",
+        "practice": "Pratique",
+        "marketplace": "Marketplace"
+      },
+      "signOut": "Se déconnecter",
+      "demo": "Explorer la démo",
+      "signIn": "Se connecter",
+      "hero": {
+        "badge": "Bienvenue au studio",
+        "titlePrefix": "Un",
+        "titleHighlight": "OS d'apprentissage",
+        "titleSuffix": "jazz pour mémoire, maîtrise et élan.",
+        "lede": "Ilmora est un moteur cognitif éthique qui ressemble à une performance live : adaptatif, intime et improvisé. Construisez des constellations de savoir, répétez des compétences et tissez une carte mémoire qui raconte votre histoire.",
+        "ctaPrimary": "Commencer l'expérience",
+        "ctaSecondary": "Entrer dans le studio",
+        "tagline": {
+          "one": "Offline-first",
+          "two": "Centré humain",
+          "three": "Conscient du système"
+        }
+      },
+      "heroCard": {
+        "badge": "Mémoire en direct",
+        "nowPlaying": "Lecture en cours",
+        "title": "Connaissance de minuit",
+        "body": "L'assistant harmonise vos rythmes d'étude dans un graphe mémoire vivant. Pas de contexte perdu, pas de démarrage à froid.",
+        "stats": {
+          "one": "Scènes 3D",
+          "two": "Thèmes",
+          "three": "Rituels"
+        }
+      },
+      "subjects": {
+        "title": "Matières",
+        "headline": "Chaque discipline, un studio.",
+        "body": "Mathématiques, physique, chimie, biologie, calcul, statistiques, algèbre linéaire, mathématiques discrètes, CS, programmation, économie, finance, histoire, littérature, langues, design, musique, médecine, ingénierie, droit et plus.",
+        "list": {
+          "math": "Mathématiques",
+          "physics": "Physique",
+          "chemistry": "Chimie",
+          "biology": "Biologie",
+          "calculus": "Calcul",
+          "statistics": "Statistiques",
+          "linearAlgebra": "Algèbre linéaire",
+          "discreteMath": "Mathématiques discrètes",
+          "cs": "CS",
+          "programming": "Programmation",
+          "economics": "Économie",
+          "finance": "Finance",
+          "history": "Histoire",
+          "literature": "Littérature",
+          "languages": "Langues",
+          "design": "Design",
+          "music": "Musique",
+          "medicine": "Médecine",
+          "engineering": "Ingénierie",
+          "law": "Droit",
+          "art": "Art",
+          "psychology": "Psychologie",
+          "philosophy": "Philosophie",
+          "astronomy": "Astronomie"
+        }
+      },
+      "ai": {
+        "title": "Fonctions IA",
+        "headline": "La boîte à outils neurale.",
+        "items": {
+          "one": "Plans d'étude adaptatifs, ajustés par matière et rythme.",
+          "two": "Expansion du graphe de concepts avec résumés sécurisés.",
+          "three": "Mode d'examen avec rappel chronométré et prompts socratiques.",
+          "four": "Explications approfondies, preuves et dérivations.",
+          "five": "Synthèse inter-disciplinaire pour connecter les idées."
+        }
+      },
+      "cards": {
+        "memory": {
+          "title": "Graphe mémoire",
+          "body": "Une carte vivante de concepts, notes et objectifs qui grandit à chaque session."
+        },
+        "ethics": {
+          "title": "IA éthique",
+          "body": "Réponses fiables, respect de la vie privée, contrôle transparent des données."
+        },
+        "practice": {
+          "title": "Pratique en couches",
+          "body": "Exercices, réflexions et tâches immersives synchronisées entre appareils."
+        },
+        "offline": {
+          "title": "Offline-first",
+          "body": "Continuez à étudier sans signal. Synchronisation élégante au retour."
+        }
+      },
+      "experience": {
+        "title": "L'expérience",
+        "headline": "Se souvenir comme un musicien.",
+        "body": "Ilmora orchestre votre rituel d'étude comme une performance. Chaque note devient un motif réutilisable dans votre graphe de savoir.",
+        "quotes": {
+          "one": {
+            "text": "\"Transforme mes notes en flow de pratique.\"",
+            "label": "Prompt du studio"
+          },
+          "two": {
+            "text": "\"Répéter les concepts avec une cadence socratique.\"",
+            "label": "Style d'apprentissage"
+          }
+        }
+      },
+      "install": {
+        "title": "Installer partout",
+        "body": "Ilmora est PWA-ready. Épinglez-la sur desktop ou mobile comme une app native et gardez votre élan hors ligne.",
+        "badges": {
+          "one": "Ajouter à l'écran d'accueil",
+          "two": "UI immersive"
+        }
+      },
+      "ritual": {
+        "title": "Votre rituel personnalisé",
+        "body": "Passez du clair au sombre, ajustez votre ambiance de focus et caler le rythme sur votre flux d'étude.",
+        "tags": {
+          "one": "Thème",
+          "two": "Tempo",
+          "three": "Focus"
+        }
+      },
+      "credits": {
+        "title": "Crédits",
+        "headline": "Créé avec",
+        "stack": "Next.js, FastAPI, Firebase, Postgres + pgvector, Framer Motion et beaucoup de jazz nocturne.",
+        "byline": "Ilmora Studio par Arsalan — construire des systèmes d'apprentissage éthiques pour la longue maîtrise. Suivez le travail sur",
+        "link": "GitHub",
+        "robots": "Robots",
+        "sitemap": "Sitemap",
+        "manifest": "Manifeste"
+      }
+    }
+  }
+}

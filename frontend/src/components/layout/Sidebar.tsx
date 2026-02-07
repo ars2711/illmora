@@ -22,8 +22,10 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { adminGet } from "@/lib/admin-api";
+import { useTranslations } from "next-intl";
 
 export function Sidebar() {
+  const t = useTranslations("sidebar");
   const pathname = usePathname();
   const router = useRouter();
   const { user, demoMode, exitDemo, token } = useAuth();
@@ -82,55 +84,55 @@ export function Sidebar() {
 
   const navItems = demoMode
     ? [
-        { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "My Graph", href: "/graph", icon: BookOpen },
-        { name: "AI Tutor", href: "/chat", icon: MessageCircle },
-        { name: "History", href: "/dashboard/history", icon: Clock },
+        { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
+        { name: t("nav.graph"), href: "/graph", icon: BookOpen },
+        { name: t("nav.tutor"), href: "/chat", icon: MessageCircle },
+        { name: t("nav.history"), href: "/dashboard/history", icon: Clock },
       ]
     : [
-        { name: "Dashboard", href: "/dashboard", icon: Home },
-        { name: "My Graph", href: "/graph", icon: BookOpen },
-        { name: "AI Tutor", href: "/chat", icon: MessageCircle },
-        { name: "Upload Content", href: "/upload", icon: Upload },
-        { name: "Marketplace", href: "/marketplace", icon: ShoppingBag },
-        { name: "Career Roadmap", href: "/career", icon: Map },
-        { name: "History", href: "/dashboard/history", icon: Clock },
-        { name: "Profile", href: "/profile", icon: User },
+        { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
+        { name: t("nav.graph"), href: "/graph", icon: BookOpen },
+        { name: t("nav.tutor"), href: "/chat", icon: MessageCircle },
+        { name: t("nav.upload"), href: "/upload", icon: Upload },
+        { name: t("nav.marketplace"), href: "/marketplace", icon: ShoppingBag },
+        { name: t("nav.career"), href: "/career", icon: Map },
+        { name: t("nav.history"), href: "/dashboard/history", icon: Clock },
+        { name: t("nav.profile"), href: "/profile", icon: User },
       ];
 
   if (isAdmin) {
     navItems.push({
-      name: "Admin Dashboard",
+      name: t("nav.adminDashboard"),
       href: "/admin/dashboard",
       icon: Shield,
     });
     navItems.push({
-      name: "Database Console",
+      name: t("nav.database"),
       href: "/admin/database",
       icon: Database,
     });
     navItems.push({
-      name: "Audit Logs",
+      name: t("nav.audit"),
       href: "/admin/audit",
       icon: FileText,
     });
     navItems.push({
-      name: "Incident Log",
+      name: t("nav.incidents"),
       href: "/admin/incidents",
       icon: AlertCircle,
     });
     navItems.push({
-      name: "Roles & Access",
+      name: t("nav.roles"),
       href: "/admin/roles",
       icon: Users,
     });
     navItems.push({
-      name: "System Health",
+      name: t("nav.health"),
       href: "/admin/health",
       icon: ShieldCheck,
     });
     navItems.push({
-      name: "Integrations",
+      name: t("nav.integrations"),
       href: "/admin/integrations",
       icon: Globe,
     });
@@ -140,7 +142,7 @@ export function Sidebar() {
     <div className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-slate-200 lg:bg-white/70 lg:pt-5 lg:pb-4 lg:backdrop-blur dark:border-white/10 dark:bg-white/5">
       <div className="flex items-center flex-shrink-0 px-6">
         <span className="text-2xl font-bold text-slate-900 dark:text-white">
-          Ilmora
+          {t("brand")}
         </span>
       </div>
       <div className="mt-6 flex-1 flex flex-col overflow-y-auto">
@@ -149,35 +151,39 @@ export function Sidebar() {
             onSubmit={handleAdminSearch}
             className="mb-4 px-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60"
           >
-            <p className="mb-2">Global admin search</p>
+            <p className="mb-2">{t("adminSearch.title")}</p>
             <div className="flex flex-col gap-2">
               <select
                 value={adminSearchTarget}
                 onChange={(event) => setAdminSearchTarget(event.target.value)}
-                aria-label="Admin search target"
+                aria-label={t("adminSearch.targetLabel")}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
               >
-                <option value="incidents">Incidents</option>
-                <option value="audit">Audit logs</option>
-                <option value="roles">Role audit</option>
+                <option value="incidents">
+                  {t("adminSearch.targets.incidents")}
+                </option>
+                <option value="audit">{t("adminSearch.targets.audit")}</option>
+                <option value="roles">{t("adminSearch.targets.roles")}</option>
               </select>
               <input
                 value={adminSearch}
                 onChange={(event) => setAdminSearch(event.target.value)}
-                placeholder="Search"
+                placeholder={t("adminSearch.placeholder")}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
               />
               <button
                 type="submit"
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                Search
+                {t("adminSearch.submit")}
               </button>
               {adminSearchCounts && (
                 <div className="rounded-2xl border border-slate-200 bg-white/80 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:bg-white/10 dark:text-white/60">
-                  {adminSearchCounts.incidents} incidents •{" "}
-                  {adminSearchCounts.audit} audit • {adminSearchCounts.roles}{" "}
-                  roles
+                  {t("adminSearch.counts", {
+                    incidents: adminSearchCounts.incidents,
+                    audit: adminSearchCounts.audit,
+                    roles: adminSearchCounts.roles,
+                  })}
                 </div>
               )}
             </div>
@@ -211,7 +217,7 @@ export function Sidebar() {
         <div className="flex items-center">
           <div className="ml-3">
             <p className="text-sm font-medium text-slate-700 dark:text-white/80">
-              {demoMode ? "Demo workspace" : user?.email}
+              {demoMode ? t("demoWorkspace") : user?.email}
             </p>
             {demoMode && (
               <button
@@ -219,7 +225,7 @@ export function Sidebar() {
                 onClick={exitDemo}
                 className="mt-2 inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/15 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Exit demo
+                {t("exitDemo")}
               </button>
             )}
           </div>
