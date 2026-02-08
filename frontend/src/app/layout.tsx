@@ -89,6 +89,10 @@ export const metadata: Metadata = {
   appleWebApp: {
     title: "Ilmora",
     statusBarStyle: "default",
+    capable: true,
+  },
+  other: {
+    "mobile-web-app-capable": "yes",
   },
   openGraph: {
     title: "Ilmora | The Cognitive Engine",
