@@ -239,9 +239,7 @@ function IncidentContent() {
   const getTimelineEntries = (incident: IncidentLog) => {
     const persisted = incidentTimeline[incident.id];
     if (persisted && persisted.length > 0) return persisted;
-    const entries = [
-      { time: incident.time, note: t("timeline.reported") },
-    ];
+    const entries = [{ time: incident.time, note: t("timeline.reported") }];
     if (incident.status === "Monitoring") {
       entries.push({ time: "+12m", note: t("timeline.mitigation") });
     }
@@ -457,12 +455,8 @@ function IncidentContent() {
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
               <AlertCircle size={14} /> {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-3xl font-semibold">
-              {t("title")}
-            </h1>
-            <p className="text-slate-500 dark:text-white/60">
-              {t("subtitle")}
-            </p>
+            <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
                 {t("lastUpdated", { time: lastUpdatedLabel })}
@@ -686,9 +680,7 @@ function IncidentContent() {
               )}
             </div>
             <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:text-white/60">
-              <span>
-                {t("pagination", { page, total: totalPages })}
-              </span>
+              <span>{t("pagination", { page, total: totalPages })}</span>
               <div className="flex gap-2">
                 <button
                   type="button"
@@ -733,7 +725,7 @@ function IncidentContent() {
                 onClick={() => setSelectedIncidentId(null)}
                 className="rounded-full border border-slate-200 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10"
               >
-                  {t("detail.close")}
+                {t("detail.close")}
               </button>
             </div>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">

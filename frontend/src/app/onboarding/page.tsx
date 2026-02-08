@@ -118,9 +118,7 @@ export default function OnboardingPage() {
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
                 {t("intro.eyebrow")}
               </p>
-              <p className="mt-2">
-                {t("intro.body", { name: displayName })}
-              </p>
+              <p className="mt-2">{t("intro.body", { name: displayName })}</p>
             </div>
           </div>
 
@@ -219,7 +217,9 @@ export default function OnboardingPage() {
                       onChange={handleChange}
                       className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                     >
-                      <option value="">{t("fields.semesterPlaceholder")}</option>
+                      <option value="">
+                        {t("fields.semesterPlaceholder")}
+                      </option>
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
                         <option key={n} value={`${n}th Semester`}>
                           {t("fields.semesterOption", { n })}

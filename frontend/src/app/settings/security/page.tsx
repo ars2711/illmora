@@ -85,9 +85,7 @@ export default function SecuritySettingsPage() {
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
                     {t("eyebrow")}
                   </p>
-                  <h1 className="text-2xl font-semibold">
-                    {t("title")}
-                  </h1>
+                  <h1 className="text-2xl font-semibold">{t("title")}</h1>
                 </div>
               </div>
               <Link
@@ -112,7 +110,9 @@ export default function SecuritySettingsPage() {
                     <KeyRound className="h-5 w-5 py-0.5" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold">{t("passkeys.title")}</h2>
+                    <h2 className="text-lg font-semibold">
+                      {t("passkeys.title")}
+                    </h2>
                     <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
                       {t("passkeys.body")}
                     </p>

@@ -60,8 +60,16 @@ export default function AdminDashboard() {
       value: "1.8s",
       tone: "text-amber-500",
     },
-    { label: t("databaseOverview.storage"), value: "62%", tone: "text-slate-600" },
-    { label: t("databaseOverview.latency"), value: "92ms", tone: "text-slate-600" },
+    {
+      label: t("databaseOverview.storage"),
+      value: "62%",
+      tone: "text-slate-600",
+    },
+    {
+      label: t("databaseOverview.latency"),
+      value: "92ms",
+      tone: "text-slate-600",
+    },
   ];
 
   const databaseActivity = [
@@ -111,7 +119,6 @@ export default function AdminDashboard() {
       icon: <Database className="w-6 h-6 text-slate-600" />,
     },
   ];
-
 
   const handleAdminSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -218,12 +225,8 @@ export default function AdminDashboard() {
         <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
         <div className="relative z-10 p-6">
           <header className="mb-8">
-            <h1 className="text-3xl font-semibold">
-              {t("title")}
-            </h1>
-            <p className="text-slate-500 dark:text-white/60">
-              {t("subtitle")}
-            </p>
+            <h1 className="text-3xl font-semibold">{t("title")}</h1>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
           </header>
 
           <div className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-5 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
@@ -258,7 +261,9 @@ export default function AdminDashboard() {
                   aria-label={t("search.targetLabel")}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
                 >
-                  <option value="incidents">{t("search.targets.incidents")}</option>
+                  <option value="incidents">
+                    {t("search.targets.incidents")}
+                  </option>
                   <option value="audit">{t("search.targets.audit")}</option>
                   <option value="roles">{t("search.targets.roles")}</option>
                 </select>
@@ -402,9 +407,7 @@ export default function AdminDashboard() {
             {/* Main Feed: Flagged Content */}
             <div className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">
-                  {t("priority.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("priority.title")}</h3>
               </div>
               <ul className="divide-y divide-slate-200 dark:divide-white/10">
                 {feedback.length === 0 ? (
@@ -424,7 +427,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-900 dark:text-white">
-                            {t("priority.context")} {" "}
+                            {t("priority.context")}{" "}
                             <span className="rounded bg-slate-100 px-1 font-mono dark:bg-white/10">
                               {item.feature}
                             </span>
@@ -451,9 +454,7 @@ export default function AdminDashboard() {
             {/* Quick Actions / Tenants */}
             <div className="h-fit rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">
-                  {t("actions.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("actions.title")}</h3>
               </div>
               <div className="p-6 flex flex-col gap-3">
                 <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">

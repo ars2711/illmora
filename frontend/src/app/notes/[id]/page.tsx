@@ -101,7 +101,11 @@ export default function NoteDetailPage() {
                     onClick={() => setIsEditing(!isEditing)}
                     className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
                   >
-                    {isEditing ? <Save className="h-4 w-4" /> : t("actions.edit")}
+                    {isEditing ? (
+                      <Save className="h-4 w-4" />
+                    ) : (
+                      t("actions.edit")
+                    )}
                     {isEditing ? t("actions.save") : ""}
                   </button>
                 </div>

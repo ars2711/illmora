@@ -382,9 +382,7 @@ export default function DatabaseConsolePage() {
               <Database size={14} /> {t("eyebrow")}
             </p>
             <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
-            <p className="text-slate-500 dark:text-white/60">
-              {t("subtitle")}
-            </p>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
                 {t("lastUpdated", { time: lastUpdatedLabel })}
@@ -505,7 +503,9 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">{t("slowQueries.title")}</h3>
+                <h3 className="text-lg font-medium">
+                  {t("slowQueries.title")}
+                </h3>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {slowQueries.map((query) => (
@@ -515,7 +515,9 @@ export default function DatabaseConsolePage() {
                     </p>
                     <div className="mt-3 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
                       <span>{t("slowQueries.time", { time: query.time })}</span>
-                      <span>{t("slowQueries.impact", { impact: query.impact })}</span>
+                      <span>
+                        {t("slowQueries.impact", { impact: query.impact })}
+                      </span>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button
@@ -620,9 +622,7 @@ export default function DatabaseConsolePage() {
               </div>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">
-                {t("charts.error.title")}
-              </h3>
+              <h3 className="text-lg font-medium">{t("charts.error.title")}</h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
                 {t("charts.error.body")}
               </p>
@@ -676,9 +676,7 @@ export default function DatabaseConsolePage() {
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">
-                  {t("rollback.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("rollback.title")}</h3>
               </div>
               <div className="space-y-3 p-6">
                 {rollbackHistory.map((item) => (
@@ -701,9 +699,7 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-medium">
-                  {t("runbook.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("runbook.title")}</h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
                   {t("runbook.subtitle")}
                 </p>

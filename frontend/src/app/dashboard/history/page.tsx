@@ -65,9 +65,7 @@ export default function HistoryPage() {
               <Clock size={14} /> {t("eyebrow")}
             </p>
             <h1 className="mt-4 text-2xl font-semibold">{t("title")}</h1>
-            <p className="text-slate-500 dark:text-white/60">
-              {t("subtitle")}
-            </p>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
           </header>
 
           <div className="mb-6 grid gap-4 rounded-3xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:grid-cols-3">

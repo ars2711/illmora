@@ -115,7 +115,9 @@ export function FeedbackWidget() {
                   type="button"
                   onClick={() => setSentiment("confused")}
                   className={`p-2 rounded-lg transition-colors ${sentiment === "confused" ? "bg-amber-100 text-amber-600" : "text-gray-400 hover:bg-gray-50"}`}
-                  aria-label={t("sentiment.confused", { defaultMessage: "Confused" })}
+                  aria-label={t("sentiment.confused", {
+                    defaultMessage: "Confused",
+                  })}
                 >
                   <Meh className="w-6 h-6" />
                 </button>

@@ -113,11 +113,7 @@ const permissionGroups = [
   },
   {
     group: "operations",
-    permissions: [
-      "integrations.manage",
-      "roles.manage",
-      "system.health",
-    ],
+    permissions: ["integrations.manage", "roles.manage", "system.health"],
   },
 ];
 
@@ -669,9 +665,7 @@ function RolesContent() {
               <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
                 <Users size={14} /> {t("eyebrow")}
               </p>
-              <h1 className="mt-4 text-3xl font-semibold">
-                {t("title")}
-              </h1>
+              <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
               <p className="text-slate-500 dark:text-white/60">
                 {t("subtitle")}
               </p>
@@ -690,8 +684,12 @@ function RolesContent() {
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               >
                 <option value="Global">{t("create.scopes.global")}</option>
-                <option value="Institution">{t("create.scopes.institution")}</option>
-                <option value="Department">{t("create.scopes.department")}</option>
+                <option value="Institution">
+                  {t("create.scopes.institution")}
+                </option>
+                <option value="Department">
+                  {t("create.scopes.department")}
+                </option>
               </select>
               <button
                 onClick={handleCreateRole}
@@ -816,21 +814,21 @@ function RolesContent() {
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                  <h3 className="text-lg font-medium">
-                    {t("permissions.title")}
-                  </h3>
+                <h3 className="text-lg font-medium">
+                  {t("permissions.title")}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                    {t("permissions.subtitle", {
-                      name:
-                        selectedRole?.name ?? t("permissions.subtitleFallback"),
-                    })}
+                  {t("permissions.subtitle", {
+                    name:
+                      selectedRole?.name ?? t("permissions.subtitleFallback"),
+                  })}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <select
                   value={selectedRoleId}
                   onChange={(event) => setSelectedRoleId(event.target.value)}
-                    aria-label={t("permissions.selectRole")}
+                  aria-label={t("permissions.selectRole")}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
                   {roles.map((role) => (
@@ -907,9 +905,7 @@ function RolesContent() {
                               : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                           }`}
                         >
-                          <span>
-                            {t(`permissions.labels.${permissionId}`)}
-                          </span>
+                          <span>{t(`permissions.labels.${permissionId}`)}</span>
                           <span>
                             {enabled
                               ? t("permissions.state.on")
@@ -928,9 +924,7 @@ function RolesContent() {
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-medium">
-                    {t("insights.title")}
-                  </h3>
+                  <h3 className="text-lg font-medium">{t("insights.title")}</h3>
                   <p className="text-sm text-slate-500 dark:text-white/60">
                     {t("insights.subtitle")}
                   </p>
@@ -960,9 +954,7 @@ function RolesContent() {
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-medium">
-                    {t("actors.title")}
-                  </h3>
+                  <h3 className="text-lg font-medium">{t("actors.title")}</h3>
                   <p className="text-sm text-slate-500 dark:text-white/60">
                     {t("actors.subtitle")}
                   </p>
@@ -1005,9 +997,7 @@ function RolesContent() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-slate-500 dark:text-white/60" />
-                  <h3 className="text-lg font-medium">
-                    {t("audit.title")}
-                  </h3>
+                  <h3 className="text-lg font-medium">{t("audit.title")}</h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
                   {auditLevels.map((level) => (

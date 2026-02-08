@@ -49,9 +49,7 @@ function GraphContent() {
               >
                 <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-white/70" />
               </Link>
-              <h1 className="text-xl font-semibold">
-                {t("title")}
-              </h1>
+              <h1 className="text-xl font-semibold">{t("title")}</h1>
             </div>
           </header>
 

@@ -242,12 +242,8 @@ export default function SystemHealthPage() {
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
               <ShieldCheck size={14} /> {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-3xl font-semibold">
-              {t("title")}
-            </h1>
-            <p className="text-slate-500 dark:text-white/60">
-              {t("subtitle")}
-            </p>
+            <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
+            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
                 {t("lastUpdated", { time: lastUpdatedLabel })}
@@ -344,9 +340,7 @@ export default function SystemHealthPage() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">
-                  {t("services.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("services.title")}</h3>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {services.map((service) => (
@@ -372,9 +366,7 @@ export default function SystemHealthPage() {
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">
-                  {t("timeline.title")}
-                </h3>
+                <h3 className="text-lg font-medium">{t("timeline.title")}</h3>
               </div>
               <div className="space-y-4 p-6">
                 {incidents.map((incident) => (
@@ -393,21 +385,21 @@ export default function SystemHealthPage() {
                         type="button"
                         onClick={() =>
                           openConfirm({
-                                  title: t("timeline.confirmResolve.title"),
-                                  description: t("timeline.confirmResolve.body"),
+                            title: t("timeline.confirmResolve.title"),
+                            description: t("timeline.confirmResolve.body"),
                             onConfirm: () => handleIncidentResolve(incident.id),
                           })
                         }
                         className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                       >
-                              {t("timeline.resolve")}
+                        {t("timeline.resolve")}
                       </button>
                       <button
                         type="button"
                         onClick={() => setSelectedIncidentId(incident.id)}
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                              {t("timeline.viewDetails")}
+                        {t("timeline.viewDetails")}
                       </button>
                     </div>
                   </div>

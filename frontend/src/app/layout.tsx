@@ -12,7 +12,12 @@ import QuickActions from "@/components/common/QuickActions";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import ScrollMotion from "@/components/common/ScrollMotion";
 import DemoOverlay from "@/components/common/DemoOverlay";
-import { defaultLocale, localeDirection, locales, type Locale } from "@/i18n/config";
+import {
+  defaultLocale,
+  localeDirection,
+  locales,
+  type Locale,
+} from "@/i18n/config";
 
 export const dynamic = "force-dynamic";
 
@@ -148,7 +153,9 @@ export default async function RootLayout({
     return (match as Locale) ?? defaultLocale;
   };
 
-  const locale = cookieLocale ? pickLocale(cookieLocale) : pickLocale(acceptLanguage);
+  const locale = cookieLocale
+    ? pickLocale(cookieLocale)
+    : pickLocale(acceptLanguage);
   const messages = (await import(`../../messages/${locale}.json`)).default;
   const direction =
     localeDirection[locale as keyof typeof localeDirection] ?? "ltr";

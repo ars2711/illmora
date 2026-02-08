@@ -219,9 +219,10 @@ export default function IntegrationsPage() {
           <div className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <h3 className="mb-4 text-lg font-medium">
               {t("form.title", {
-                kind: activeTab === "integrations"
-                  ? t("form.integration")
-                  : t("form.webhook"),
+                kind:
+                  activeTab === "integrations"
+                    ? t("form.integration")
+                    : t("form.webhook"),
               })}
             </h3>
             <div className="grid grid-cols-1 items-end gap-4 md:grid-cols-4">
@@ -236,9 +237,15 @@ export default function IntegrationsPage() {
                     onChange={(e) => setNewItemType(e.target.value)}
                     aria-label={t("form.integrationTypeAria")}
                   >
-                    <option value="LMS">{t("form.integrationTypes.lms")}</option>
-                    <option value="PAYMENT">{t("form.integrationTypes.payment")}</option>
-                    <option value="SSO">{t("form.integrationTypes.sso")}</option>
+                    <option value="LMS">
+                      {t("form.integrationTypes.lms")}
+                    </option>
+                    <option value="PAYMENT">
+                      {t("form.integrationTypes.payment")}
+                    </option>
+                    <option value="SSO">
+                      {t("form.integrationTypes.sso")}
+                    </option>
                   </select>
                 ) : (
                   <select
