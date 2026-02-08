@@ -10,16 +10,19 @@ import {
   MessageCircle,
   BookOpen,
   Clock,
+  Settings,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { useTranslations } from "next-intl";
 
 export function BottomNav() {
   const pathname = usePathname();
-  const { demoMode } = useAuth();
+  const { demoMode, user } = useAuth();
   const t = useTranslations("bottomNav");
 
   const isActive = (path: string) => pathname === path;
+
+  const isEducator = user?.role === "educator";
 
   const navItems = demoMode
     ? [
@@ -30,9 +33,11 @@ export function BottomNav() {
       ]
     : [
         { href: "/dashboard", label: t("home"), icon: Home },
-        { href: "/marketplace", label: t("store"), icon: ShoppingBag },
+        isEducator
+          ? { href: "/teacher", label: "Teacher", icon: BookOpen }
+          : { href: "/marketplace", label: t("store"), icon: ShoppingBag },
         { href: "/chat", label: t("chat"), icon: MessageCircle },
-        { href: "/profile", label: t("profile"), icon: User },
+        { href: "/settings/profile", label: t("profile"), icon: Settings },
       ];
 
   return (
@@ -49,7 +54,7 @@ export function BottomNav() {
           </Link>
         ))}
 
-        {!demoMode && (
+        {!demoMode && !isEducator && (
           <Link href="/upload" className="flex flex-col items-center p-2 -mt-6">
             <div className="bg-indigo-600 rounded-full p-4 shadow-lg text-white">
               <Upload className="w-6 h-6" />

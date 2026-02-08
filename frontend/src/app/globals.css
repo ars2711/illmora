@@ -181,25 +181,95 @@ body {
 }
 
 .controls-stack {
+  will-change: transform, opacity;
+}
+
+/* ---------- TOP DOCK (horizontal, expand left) ---------- */
+.controls-stack.is-docked-top {
+  transform-origin: 100% 50%;
+  overflow: hidden;
+  transition:
+    max-width 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+.controls-stack.is-docked-top.is-expanded {
+  max-width: 520px;
+  opacity: 1;
+}
+
+.controls-stack.is-docked-top.is-collapsed {
+  max-width: 0;
+  opacity: 0;
+}
+
+/* ---------- BOTTOM DOCK (vertical, expand up) ---------- */
+.controls-stack.is-docked-bottom {
   transform-origin: 100% 100%;
   transition:
-    opacity 0.35s ease,
-    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-    max-height 0.55s ease;
+    max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
 }
 
-.controls-stack.is-expanded {
-  opacity: 1;
+.controls-stack.is-docked-bottom.is-expanded {
   max-height: 520px;
-  transform: translate3d(0, 0, 0) scale(1);
-  animation: controls-pop 520ms cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
 }
 
-.controls-stack.is-collapsed {
-  opacity: 0;
+.controls-stack.is-docked-bottom.is-collapsed {
   max-height: 0;
-  transform: translate3d(0, 18px, 0) scale(0.6);
-  animation: controls-collapse 420ms ease-in;
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* ---------- INDIVIDUAL ITEM TRANSITIONS ---------- */
+.controls-item {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.35s ease;
+}
+
+/* Top dock: items slide in from the right (toward the menu button) */
+.controls-stack.is-docked-top.is-collapsed .controls-item {
+  opacity: 0;
+  transform: translate3d(20px, 0, 0) scale(0.7);
+}
+.controls-stack.is-docked-top.is-expanded .controls-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Bottom dock: items slide up from below */
+.controls-stack.is-docked-bottom.is-collapsed .controls-item {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0) scale(0.7);
+}
+.controls-stack.is-docked-bottom.is-expanded .controls-item {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Tooltip below the buttons */
+.controls-tooltip {
+  transform: translateY(4px);
+}
+.group:hover .controls-tooltip {
+  transform: translateY(0);
+}
+
+:root[dir="rtl"] .controls-stack.is-docked-top {
+  flex-direction: row;
+}
+
+select option {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.dark select,
+.dark option {
+  background-color: #0f172a;
+  color: #f8fafc;
 }
 
 .controls-tooltip {

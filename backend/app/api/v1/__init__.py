@@ -12,7 +12,8 @@ from app.api.v1.endpoints import (
     integrations,
     webhooks,
     career,
-    auth
+    auth,
+    teacher
 )
 
 router = APIRouter()
@@ -31,6 +32,7 @@ router.include_router(webhooks.router, prefix="/webhooks", tags=["webhooks"])
 router.include_router(career.router, prefix="/career", tags=["career"])
 router.include_router(integrations.router, prefix="/integrations", tags=["integrations"])
 router.include_router(auth.router, prefix="/auth", tags=["auth"])
+router.include_router(teacher.router, prefix="/teacher", tags=["teacher"])
 
 
 

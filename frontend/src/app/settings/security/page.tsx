@@ -6,6 +6,7 @@ import { useToast } from "@/context/ToastContext";
 import { credentialToJSON, normalizePublicKeyOptions } from "@/lib/passkey";
 import Link from "next/link";
 import { Shield, ArrowLeft, Loader2, KeyRound } from "lucide-react";
+import QRCode from "qrcode.react";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import { useState } from "react";
 import { buildApiUrl } from "@/lib/api";
@@ -16,6 +17,15 @@ export default function SecuritySettingsPage() {
   const { user, demoMode, token } = useAuth();
   const { showToast } = useToast();
   const [passkeyLoading, setPasskeyLoading] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordLoading, setPasswordLoading] = useState(false);
+  const [totpUrl, setTotpUrl] = useState("");
+  const [totpSecret, setTotpSecret] = useState("");
+  const [totpCode, setTotpCode] = useState("");
+  const [mfaChannels, setMfaChannels] = useState<string[]>(["email"]);
+  const [mfaLoading, setMfaLoading] = useState(false);
 
   const handlePasskeyCreate = async () => {
     if (!user) return;
@@ -67,6 +77,108 @@ export default function SecuritySettingsPage() {
       showToast(error?.message ?? t("errors.failed"), "error");
     } finally {
       setPasskeyLoading(false);
+    }
+  };
+
+  const handlePasswordSet = async () => {
+    if (!token) {
+      showToast(t("errors.sessionExpired"), "error");
+      return;
+    }
+    if (!newPassword || newPassword !== confirmPassword) {
+      showToast("Passwords do not match.", "error");
+      return;
+    }
+    setPasswordLoading(true);
+    try {
+      const res = await fetch(buildApiUrl("/api/v1/auth/password/set"), {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          current_password: currentPassword || null,
+          new_password: newPassword,
+        }),
+      });
+      if (!res.ok) {
+        const data = await res.json();
+        throw new Error(data.detail ?? "Password update failed.");
+      }
+      showToast("Password updated.", "success");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error: any) {
+      showToast(error?.message ?? "Password update failed.", "error");
+    } finally {
+      setPasswordLoading(false);
+    }
+  };
+
+  const handleTotpSetup = async () => {
+    if (!token) {
+      showToast(t("errors.sessionExpired"), "error");
+      return;
+    }
+    setMfaLoading(true);
+    try {
+      const res = await fetch(buildApiUrl("/api/v1/auth/mfa/totp/setup"), {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!res.ok) throw new Error("Failed to setup TOTP");
+      const data = await res.json();
+      setTotpSecret(data.secret);
+      setTotpUrl(data.otpauth_url);
+    } catch (err: any) {
+      showToast(err.message ?? "Failed to setup TOTP", "error");
+    } finally {
+      setMfaLoading(false);
+    }
+  };
+
+  const handleTotpEnable = async () => {
+    if (!token || !totpCode) return;
+    setMfaLoading(true);
+    try {
+      const res = await fetch(buildApiUrl("/api/v1/auth/mfa/totp/enable"), {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ code: totpCode }),
+      });
+      if (!res.ok) throw new Error("Invalid code");
+      showToast("Authenticator enabled.", "success");
+      setTotpCode("");
+    } catch (err: any) {
+      showToast(err.message ?? "Failed to enable TOTP", "error");
+    } finally {
+      setMfaLoading(false);
+    }
+  };
+
+  const handleMfaChannels = async () => {
+    if (!token) return;
+    setMfaLoading(true);
+    try {
+      const res = await fetch(buildApiUrl("/api/v1/auth/mfa/channels"), {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ channels: mfaChannels }),
+      });
+      if (!res.ok) throw new Error("Failed to update MFA channels");
+      showToast("MFA preferences saved.", "success");
+    } catch (err: any) {
+      showToast(err.message ?? "Failed to update MFA", "error");
+    } finally {
+      setMfaLoading(false);
     }
   };
 
@@ -134,6 +246,129 @@ export default function SecuritySettingsPage() {
                   )}
                 </button>
               </div>
+            </section>
+
+            <section className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-lg font-semibold">
+                Two-factor authentication
+              </h2>
+              <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
+                Enable extra verification with email, SMS, WhatsApp, voice, or
+                authenticator apps.
+              </p>
+
+              <div className="mt-4 grid gap-3">
+                <div className="grid grid-cols-2 gap-2 text-xs uppercase tracking-[0.2em] text-slate-600 dark:text-white/70">
+                  {["email", "sms", "whatsapp", "voice", "totp"].map(
+                    (channel) => (
+                      <label
+                        key={channel}
+                        className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-3 py-2 dark:border-white/10 dark:bg-white/10"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={mfaChannels.includes(channel)}
+                          onChange={(event) => {
+                            const next = event.target.checked
+                              ? [...mfaChannels, channel]
+                              : mfaChannels.filter((c) => c !== channel);
+                            setMfaChannels(next);
+                          }}
+                        />
+                        {channel}
+                      </label>
+                    ),
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={handleMfaChannels}
+                  disabled={mfaLoading}
+                  className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-700 hover:bg-white disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                >
+                  {mfaLoading ? "Saving..." : "Save MFA preferences"}
+                </button>
+              </div>
+
+              <div className="mt-6 rounded-2xl border border-slate-200 bg-white/80 p-4 dark:border-white/10 dark:bg-white/10">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
+                  Authenticator app
+                </p>
+                <div className="mt-3 flex flex-wrap items-center gap-4">
+                  {totpUrl && (
+                    <div className="rounded-xl border border-slate-200 bg-white p-2 dark:border-white/10 dark:bg-white/5">
+                      <QRCode value={totpUrl} size={96} />
+                    </div>
+                  )}
+                  <div className="flex-1 space-y-2">
+                    <button
+                      type="button"
+                      onClick={handleTotpSetup}
+                      className="inline-flex items-center rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    >
+                      Generate authenticator code
+                    </button>
+                    {totpSecret && (
+                      <p className="text-xs text-slate-500 dark:text-white/60">
+                        Secret: {totpSecret}
+                      </p>
+                    )}
+                    <div className="flex flex-wrap gap-2">
+                      <input
+                        value={totpCode}
+                        onChange={(event) => setTotpCode(event.target.value)}
+                        placeholder="Enter 6-digit code"
+                        className="w-40 rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-xs outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleTotpEnable}
+                        className="inline-flex items-center rounded-full border border-amber-200 bg-amber-50 px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-amber-700"
+                      >
+                        Enable
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <section className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              <h2 className="text-lg font-semibold">Password access</h2>
+              <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
+                Set or change your password to enable email + password login.
+              </p>
+              <div className="mt-4 grid gap-3">
+                <input
+                  type="password"
+                  placeholder="Current password (if set)"
+                  value={currentPassword}
+                  onChange={(event) => setCurrentPassword(event.target.value)}
+                  className="w-full rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                />
+                <input
+                  type="password"
+                  placeholder="New password"
+                  value={newPassword}
+                  onChange={(event) => setNewPassword(event.target.value)}
+                  className="w-full rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                />
+                <input
+                  type="password"
+                  placeholder="Confirm new password"
+                  value={confirmPassword}
+                  onChange={(event) => setConfirmPassword(event.target.value)}
+                  className="w-full rounded-lg border border-slate-200 bg-white/90 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                />
+              </div>
+              <button
+                type="button"
+                onClick={handlePasswordSet}
+                disabled={passwordLoading || demoMode}
+                className="mt-4 inline-flex items-center rounded-full bg-slate-900 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-slate-800 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-white/90"
+              >
+                {passwordLoading ? "Saving..." : "Update password"}
+              </button>
             </section>
 
             <section className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">

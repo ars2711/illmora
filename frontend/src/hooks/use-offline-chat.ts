@@ -87,5 +87,32 @@ export function useOfflineChat(sessionId: string, demoMode = false) {
     }
   };
 
-  return { messages, sendMessage, isOnline };
+  const importMessages = async (incoming: any[]) => {
+    if (!incoming?.length) return;
+    const normalized = incoming.map((item) => ({
+      id: item.id ?? crypto.randomUUID(),
+      role: item.role ?? "assistant",
+      content: String(item.content ?? ""),
+      createdAt: item.createdAt ?? Date.now(),
+      pending: false,
+    }));
+
+    const updatedMessages = [...messages, ...normalized];
+    setMessages(updatedMessages);
+
+    const db = await initDB();
+    const session = (await db.get("chat-sessions", sessionId)) || {
+      id: sessionId,
+      title: "New Chat",
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      messages: [],
+      isSynced: false,
+    };
+    session.messages = [...session.messages, ...normalized];
+    session.updatedAt = Date.now();
+    await db.put("chat-sessions", session);
+  };
+
+  return { messages, sendMessage, importMessages, isOnline };
 }

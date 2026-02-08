@@ -1,5 +1,6 @@
 import json
 import logging
+from datetime import datetime, timedelta
 from typing import Any, Optional, Union
 import redis
 from app.core.config import settings
@@ -10,6 +11,7 @@ class CacheService:
     def __init__(self):
         self.redis_client = None
         self.enabled = False
+        self._memory_store: dict[str, tuple[Any, datetime]] = {}
         try:
             self.redis_client = redis.from_url(settings.REDIS_URL, decode_responses=True)
             self.redis_client.ping()
@@ -20,7 +22,14 @@ class CacheService:
 
     def get(self, key: str) -> Optional[Any]:
         if not self.enabled:
-            return None
+            item = self._memory_store.get(key)
+            if not item:
+                return None
+            value, expires_at = item
+            if datetime.utcnow() > expires_at:
+                self._memory_store.pop(key, None)
+                return None
+            return value
         try:
             val = self.redis_client.get(key)
             if val:
@@ -34,7 +43,9 @@ class CacheService:
         Set value in cache with TTL (seconds). Default 1 hour.
         """
         if not self.enabled:
-            return False
+            expires_at = datetime.utcnow() + timedelta(seconds=ttl)
+            self._memory_store[key] = (value, expires_at)
+            return True
         try:
             serialized = json.dumps(value)
             return self.redis_client.setex(key, ttl, serialized)
@@ -47,6 +58,8 @@ class CacheService:
     def delete(self, key: str):
         if self.enabled:
             self.redis_client.delete(key)
+        else:
+            self._memory_store.pop(key, None)
             
     def generate_key(self, prefix: str, *args, **kwargs) -> str:
         """Helper to generate consistent keys"""

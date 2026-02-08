@@ -40,9 +40,9 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="relative w-full max-w-4xl mx-auto p-4 bg-white border-t border-gray-200"
+      className="relative w-full max-w-4xl mx-auto p-4"
     >
-      <div className="relative flex items-end gap-2 p-2 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent transition-all">
+      <div className="relative flex items-end gap-2 rounded-2xl border border-slate-200 bg-white/90 p-2 shadow-sm transition-all focus-within:border-amber-300 focus-within:ring-2 focus-within:ring-amber-200 dark:border-white/10 dark:bg-white/5">
         <textarea
           ref={textareaRef}
           value={input}
@@ -50,13 +50,13 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           onKeyDown={handleKeyDown}
           disabled={disabled}
           placeholder={t("input.placeholder")}
-          className="w-full max-h-40 min-h-[50px] p-2 bg-transparent resize-none border-none focus:ring-0 outline-none text-gray-800 placeholder:text-gray-400"
+          className="w-full max-h-40 min-h-[50px] p-2 bg-transparent resize-none border-none focus:ring-0 outline-none text-slate-800 placeholder:text-slate-400 dark:text-white/90 dark:placeholder:text-white/40"
           rows={1}
         />
         <button
           type="submit"
           disabled={!input.trim() || disabled}
-          className="p-2 mb-1 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          className="mb-1 rounded-xl bg-slate-900 p-2 text-white transition-colors hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
         >
           {disabled ? (
             <Loader2 className="w-5 h-5 animate-spin" />
@@ -65,7 +65,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           )}
         </button>
       </div>
-      <p className="text-xs text-center text-gray-400 mt-2">
+      <p className="mt-2 text-center text-xs text-slate-400 dark:text-white/40">
         {t("input.helper")}
       </p>
     </form>

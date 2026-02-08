@@ -41,6 +41,12 @@ def update_user_profile(
         profile.learning_style = profile_data.learning_style
     if profile_data.career_goals:
         profile.career_goals = profile_data.career_goals
+    if profile_data.archetype:
+        profile.archetype = profile_data.archetype
+    if profile_data.phone_number:
+        profile.phone_number = profile_data.phone_number
+    if profile_data.whatsapp_number:
+        profile.whatsapp_number = profile_data.whatsapp_number
 
     db.commit()
     db.refresh(current_user)
@@ -49,8 +55,12 @@ def update_user_profile(
         id=current_user.id,
         email=current_user.email,
         full_name=current_user.full_name,
+        role=str(current_user.role) if current_user.role else None,
         curriculum_id=current_user.curriculum_id,
-        profile_completed=bool(profile.degree_program)
+        profile_completed=bool(profile.degree_program),
+        archetype=profile.archetype,
+        phone_number=profile.phone_number,
+        whatsapp_number=profile.whatsapp_number
     )
 
 @router.get("/me", response_model=UserProfileResponse)
@@ -66,6 +76,10 @@ def get_me(
         id=current_user.id,
         email=current_user.email,
         full_name=current_user.full_name,
+        role=str(current_user.role) if current_user.role else None,
         curriculum_id=current_user.curriculum_id,
-        profile_completed=profile_completed
+        profile_completed=profile_completed,
+        archetype=current_user.profile.archetype if current_user.profile else None,
+        phone_number=current_user.profile.phone_number if current_user.profile else None,
+        whatsapp_number=current_user.profile.whatsapp_number if current_user.profile else None
     )

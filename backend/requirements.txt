@@ -16,3 +16,6 @@ httpx
 pytest
 redis
 webauthn
+twilio
+pyotp
+qrcode

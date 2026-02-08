@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { buildApiUrl } from "@/lib/api";
 import { useTranslations } from "next-intl";
+import {
+  Music2,
+  Terminal,
+  PenTool,
+  Beaker,
+  BookOpen,
+  Check,
+} from "lucide-react";
 
 export default function OnboardingPage() {
   const t = useTranslations("onboarding");
@@ -23,7 +31,19 @@ export default function OnboardingPage() {
     preferred_language: "English",
     learning_style: "Visual",
     career_goals: "",
+    phone_number: "",
+    whatsapp_number: "",
   });
+
+  const [archetype, setArchetype] = useState("musician");
+
+  const archetypes = [
+    { id: "musician", label: "Musician", icon: Music2 },
+    { id: "developer", label: "Developer", icon: Terminal },
+    { id: "designer", label: "Designer", icon: PenTool },
+    { id: "scientist", label: "Scientist", icon: Beaker },
+    { id: "writer", label: "Writer", icon: BookOpen },
+  ];
 
   useEffect(() => {
     async function getCurricula() {
@@ -54,6 +74,9 @@ export default function OnboardingPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    // Save archetype preference locally for UI personalization
+    localStorage.setItem("ilmora-archetype", archetype);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -84,6 +107,7 @@ export default function OnboardingPage() {
           ...formData,
           subjects: subjectsArray,
           career_goals: careerArray,
+          archetype,
         }),
       });
 
@@ -353,6 +377,81 @@ export default function OnboardingPage() {
                       onChange={handleChange}
                       className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                     />
+                  </div>
+                </div>
+
+                {/* Contact Methods */}
+                <div>
+                  <label
+                    htmlFor="phone_number"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    Phone number (SMS)
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="phone_number"
+                      name="phone_number"
+                      type="tel"
+                      placeholder="+1 555 010 1010"
+                      value={formData.phone_number}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label
+                    htmlFor="whatsapp_number"
+                    className="block text-sm font-medium text-slate-700 dark:text-white/70"
+                  >
+                    WhatsApp number
+                  </label>
+                  <div className="mt-1">
+                    <input
+                      id="whatsapp_number"
+                      name="whatsapp_number"
+                      type="tel"
+                      placeholder="+1 555 010 2020"
+                      value={formData.whatsapp_number}
+                      onChange={handleChange}
+                      className="appearance-none block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 text-sm shadow-sm placeholder-slate-400 focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
+                    />
+                  </div>
+                </div>
+
+                {/* Archetype Selection */}
+                <div className="py-2">
+                  <label className="mb-3 block text-sm font-medium text-slate-700 dark:text-slate-200">
+                    Choose your Archetype
+                  </label>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+                    {archetypes.map((type) => {
+                      const Icon = type.icon;
+                      const isSelected = archetype === type.id;
+                      return (
+                        <button
+                          key={type.id}
+                          type="button"
+                          onClick={() => setArchetype(type.id)}
+                          className={`relative flex flex-col items-center justify-center gap-3 rounded-xl border p-4 transition-all ${
+                            isSelected
+                              ? "border-amber-400 bg-amber-50 text-amber-700 dark:border-amber-400/50 dark:bg-amber-900/20 dark:text-amber-300"
+                              : "border-slate-200 bg-white hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+                          }`}
+                        >
+                          <Icon size={24} />
+                          <span className="text-xs font-medium uppercase tracking-wider">
+                            {type.label}
+                          </span>
+                          {isSelected && (
+                            <div className="absolute top-2 right-2 rounded-full bg-amber-400 p-0.5 text-white">
+                              <Check size={10} />
+                            </div>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 

@@ -89,6 +89,10 @@ class User(Base):
     
     email: Mapped[str] = mapped_column(String, unique=True, index=True)
     full_name: Mapped[str] = mapped_column(String, nullable=True)
+    hashed_password: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    mfa_enabled: Mapped[bool] = mapped_column(Boolean, default=False)
+    mfa_totp_secret: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    mfa_channels: Mapped[List[str]] = mapped_column(JSON, default=list)
     
     role: Mapped[UserRole] = mapped_column(String, default=UserRole.STUDENT)
     
@@ -105,6 +109,10 @@ class User(Base):
     memories: Mapped[List["Memory"]] = relationship(back_populates="user")
     notes: Mapped[List["Note"]] = relationship(back_populates="user")
     passkeys: Mapped[List["PasskeyCredential"]] = relationship(back_populates="user")
+    classes_owned: Mapped[List["ClassRoom"]] = relationship(back_populates="owner")
+    class_memberships: Mapped[List["ClassMembership"]] = relationship(
+        back_populates="user"
+    )
 
 class LearningProfile(Base):
     __tablename__ = "learning_profiles"
@@ -113,6 +121,9 @@ class LearningProfile(Base):
     user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
     
     # Metadata for personalization
+    archetype: Mapped[str] = mapped_column(String, nullable=True) # e.g. "musician", "developer"
+    phone_number: Mapped[str] = mapped_column(String, nullable=True)
+    whatsapp_number: Mapped[str] = mapped_column(String, nullable=True)
     degree_program: Mapped[str] = mapped_column(String, nullable=True) # e.g. "BS Computer Science"
     current_semester: Mapped[str] = mapped_column(String, nullable=True) # e.g. "4th Semester"
     curr_subjects: Mapped[List[str]] = mapped_column(JSON, default=list) # e.g. ["DSA", "Linear Algebra"]
@@ -398,6 +409,34 @@ class RoomMessage(Base):
     
     room: Mapped["StudyRoom"] = relationship(back_populates="messages")
     sender: Mapped["User"] = relationship("User")
+
+# --- Teacher / Class Models ---
+
+class ClassRoom(Base):
+    __tablename__ = "class_rooms"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    owner_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
+    name: Mapped[str] = mapped_column(String)
+    description: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    join_code: Mapped[str] = mapped_column(String, unique=True, index=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    owner: Mapped["User"] = relationship(back_populates="classes_owned")
+    members: Mapped[List["ClassMembership"]] = relationship(back_populates="class_room")
+
+
+class ClassMembership(Base):
+    __tablename__ = "class_memberships"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    class_id: Mapped[str] = mapped_column(String, ForeignKey("class_rooms.id"))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
+    role: Mapped[str] = mapped_column(String, default="student")
+    joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+    class_room: Mapped["ClassRoom"] = relationship(back_populates="members")
+    user: Mapped["User"] = relationship(back_populates="class_memberships")
 
 # --- Marketplace & Ecosystem Models ---
 

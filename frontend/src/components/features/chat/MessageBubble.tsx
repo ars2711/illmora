@@ -21,16 +21,16 @@ export function MessageBubble({ role, content, pending }: MessageBubbleProps) {
     >
       <div
         className={cn(
-          "flex max-w-[80%] rounded-lg p-4 gap-3",
+          "flex max-w-[80%] rounded-2xl p-4 gap-3 border shadow-sm",
           isUser
-            ? "bg-blue-600 text-white"
-            : "bg-gray-100 text-gray-900 border border-gray-200",
+            ? "bg-gradient-to-br from-slate-900 to-slate-700 text-white border-slate-900/60"
+            : "bg-white/80 text-slate-900 border-slate-200 dark:bg-white/10 dark:text-white/90 dark:border-white/10",
           pending && "opacity-70",
         )}
       >
         {!isUser && (
-          <div className="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center shrink-0">
-            <Bot className="w-5 h-5 text-indigo-600" />
+          <div className="w-8 h-8 rounded-full border border-slate-200 bg-white/90 flex items-center justify-center shrink-0 dark:border-white/10 dark:bg-white/10">
+            <Bot className="w-5 h-5 text-slate-700 dark:text-white/80" />
           </div>
         )}
 
@@ -40,7 +40,7 @@ export function MessageBubble({ role, content, pending }: MessageBubbleProps) {
         </div>
 
         {isUser && (
-          <div className="w-8 h-8 rounded-full bg-blue-700 flex items-center justify-center shrink-0">
+          <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center shrink-0">
             <User className="w-5 h-5 text-white" />
           </div>
         )}

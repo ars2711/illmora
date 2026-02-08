@@ -3,6 +3,8 @@
 import Link from "next/link";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import AmbientOrbs from "@/components/common/AmbientOrbs";
 import { motion } from "framer-motion";
 import {
@@ -14,6 +16,10 @@ import {
   Layers,
   Move3d,
   Music2,
+  Terminal,
+  PenTool,
+  Beaker,
+  BookOpen,
   Palette,
   Keyboard,
   Compass,
@@ -23,12 +29,37 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
-import { useTranslations } from "next-intl";
 
 export default function Home() {
   const t = useTranslations("home");
   const { user, logOut, startDemo, demoMode } = useAuth();
   const router = useRouter();
+  const [archetype, setArchetype] = useState("musician");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("ilmora-archetype");
+    if (saved) setArchetype(saved);
+  }, []);
+
+  const getArchetypeData = () => {
+    switch (archetype) {
+      case "developer":
+        return { text: "Enter Console", icon: <Terminal size={16} /> };
+      case "designer":
+        return { text: "Enter Atelier", icon: <PenTool size={16} /> };
+      case "scientist":
+        return { text: "Enter Lab", icon: <Beaker size={16} /> };
+      case "writer":
+        return { text: "Enter Study", icon: <BookOpen size={16} /> };
+      default:
+        return {
+          text: t("public.hero.ctaSecondary"),
+          icon: <Music2 size={16} />,
+        };
+    }
+  };
+
+  const { text: enterText, icon: enterIcon } = getArchetypeData();
 
   const handleLogout = async () => {
     try {
@@ -332,7 +363,7 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap gap-4">
               <Link
-                href="/onboarding"
+                href="/signup"
                 className="ilmora-glow inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-black"
               >
                 {t("public.hero.ctaPrimary")} <ArrowRight size={16} />
@@ -341,7 +372,7 @@ export default function Home() {
                 href="/chat"
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3 text-sm text-slate-700 hover:bg-slate-200/50 dark:border-white/15 dark:text-white/80 dark:hover:bg-white/10"
               >
-                {t("public.hero.ctaSecondary")} <Music2 size={16} />
+                {enterText} {enterIcon}
               </Link>
             </div>
             <div className="flex flex-wrap gap-6 text-xs uppercase tracking-[0.25em] text-slate-500 dark:text-white/50">
@@ -396,6 +427,37 @@ export default function Home() {
               </div>
             </div>
           </motion.div>
+        </section>
+
+        <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-[32px] border border-slate-200 bg-white/70 p-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
+              The Origin Story
+            </p>
+            <h3 className="mt-4 font-display text-3xl">
+              A study engine born from late nights and live sessions.
+            </h3>
+            <p className="mt-3 text-sm text-slate-600 dark:text-white/70">
+              Ilmora began as a private studio for deep work: a place where
+              memory, ritual, and curiosity were treated like instruments. The
+              idea was simple: build a system that remembers you, adapts to your
+              cadence, and turns every session into a living performance of
+              learning. Today, that studio is open to every discipline.
+            </p>
+          </div>
+          <div className="rounded-[32px] border border-slate-200 bg-white/70 p-8 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
+              The Ritual
+            </p>
+            <ul className="mt-4 space-y-3 text-sm text-slate-600 dark:text-white/70">
+              <li>Start in guest mode. No account required.</li>
+              <li>Choose your archetype and let the interface transform.</li>
+              <li>
+                Build memory nodes, rehearse concepts, and sync your flow.
+              </li>
+              <li>Graduate into full sessions with your profile and graph.</li>
+            </ul>
+          </div>
         </section>
 
         <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-12 lg:grid-cols-[1.1fr_0.9fr]">

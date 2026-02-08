@@ -1,11 +1,11 @@
 "use client";
 
 import { ArrowUp, Globe, Menu, RotateCcw, Undo2, X } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { locales } from "@/i18n/config";
 
 const defaultOrder = ["theme", "install", "back", "refresh", "top", "language"];
@@ -16,10 +16,19 @@ export default function QuickActions() {
   const t = useTranslations("quickActions");
   const locale = useLocale();
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(true);
+  const pathname = usePathname();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [draggingId, setDraggingId] = useState<string | null>(null);
   const [order, setOrder] = useState<string[]>(defaultOrder);
   const [language, setLanguage] = useState(locale);
+  const [isVisible, setIsVisible] = useState(true);
+  const [dockPosition, setDockPosition] = useState<"top" | "bottom">("bottom");
+
+  useEffect(() => {
+    setIsVisible(true);
+    setDockPosition("top");
+  }, [pathname]);
   const [isAnimating, setIsAnimating] = useState(false);
 
   const getCookie = (name: string) => {
@@ -182,7 +191,18 @@ export default function QuickActions() {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
+    <div
+      ref={containerRef}
+      className={`fixed right-6 z-50 flex items-start gap-2 transition-all duration-500 ease-in-out transform ${
+        dockPosition === "top" ? "top-6" : "bottom-6"
+      } ${
+        isVisible
+          ? "translate-y-0 opacity-100"
+          : "translate-y-20 opacity-0 pointer-events-none"
+      }`}
+      style={{ flexDirection: dockPosition === "top" ? "row-reverse" : "column", alignItems: dockPosition === "top" ? "center" : "flex-end" }}
+    >
+      {/* Menu toggle - always rightmost in top dock */}
       <button
         type="button"
         onClick={() => {
@@ -190,32 +210,38 @@ export default function QuickActions() {
           setIsAnimating(true);
           window.setTimeout(() => setIsAnimating(false), 700);
         }}
-        className={`inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white ${
+        className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white ${
           isAnimating ? "animate-controls-orbit" : ""
         }`}
         aria-label={isExpanded ? t("collapse") : t("expand")}
-        aria-expanded={isExpanded}
       >
         {isExpanded ? <X size={16} /> : <Menu size={16} />}
       </button>
 
+      {/* Action items - expand LEFT from the menu button (top dock) */}
       <div
-        className={`controls-stack flex flex-col items-end gap-2 ${
-          isExpanded ? "is-expanded" : "pointer-events-none is-collapsed"
-        }`}
+        className={`controls-stack flex gap-2 ${
+          dockPosition === "top"
+            ? "is-docked-top flex-row-reverse items-center"
+            : "is-docked-bottom flex-col items-end"
+        } ${isExpanded ? "is-expanded" : "pointer-events-none is-collapsed"}`}
       >
-        {orderedActions.map(({ key, node }) => (
+        {orderedActions.map(({ key, node }, idx) => (
           <div
             key={key}
             draggable
             onDragStart={handleDragStart(key)}
             onDragEnd={handleDragEnd}
             onDragOver={handleDragOver(key)}
-            className={`group relative flex items-center gap-2 ${
+            className={`controls-item group relative ${
               draggingId === key ? "opacity-70" : "opacity-100"
             }`}
+            style={{
+              transitionDelay: isExpanded ? `${idx * 40}ms` : `${(orderedActions.length - idx) * 25}ms`,
+            }}
           >
-            <span className="controls-tooltip pointer-events-none absolute right-full mr-3 whitespace-nowrap rounded-full border border-white/10 bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-700 opacity-0 shadow-lg backdrop-blur transition-all duration-200 ease-out group-hover:opacity-100 group-hover:-translate-x-1 dark:bg-slate-900/90 dark:text-white">
+            {node}
+            <span className="controls-tooltip pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-white/10 bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-700 opacity-0 shadow-lg backdrop-blur transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 dark:bg-slate-900/90 dark:text-white">
               {key === "theme" && t("theme")}
               {key === "install" && t("install")}
               {key === "back" && t("back")}
@@ -223,7 +249,6 @@ export default function QuickActions() {
               {key === "top" && t("top")}
               {key === "language" && t(`languages.${language}`)}
             </span>
-            {node}
           </div>
         ))}
       </div>

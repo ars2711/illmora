@@ -13,6 +13,7 @@ interface AuthUser {
   id: string;
   email?: string;
   displayName?: string;
+  role?: string;
 }
 
 interface AuthContextType {
@@ -54,6 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       id: payload.sub,
       email: payload.email,
       displayName: payload.name ?? payload.email?.split("@")[0],
+      role: payload.role,
     } as AuthUser;
   };
 

@@ -48,6 +48,28 @@ class Settings(BaseSettings):
     PASSKEY_RP_NAME: str = "Ilmora"
     PASSKEY_ORIGIN: str = "http://localhost:3000"
     PASSKEY_TIMEOUT_MS: int = 60000
+
+    FRONTEND_URL: str = "http://localhost:3000"
+
+    # Admin signup TOTP
+    ADMIN_TOTP_SECRET: str = ""
+
+    # MFA
+    MFA_ISSUER: str = "Ilmora"
+
+    # Notifications
+    SMTP_HOST: str = ""
+    SMTP_PORT: int = 587
+    SMTP_USER: str = ""
+    SMTP_PASSWORD: str = ""
+    SMTP_FROM: str = ""
+    SMTP_USE_TLS: bool = True
+
+    TWILIO_ACCOUNT_SID: str = ""
+    TWILIO_AUTH_TOKEN: str = ""
+    TWILIO_FROM_NUMBER: str = ""
+    TWILIO_WHATSAPP_NUMBER: str = ""
+    TWILIO_VOICE_NUMBER: str = ""
     
     class Config:
         case_sensitive = True

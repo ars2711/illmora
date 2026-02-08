@@ -12,6 +12,7 @@ import QuickActions from "@/components/common/QuickActions";
 import ServiceWorkerRegister from "@/components/common/ServiceWorkerRegister";
 import ScrollMotion from "@/components/common/ScrollMotion";
 import DemoOverlay from "@/components/common/DemoOverlay";
+import { AppShell } from "@/components/layout/AppShell";
 import {
   defaultLocale,
   localeDirection,
@@ -171,7 +172,7 @@ export default async function RootLayout({
           <ThemeProvider>
             <AuthProvider>
               <ToastProvider>
-                {children}
+                <AppShell>{children}</AppShell>
                 <DemoOverlay />
                 <FeedbackWidget />
                 <SyncIndicator />

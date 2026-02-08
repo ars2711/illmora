@@ -10,10 +10,17 @@ class UserProfileUpdate(BaseModel):
     preferred_language: Optional[str] = "English"
     learning_style: Optional[str] = None
     career_goals: Optional[List[str]] = []
+    archetype: Optional[str] = None
+    phone_number: Optional[str] = None
+    whatsapp_number: Optional[str] = None
 
 class UserProfileResponse(BaseModel):
     id: str
     email: str
     full_name: Optional[str]
+    role: Optional[str] = None
     curriculum_id: Optional[str] = None
     profile_completed: bool = False
+    archetype: Optional[str] = None
+    phone_number: Optional[str] = None
+    whatsapp_number: Optional[str] = None
