@@ -10,6 +10,7 @@ import ConfirmDialog from "@/components/common/ConfirmDialog";
 import MiniBarChart from "@/components/common/MiniBarChart";
 import LineChart from "@/components/common/LineChart";
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
 
 const demoRoles = [
   {
@@ -99,35 +100,23 @@ const actorWidthClass = (count: number) => {
 
 const permissionGroups = [
   {
-    group: "Data",
-    permissions: [
-      { id: "db.read", label: "Read database" },
-      { id: "db.write", label: "Write data" },
-      { id: "db.export", label: "Export records" },
-    ],
+    group: "data",
+    permissions: ["db.read", "db.write", "db.export"],
   },
   {
-    group: "Security",
-    permissions: [
-      { id: "audit.view", label: "View audit logs" },
-      { id: "audit.export", label: "Export audit logs" },
-      { id: "incident.manage", label: "Manage incidents" },
-    ],
+    group: "security",
+    permissions: ["audit.view", "audit.export", "incident.manage"],
   },
   {
-    group: "AI & Content",
-    permissions: [
-      { id: "content.review", label: "Review content" },
-      { id: "model.configure", label: "Configure models" },
-      { id: "studio.manage", label: "Manage studio" },
-    ],
+    group: "aiContent",
+    permissions: ["content.review", "model.configure", "studio.manage"],
   },
   {
-    group: "Operations",
+    group: "operations",
     permissions: [
-      { id: "integrations.manage", label: "Manage integrations" },
-      { id: "roles.manage", label: "Manage roles" },
-      { id: "system.health", label: "View system health" },
+      "integrations.manage",
+      "roles.manage",
+      "system.health",
     ],
   },
 ];
@@ -159,10 +148,30 @@ const permissionTemplates = {
   "Read Only": ["db.read", "audit.view", "system.health"],
 } as const;
 
+const templateLabelKey: Record<keyof typeof permissionTemplates, string> = {
+  Administrator: "administrator",
+  Operator: "operator",
+  "Read Only": "readOnly",
+};
+
+const auditLevels = ["All", "High", "Medium", "Low"] as const;
+
 function RolesContent() {
   const searchParams = useSearchParams();
   const { token, demoMode } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminRoles");
+  const templateLabelMap: Record<keyof typeof permissionTemplates, string> = {
+    Administrator: t("templates.labels.administrator"),
+    Operator: t("templates.labels.operator"),
+    "Read Only": t("templates.labels.readOnly"),
+  };
+  const auditLevelLabels: Record<(typeof auditLevels)[number], string> = {
+    All: t("audit.levels.all"),
+    High: t("audit.levels.high"),
+    Medium: t("audit.levels.medium"),
+    Low: t("audit.levels.low"),
+  };
   const [roles, setRoles] = useState(demoRoles);
   const [accessRequests, setAccessRequests] = useState(demoAccessRequests);
   const [roleName, setRoleName] = useState("");
@@ -262,7 +271,7 @@ function RolesContent() {
     link.download = "role-permissions.csv";
     link.click();
     URL.revokeObjectURL(url);
-    showToast("Permission matrix exported.", "success");
+    showToast(t("toast.matrixExported"), "success");
   };
 
   const handleExportAudit = async () => {
@@ -306,12 +315,12 @@ function RolesContent() {
     link.download = "role-audit.csv";
     link.click();
     URL.revokeObjectURL(url);
-    showToast("Role audit exported.", "success");
+    showToast(t("toast.auditExported"), "success");
   };
 
   const handleCloneRole = async () => {
     if (!selectedRole) {
-      showToast("Select a role to clone.", "info");
+      showToast(t("toast.cloneSelect"), "info");
       return;
     }
     const newRoleName = `${selectedRole.name} Copy`;
@@ -330,7 +339,7 @@ function RolesContent() {
         ...prev,
         [newRoleId]: { ...prev[selectedRole.id] },
       }));
-      showToast("Role cloned (demo).", "success");
+      showToast(t("toast.cloneDemo"), "success");
       return;
     }
     try {
@@ -344,10 +353,10 @@ function RolesContent() {
         ...prev,
         [created.id]: { ...prev[selectedRole.id] },
       }));
-      showToast("Role cloned.", "success");
+      showToast(t("toast.clone"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Role clone failed.", "error");
+      showToast(t("toast.cloneFailed"), "error");
     }
   };
 
@@ -394,7 +403,7 @@ function RolesContent() {
       setAuditTotal(data.total);
     } catch (error) {
       console.error(error);
-      showToast("Role audit is using demo data.", "warning");
+      showToast(t("toast.auditDemo"), "warning");
     }
   }, [
     auditFilter,
@@ -423,7 +432,7 @@ function RolesContent() {
         if (roleData.length > 0) setSelectedRoleId(roleData[0].id);
       } catch (error) {
         console.error(error);
-        showToast("Roles data is using demo data.", "warning");
+        showToast(t("toast.rolesDemo"), "warning");
       }
     };
     load();
@@ -495,7 +504,7 @@ function RolesContent() {
           [permissionId]: nextValue,
         },
       }));
-      showToast("Permission updated (demo).", "success");
+      showToast(t("toast.permissionDemo"), "success");
       return;
     }
     try {
@@ -511,21 +520,21 @@ function RolesContent() {
           [permissionId]: nextValue,
         },
       }));
-      showToast("Permission updated.", "success");
+      showToast(t("toast.permissionUpdated"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Permission update failed.", "error");
+      showToast(t("toast.permissionFailed"), "error");
     }
   };
 
   const handleBulkAccess = async (approved: boolean) => {
     if (accessRequests.length === 0) {
-      showToast("No access requests to update.", "info");
+      showToast(t("toast.noAccessRequests"), "info");
       return;
     }
     if (demoMode) {
       setAccessRequests([]);
-      showToast("Access requests updated (demo).", "success");
+      showToast(t("toast.accessUpdatedDemo"), "success");
       return;
     }
     try {
@@ -533,10 +542,10 @@ function RolesContent() {
         action: approved ? "approve" : "deny",
       });
       setAccessRequests([]);
-      showToast("Access requests updated.", "success");
+      showToast(t("toast.accessUpdated"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Bulk update failed.", "error");
+      showToast(t("toast.bulkFailed"), "error");
     }
   };
 
@@ -544,11 +553,11 @@ function RolesContent() {
     templateName: keyof typeof permissionTemplates,
   ) => {
     const template = permissionTemplates[templateName];
+    const templateLabel = templateLabelMap[templateName];
     setConfirm({
       open: true,
-      title: `Apply ${templateName} template`,
-      description:
-        "This will overwrite the current permission set for the selected role.",
+      title: t("templates.confirmTitle", { name: templateLabel }),
+      description: t("templates.confirmBody"),
       tone: "danger",
       onConfirm: async () => {
         const nextPermissions = template.reduce<Record<string, boolean>>(
@@ -563,7 +572,7 @@ function RolesContent() {
             ...prev,
             [selectedRoleId]: nextPermissions,
           }));
-          showToast("Template applied (demo).", "success");
+          showToast(t("toast.templateDemo"), "success");
           return;
         }
         try {
@@ -576,10 +585,10 @@ function RolesContent() {
             ...prev,
             [selectedRoleId]: nextPermissions,
           }));
-          showToast("Template applied.", "success");
+          showToast(t("toast.templateApplied"), "success");
         } catch (error) {
           console.error(error);
-          showToast("Template apply failed.", "error");
+          showToast(t("toast.templateFailed"), "error");
         }
       },
     });
@@ -587,7 +596,7 @@ function RolesContent() {
 
   const handleCreateRole = async () => {
     if (!roleName.trim()) {
-      showToast("Enter a role name.", "info");
+      showToast(t("toast.roleNameRequired"), "info");
       return;
     }
     if (demoMode) {
@@ -601,7 +610,7 @@ function RolesContent() {
         },
       ]);
       setRoleName("");
-      showToast("Role created in demo mode.", "success");
+      showToast(t("toast.roleCreatedDemo"), "success");
       return;
     }
     try {
@@ -612,17 +621,17 @@ function RolesContent() {
       );
       setRoles((prev) => [...prev, created]);
       setRoleName("");
-      showToast("Role created.", "success");
+      showToast(t("toast.roleCreated"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Role creation failed.", "error");
+      showToast(t("toast.roleCreateFailed"), "error");
     }
   };
 
   const handleAccessDecision = async (id: string, approved: boolean) => {
     if (demoMode) {
       setAccessRequests((prev) => prev.filter((req) => req.id !== id));
-      showToast("Access request updated (demo).", "success");
+      showToast(t("toast.accessDecisionDemo"), "success");
       return;
     }
     try {
@@ -631,10 +640,10 @@ function RolesContent() {
         token,
       );
       setAccessRequests((prev) => prev.filter((req) => req.id !== id));
-      showToast("Access request updated.", "success");
+      showToast(t("toast.accessDecision"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Access request update failed.", "error");
+      showToast(t("toast.accessDecisionFailed"), "error");
     }
   };
 
@@ -645,7 +654,7 @@ function RolesContent() {
         title={confirm?.title ?? ""}
         description={confirm?.description}
         tone={confirm?.tone ?? "default"}
-        confirmLabel="Proceed"
+        confirmLabel={t("confirm.proceed")}
         onCancel={() => setConfirm(null)}
         onConfirm={() => {
           confirm?.onConfirm();
@@ -658,37 +667,37 @@ function RolesContent() {
           <header className="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-                <Users size={14} /> Roles & Access
+                <Users size={14} /> {t("eyebrow")}
               </p>
               <h1 className="mt-4 text-3xl font-semibold">
-                Permission architecture
+                {t("title")}
               </h1>
               <p className="text-slate-500 dark:text-white/60">
-                Configure roles, approvals, and access boundaries.
+                {t("subtitle")}
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-2">
               <input
                 value={roleName}
                 onChange={(event) => setRoleName(event.target.value)}
-                placeholder="Role name"
+                placeholder={t("create.placeholder")}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               />
               <select
                 value={roleScope}
                 onChange={(event) => setRoleScope(event.target.value)}
-                aria-label="Role scope"
+                aria-label={t("create.scopeAria")}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               >
-                <option value="Global">Global</option>
-                <option value="Institution">Institution</option>
-                <option value="Department">Department</option>
+                <option value="Global">{t("create.scopes.global")}</option>
+                <option value="Institution">{t("create.scopes.institution")}</option>
+                <option value="Department">{t("create.scopes.department")}</option>
               </select>
               <button
                 onClick={handleCreateRole}
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                <Plus className="h-4 w-4" /> Create role
+                <Plus className="h-4 w-4" /> {t("create.submit")}
               </button>
             </div>
           </header>
@@ -696,7 +705,7 @@ function RolesContent() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Active roles</h3>
+                <h3 className="text-lg font-medium">{t("activeRoles")}</h3>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {roles.map((role) => (
@@ -709,7 +718,10 @@ function RolesContent() {
                         {role.name}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        {role.members} members • {role.scope}
+                        {t("roleMeta", {
+                          count: role.members,
+                          scope: role.scope,
+                        })}
                       </p>
                     </div>
                     <button
@@ -720,7 +732,7 @@ function RolesContent() {
                           : "text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
                       }`}
                     >
-                      Manage
+                      {t("manage")}
                     </button>
                   </div>
                 ))}
@@ -730,38 +742,36 @@ function RolesContent() {
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-lg font-medium">Access requests</h3>
+                  <h3 className="text-lg font-medium">{t("access.title")}</h3>
                   <div className="flex flex-wrap items-center gap-2">
                     <button
                       type="button"
                       onClick={() =>
                         setConfirm({
                           open: true,
-                          title: "Approve all requests",
-                          description:
-                            "This will approve all pending access requests.",
+                          title: t("access.approveAllTitle"),
+                          description: t("access.approveAllBody"),
                           onConfirm: () => handleBulkAccess(true),
                         })
                       }
                       className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                     >
-                      Approve all
+                      {t("access.approveAll")}
                     </button>
                     <button
                       type="button"
                       onClick={() =>
                         setConfirm({
                           open: true,
-                          title: "Deny all requests",
-                          description:
-                            "This will deny all pending access requests.",
+                          title: t("access.denyAllTitle"),
+                          description: t("access.denyAllBody"),
                           tone: "danger",
                           onConfirm: () => handleBulkAccess(false),
                         })
                       }
                       className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-100 dark:border-rose-200/40 dark:bg-rose-200/10 dark:text-rose-200 dark:hover:bg-rose-200/20"
                     >
-                      Deny all
+                      {t("access.denyAll")}
                     </button>
                   </div>
                 </div>
@@ -785,19 +795,19 @@ function RolesContent() {
                         onClick={() => handleAccessDecision(req.id, true)}
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                       >
-                        Approve
+                        {t("access.approve")}
                       </button>
                       <button
                         onClick={() => handleAccessDecision(req.id, false)}
                         className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-100 dark:border-rose-200/40 dark:bg-rose-200/10 dark:text-rose-200 dark:hover:bg-rose-200/20"
                       >
-                        Deny
+                        {t("access.deny")}
                       </button>
                     </div>
                   </div>
                 ))}
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-xs text-slate-500 dark:border-white/10 dark:bg-white/10 dark:text-white/60">
-                  Approvals are logged to the audit trail automatically.
+                  {t("access.notice")}
                 </div>
               </div>
             </div>
@@ -806,16 +816,21 @@ function RolesContent() {
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <h3 className="text-lg font-medium">Permission matrix</h3>
+                  <h3 className="text-lg font-medium">
+                    {t("permissions.title")}
+                  </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Configure access for {selectedRole?.name ?? "role"}.
+                    {t("permissions.subtitle", {
+                      name:
+                        selectedRole?.name ?? t("permissions.subtitleFallback"),
+                    })}
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
                 <select
                   value={selectedRoleId}
                   onChange={(event) => setSelectedRoleId(event.target.value)}
-                  aria-label="Select role"
+                    aria-label={t("permissions.selectRole")}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 >
                   {roles.map((role) => (
@@ -829,22 +844,21 @@ function RolesContent() {
                   onClick={handleExportMatrix}
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Export matrix
+                  {t("permissions.export")}
                 </button>
                 <button
                   type="button"
                   onClick={() =>
                     setConfirm({
                       open: true,
-                      title: "Clone selected role",
-                      description:
-                        "This will create a copy of the selected role and permissions.",
+                      title: t("permissions.cloneTitle"),
+                      description: t("permissions.cloneBody"),
                       onConfirm: handleCloneRole,
                     })
                   }
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Clone role
+                  {t("permissions.clone")}
                 </button>
               </div>
             </div>
@@ -860,7 +874,11 @@ function RolesContent() {
                   }
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  {template}
+                  {
+                    templateLabelMap[
+                      template as keyof typeof permissionTemplates
+                    ]
+                  }
                 </button>
               ))}
             </div>
@@ -871,26 +889,32 @@ function RolesContent() {
                   className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-sm dark:border-white/10 dark:bg-white/10"
                 >
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                    {group.group}
+                    {t(`permissions.groups.${group.group}`)}
                   </p>
                   <div className="mt-3 space-y-2">
-                    {group.permissions.map((permission) => {
+                    {group.permissions.map((permissionId) => {
                       const enabled =
-                        rolePermissions[selectedRoleId]?.[permission.id] ??
+                        rolePermissions[selectedRoleId]?.[permissionId] ??
                         false;
                       return (
                         <button
-                          key={permission.id}
+                          key={permissionId}
                           type="button"
-                          onClick={() => handlePermissionToggle(permission.id)}
+                          onClick={() => handlePermissionToggle(permissionId)}
                           className={`flex w-full items-center justify-between rounded-2xl border px-3 py-2 text-xs uppercase tracking-[0.2em] ${
                             enabled
                               ? "border-emerald-200 bg-emerald-50 text-emerald-700 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200"
                               : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                           }`}
                         >
-                          <span>{permission.label}</span>
-                          <span>{enabled ? "On" : "Off"}</span>
+                          <span>
+                            {t(`permissions.labels.${permissionId}`)}
+                          </span>
+                          <span>
+                            {enabled
+                              ? t("permissions.state.on")
+                              : t("permissions.state.off")}
+                          </span>
                         </button>
                       );
                     })}
@@ -904,9 +928,11 @@ function RolesContent() {
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-medium">Role audit insights</h3>
+                  <h3 className="text-lg font-medium">
+                    {t("insights.title")}
+                  </h3>
                   <p className="text-sm text-slate-500 dark:text-white/60">
-                    Severity distribution and intensity (loaded entries).
+                    {t("insights.subtitle")}
                   </p>
                 </div>
                 <BarChart3 className="h-5 w-5 text-slate-500 dark:text-white/60" />
@@ -914,7 +940,7 @@ function RolesContent() {
               <div className="mt-4 grid gap-4 lg:grid-cols-2">
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-sm dark:border-white/10 dark:bg-white/10">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                    Severity mix
+                    {t("insights.mix")}
                   </p>
                   <div className="mt-3 text-slate-700 dark:text-white/70">
                     <MiniBarChart data={severityData} />
@@ -922,7 +948,7 @@ function RolesContent() {
                 </div>
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-sm dark:border-white/10 dark:bg-white/10">
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                    Severity trend
+                    {t("insights.trend")}
                   </p>
                   <div className="mt-3">
                     <LineChart data={severityTrend} unit="lvl" />
@@ -934,9 +960,11 @@ function RolesContent() {
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-lg font-medium">Actor leaderboard</h3>
+                  <h3 className="text-lg font-medium">
+                    {t("actors.title")}
+                  </h3>
                   <p className="text-sm text-slate-500 dark:text-white/60">
-                    Most active admins in the current view.
+                    {t("actors.subtitle")}
                   </p>
                 </div>
                 <FileText className="h-5 w-5 text-slate-500 dark:text-white/60" />
@@ -944,7 +972,7 @@ function RolesContent() {
               <div className="mt-4 space-y-3">
                 {topActors.length === 0 ? (
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-4 text-xs text-slate-500 dark:border-white/10 dark:bg-white/10 dark:text-white/60">
-                    No audit activity loaded yet.
+                    {t("actors.empty")}
                   </div>
                 ) : (
                   topActors.map((actor) => (
@@ -957,7 +985,7 @@ function RolesContent() {
                           {actor.actor}
                         </span>
                         <span className="text-slate-500 dark:text-white/60">
-                          {actor.count} events
+                          {t("actors.events", { count: actor.count })}
                         </span>
                       </div>
                       <div className="mt-2 h-1.5 w-full rounded-full bg-slate-200 dark:bg-white/10">
@@ -977,10 +1005,12 @@ function RolesContent() {
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div className="flex items-center gap-3">
                   <FileText className="h-5 w-5 text-slate-500 dark:text-white/60" />
-                  <h3 className="text-lg font-medium">Role audit history</h3>
+                  <h3 className="text-lg font-medium">
+                    {t("audit.title")}
+                  </h3>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  {"All High Medium Low".split(" ").map((level) => (
+                  {auditLevels.map((level) => (
                     <button
                       key={level}
                       type="button"
@@ -991,7 +1021,7 @@ function RolesContent() {
                           : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       }`}
                     >
-                      {level}
+                      {auditLevelLabels[level]}
                     </button>
                   ))}
                   <button
@@ -999,14 +1029,14 @@ function RolesContent() {
                     onClick={handleExportAudit}
                     className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                   >
-                    Export CSV
+                    {t("audit.export")}
                   </button>
                 </div>
               </div>
               <input
                 value={auditSearch}
                 onChange={(event) => setAuditSearch(event.target.value)}
-                placeholder="Search role audit"
+                placeholder={t("audit.search")}
                 className="mt-4 w-full rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               />
             </div>
@@ -1018,10 +1048,10 @@ function RolesContent() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">
-                      No role audit entries match your filters.
+                      {t("audit.empty.title")}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-white/60">
-                      Adjust the filters or clear the search.
+                      {t("audit.empty.body")}
                     </p>
                   </div>
                   <button
@@ -1032,7 +1062,7 @@ function RolesContent() {
                     }}
                     className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                   >
-                    Clear filters
+                    {t("audit.empty.clear")}
                   </button>
                 </div>
               ) : (
@@ -1058,7 +1088,10 @@ function RolesContent() {
             </div>
             <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:text-white/60">
               <span>
-                Page {auditPage} of {auditTotalPages}
+                {t("audit.pagination", {
+                  page: auditPage,
+                  total: auditTotalPages,
+                })}
               </span>
               <div className="flex gap-2">
                 <button
@@ -1067,7 +1100,7 @@ function RolesContent() {
                   disabled={auditPage <= 1}
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Prev
+                  {t("audit.prev")}
                 </button>
                 <button
                   type="button"
@@ -1077,7 +1110,7 @@ function RolesContent() {
                   disabled={auditPage >= auditTotalPages}
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Next
+                  {t("audit.next")}
                 </button>
               </div>
             </div>
@@ -1087,7 +1120,7 @@ function RolesContent() {
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-5 w-5 text-emerald-500" />
               <p className="text-sm text-slate-600 dark:text-white/70">
-                Access policies are enforced per institution and synced hourly.
+                {t("footer.notice")}
               </p>
             </div>
           </div>
@@ -1098,8 +1131,9 @@ function RolesContent() {
 }
 
 export default function RolesPage() {
+  const t = useTranslations("adminRoles");
   return (
-    <Suspense fallback={<div className="p-6">Loading roles...</div>}>
+    <Suspense fallback={<div className="p-6">{t("loading")}</div>}>
       <RolesContent />
     </Suspense>
   );

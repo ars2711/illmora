@@ -5,6 +5,7 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown"; // Assuming installed or will be
 import { Target, Map, ArrowRight, Loader } from "lucide-react";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 interface RoadmapResponse {
   roadmap_content: string;
@@ -13,6 +14,7 @@ interface RoadmapResponse {
 }
 
 export default function CareerPage() {
+  const t = useTranslations("career");
   const { user, token } = useAuth();
   const [loading, setLoading] = useState(false);
   const [roadmap, setRoadmap] = useState<RoadmapResponse | null>(null);
@@ -40,7 +42,7 @@ export default function CareerPage() {
       }
     } catch (e) {
       console.error(e);
-      alert("Failed to generate roadmap.");
+      alert(t("errors.failed"));
     } finally {
       setLoading(false);
     }
@@ -53,9 +55,9 @@ export default function CareerPage() {
         <div className="relative z-10">
           <header className="border-b border-slate-200 bg-white/70 py-10 backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-display">Career Intelligence</h1>
+              <h1 className="text-3xl font-display">{t("title")}</h1>
               <p className="mt-2 text-slate-600 dark:text-white/60">
-                AI-driven strategy to bridge your degree with industry needs.
+                {t("subtitle")}
               </p>
             </div>
           </header>
@@ -66,7 +68,7 @@ export default function CareerPage() {
               <div className="grid grid-cols-1 items-end gap-6 md:grid-cols-3">
                 <div className="md:col-span-2">
                   <label className="block text-sm font-medium text-slate-700 dark:text-white/70">
-                    Target Role (Optional override)
+                    {t("form.label")}
                   </label>
                   <div className="relative mt-1 rounded-md">
                     <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -75,7 +77,7 @@ export default function CareerPage() {
                     <input
                       type="text"
                       className="block w-full rounded-md border border-slate-200 bg-white/90 py-3 pl-10 text-sm focus:border-amber-300 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
-                      placeholder="e.g. Full Stack Developer, Data Scientist..."
+                      placeholder={t("form.placeholder")}
                       value={customGoal}
                       onChange={(e) => setCustomGoal(e.target.value)}
                     />
@@ -90,12 +92,12 @@ export default function CareerPage() {
                     {loading ? (
                       <>
                         <Loader className="-ml-1 mr-2 h-5 w-5 animate-spin" />
-                        Analyzing Syllabus...
+                        {t("actions.loading")}
                       </>
                     ) : (
                       <>
                         <Map className="-ml-1 mr-2 h-5 w-5" />
-                        Generate Roadmap
+                        {t("actions.generate")}
                       </>
                     )}
                   </button>
@@ -107,9 +109,9 @@ export default function CareerPage() {
             {roadmap && (
               <div className="overflow-hidden rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
                 <div className="flex items-center justify-between border-b border-slate-200 bg-white/80 px-6 py-5 dark:border-white/10 dark:bg-white/10">
-                  <h3 className="text-lg font-medium">Personalized Strategy</h3>
+                  <h3 className="text-lg font-medium">{t("result.title")}</h3>
                   <span className="inline-flex items-center rounded-full bg-emerald-100 px-3 py-0.5 text-sm font-medium text-emerald-800 dark:bg-emerald-500/20 dark:text-emerald-200">
-                    Est. Time: {roadmap.estimated_time}
+                    {t("result.time", { time: roadmap.estimated_time })}
                   </span>
                 </div>
                 <div className="prose prose-slate max-w-none px-6 py-8 dark:prose-invert">

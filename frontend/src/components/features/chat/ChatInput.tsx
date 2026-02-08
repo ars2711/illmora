@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Send, Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ChatInputProps {
   onSend: (content: string) => void;
@@ -7,6 +8,7 @@ interface ChatInputProps {
 }
 
 export function ChatInput({ onSend, disabled }: ChatInputProps) {
+  const t = useTranslations("chat");
   const [input, setInput] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -47,7 +49,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           disabled={disabled}
-          placeholder="Ask Ilmora anything..."
+          placeholder={t("input.placeholder")}
           className="w-full max-h-40 min-h-[50px] p-2 bg-transparent resize-none border-none focus:ring-0 outline-none text-gray-800 placeholder:text-gray-400"
           rows={1}
         />
@@ -64,7 +66,7 @@ export function ChatInput({ onSend, disabled }: ChatInputProps) {
         </button>
       </div>
       <p className="text-xs text-center text-gray-400 mt-2">
-        Ilmora is an AI tutor designed for learning, not cheating.
+        {t("input.helper")}
       </p>
     </form>
   );

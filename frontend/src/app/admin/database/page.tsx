@@ -16,6 +16,7 @@ import ConfirmDialog from "@/components/common/ConfirmDialog";
 import LineChart from "@/components/common/LineChart";
 import { adminGet, adminPost } from "@/lib/admin-api";
 import useAutoRefresh from "@/hooks/use-auto-refresh";
+import { useTranslations } from "next-intl";
 
 const demoClusters = [
   {
@@ -106,6 +107,7 @@ type RunbookStep = {
 export default function DatabaseConsolePage() {
   const { token, demoMode } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminDatabase");
   const [clusters, setClusters] = useState(demoClusters);
   const [slowQueries, setSlowQueries] = useState(demoSlowQueries);
   const [jobs, setJobs] = useState(demoJobs);
@@ -172,7 +174,7 @@ export default function DatabaseConsolePage() {
       setLastUpdated(new Date());
     } catch (error) {
       console.error(error);
-      showToast("Database console is using demo data.", "warning");
+      showToast(t("toast.demoFallback"), "warning");
     } finally {
       setIsRefreshing(false);
     }
@@ -186,15 +188,15 @@ export default function DatabaseConsolePage() {
 
   const handleBackup = async () => {
     if (demoMode) {
-      showToast("Backup snapshot queued (demo).", "success");
+      showToast(t("toast.backupQueuedDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/database/backup", token);
-      showToast("Backup snapshot queued.", "success");
+      showToast(t("toast.backupQueued"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Backup request failed.", "error");
+      showToast(t("toast.backupFailed"), "error");
     }
   };
 
@@ -205,22 +207,22 @@ export default function DatabaseConsolePage() {
           job.id === jobId ? { ...job, status: "Running" } : job,
         ),
       );
-      showToast("Job started (demo).", "success");
+      showToast(t("toast.jobStartedDemo"), "success");
       return;
     }
     try {
       await adminPost(`/api/v1/admin/database/jobs/${jobId}/run`, token);
-      showToast("Job started.", "success");
+      showToast(t("toast.jobStarted"), "success");
       void load();
     } catch (error) {
       console.error(error);
-      showToast("Job start failed.", "error");
+      showToast(t("toast.jobFailed"), "error");
     }
   };
 
   const handleQueryTerminate = async (queryId: string) => {
     if (demoMode) {
-      showToast("Query terminated (demo).", "success");
+      showToast(t("toast.queryTerminatedDemo"), "success");
       return;
     }
     try {
@@ -228,10 +230,10 @@ export default function DatabaseConsolePage() {
         `/api/v1/admin/database/queries/${queryId}/terminate`,
         token,
       );
-      showToast("Query terminated.", "success");
+      showToast(t("toast.queryTerminated"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Query termination failed.", "error");
+      showToast(t("toast.queryFailed"), "error");
     }
   };
 
@@ -255,29 +257,29 @@ export default function DatabaseConsolePage() {
 
   const handleRollback = async () => {
     if (demoMode) {
-      showToast("Rollback queued (demo).", "success");
+      showToast(t("toast.rollbackQueuedDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/database/rollback", token);
-      showToast("Rollback queued.", "success");
+      showToast(t("toast.rollbackQueued"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Rollback failed.", "error");
+      showToast(t("toast.rollbackFailed"), "error");
     }
   };
 
   const handlePointInTimeRestore = async () => {
     if (demoMode) {
-      showToast("PITR initiated (demo).", "success");
+      showToast(t("toast.pitrDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/database/restore", token);
-      showToast("PITR initiated.", "success");
+      showToast(t("toast.pitr"), "success");
     } catch (error) {
       console.error(error);
-      showToast("PITR failed.", "error");
+      showToast(t("toast.pitrFailed"), "error");
     }
   };
 
@@ -288,7 +290,7 @@ export default function DatabaseConsolePage() {
           step.id === stepId ? { ...step, status: "Done" } : step,
         ),
       );
-      showToast("Runbook step completed (demo).", "success");
+      showToast(t("toast.runbookStepDemo"), "success");
       return;
     }
     try {
@@ -301,10 +303,10 @@ export default function DatabaseConsolePage() {
           step.id === stepId ? { ...step, status: "Done" } : step,
         ),
       );
-      showToast("Runbook step completed.", "success");
+      showToast(t("toast.runbookStep"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Runbook update failed.", "error");
+      showToast(t("toast.runbookFailed"), "error");
     }
   };
 
@@ -316,22 +318,22 @@ export default function DatabaseConsolePage() {
           status: index === 0 ? "Ready" : "Pending",
         })),
       );
-      showToast("Runbook reset (demo).", "success");
+      showToast(t("toast.runbookResetDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/database/runbook/reset", token);
       void load();
-      showToast("Runbook reset.", "success");
+      showToast(t("toast.runbookReset"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Runbook reset failed.", "error");
+      showToast(t("toast.runbookResetFailed"), "error");
     }
   };
 
   const handleRestorePoint = async (restoreId: string) => {
     if (demoMode) {
-      showToast("Restore queued (demo).", "success");
+      showToast(t("toast.restoreDemo"), "success");
       return;
     }
     try {
@@ -339,10 +341,10 @@ export default function DatabaseConsolePage() {
         `/api/v1/admin/database/restore-points/${restoreId}/restore`,
         token,
       );
-      showToast("Restore queued.", "success");
+      showToast(t("toast.restore"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Restore failed.", "error");
+      showToast(t("toast.restoreFailed"), "error");
     }
   };
 
@@ -377,22 +379,22 @@ export default function DatabaseConsolePage() {
         <div className="relative z-10 p-6">
           <header className="mb-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <Database size={14} /> Database Console
+              <Database size={14} /> {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-3xl font-semibold">Data control center</h1>
+            <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
             <p className="text-slate-500 dark:text-white/60">
-              Monitor replication, query health, and maintenance operations.
+              {t("subtitle")}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
-                Last updated {lastUpdatedLabel}
+                {t("lastUpdated", { time: lastUpdatedLabel })}
               </span>
               <button
                 type="button"
                 onClick={load}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                {isRefreshing ? "Refreshing" : "Refresh"}
+                {isRefreshing ? t("refreshing") : t("refresh")}
               </button>
               <button
                 type="button"
@@ -403,7 +405,7 @@ export default function DatabaseConsolePage() {
                     : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                Auto refresh {autoRefresh ? "On" : "Off"}
+                {t("autoRefresh", { state: autoRefresh ? t("on") : t("off") })}
               </button>
             </div>
           </header>
@@ -424,7 +426,7 @@ export default function DatabaseConsolePage() {
                     </h2>
                   </div>
                   <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-700 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200">
-                    Live
+                    {t("cluster.live")}
                   </span>
                 </div>
                 <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -433,9 +435,8 @@ export default function DatabaseConsolePage() {
                       type="button"
                       onClick={() =>
                         openConfirm({
-                          title: "Promote replica",
-                          description:
-                            "This will promote the replica to primary. Continue?",
+                          title: t("cluster.promoteTitle"),
+                          description: t("cluster.promoteBody"),
                           tone: "danger",
                           onConfirm: () =>
                             handleReplicaAction(cluster.id, "Promote"),
@@ -443,36 +444,35 @@ export default function DatabaseConsolePage() {
                       }
                       className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                     >
-                      Promote replica
+                      {t("cluster.promote")}
                     </button>
                   ) : (
                     <button
                       type="button"
                       onClick={() =>
                         openConfirm({
-                          title: "Run failover drill",
-                          description:
-                            "This runs a failover simulation. Confirm to proceed.",
+                          title: t("cluster.failoverTitle"),
+                          description: t("cluster.failoverBody"),
                           onConfirm: () =>
                             handleReplicaAction(cluster.id, "Failover drill"),
                         })
                       }
                       className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                     >
-                      Run failover drill
+                      {t("cluster.failover")}
                     </button>
                   )}
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
                   <div className="flex items-center gap-2">
-                    <Activity className="h-4 w-4" /> Latency trend
+                    <Activity className="h-4 w-4" /> {t("cluster.latencyTrend")}
                   </div>
                   <Sparkline points={trends.latency} stroke="#0f172a" />
                 </div>
                 <div className="mt-5 grid gap-3 sm:grid-cols-3">
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                     <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                      Latency
+                      {t("cluster.latency")}
                     </p>
                     <p className="mt-2 text-sm font-semibold">
                       {cluster.latency}
@@ -480,7 +480,7 @@ export default function DatabaseConsolePage() {
                   </div>
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                     <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                      Storage
+                      {t("cluster.storage")}
                     </p>
                     <p className="mt-2 text-sm font-semibold">
                       {cluster.storage}
@@ -491,9 +491,11 @@ export default function DatabaseConsolePage() {
                   </div>
                   <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                     <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                      Backups
+                      {t("cluster.backups")}
                     </p>
-                    <p className="mt-2 text-sm font-semibold">4 hr ago</p>
+                    <p className="mt-2 text-sm font-semibold">
+                      {t("cluster.backupTime")}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -503,7 +505,7 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Slow queries</h3>
+                <h3 className="text-lg font-medium">{t("slowQueries.title")}</h3>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {slowQueries.map((query) => (
@@ -512,33 +514,30 @@ export default function DatabaseConsolePage() {
                       {query.query}
                     </p>
                     <div className="mt-3 flex items-center gap-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                      <span>Time {query.time}</span>
-                      <span>Impact {query.impact}</span>
+                      <span>{t("slowQueries.time", { time: query.time })}</span>
+                      <span>{t("slowQueries.impact", { impact: query.impact })}</span>
                     </div>
                     <div className="mt-4 flex flex-wrap gap-2">
                       <button
                         type="button"
-                        onClick={() =>
-                          showToast("Query inspection opened.", "info")
-                        }
+                        onClick={() => showToast(t("toast.inspect"), "info")}
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                        Inspect
+                        {t("slowQueries.inspect")}
                       </button>
                       <button
                         type="button"
                         onClick={() =>
                           openConfirm({
-                            title: "Terminate query",
-                            description:
-                              "This will terminate a live query immediately.",
+                            title: t("slowQueries.terminateTitle"),
+                            description: t("slowQueries.terminateBody"),
                             tone: "danger",
                             onConfirm: () => handleQueryTerminate(query.id),
                           })
                         }
                         className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-100 dark:border-rose-200/40 dark:bg-rose-200/10 dark:text-rose-200 dark:hover:bg-rose-200/20"
                       >
-                        Terminate
+                        {t("slowQueries.terminate")}
                       </button>
                     </div>
                   </div>
@@ -548,7 +547,9 @@ export default function DatabaseConsolePage() {
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Maintenance queue</h3>
+                <h3 className="text-lg font-medium">
+                  {t("maintenance.title")}
+                </h3>
               </div>
               <div className="space-y-3 p-6">
                 {jobs.map((job) => (
@@ -567,15 +568,14 @@ export default function DatabaseConsolePage() {
                         type="button"
                         onClick={() =>
                           openConfirm({
-                            title: "Run maintenance job",
-                            description:
-                              "This will start the maintenance job now.",
+                            title: t("maintenance.runTitle"),
+                            description: t("maintenance.runBody"),
                             onConfirm: () => handleJobRun(job.id),
                           })
                         }
                         className="rounded-full border border-slate-200 bg-white/80 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                        Run now
+                        {t("maintenance.runNow")}
                       </button>
                     )}
                   </div>
@@ -583,15 +583,14 @@ export default function DatabaseConsolePage() {
                 <button
                   onClick={() =>
                     openConfirm({
-                      title: "Run backup snapshot",
-                      description:
-                        "Trigger a snapshot backup for the primary cluster.",
+                      title: t("maintenance.backupTitle"),
+                      description: t("maintenance.backupBody"),
                       onConfirm: handleBackup,
                     })
                   }
                   className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                 >
-                  <HardDrive className="h-4 w-4" /> Run backup snapshot
+                  <HardDrive className="h-4 w-4" /> {t("maintenance.backup")}
                 </button>
               </div>
             </div>
@@ -599,27 +598,33 @@ export default function DatabaseConsolePage() {
 
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Latency histogram</h3>
+              <h3 className="text-lg font-medium">
+                {t("charts.latency.title")}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                Distribution of query latency over the last hour.
+                {t("charts.latency.body")}
               </p>
               <div className="mt-4 text-slate-700 dark:text-white/70">
                 <MiniBarChart data={trends.latencyHistogram} />
               </div>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Replica lag trend</h3>
+              <h3 className="text-lg font-medium">
+                {t("charts.replica.title")}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                Lag in seconds (last 7 samples).
+                {t("charts.replica.body")}
               </p>
               <div className="mt-4">
                 <LineChart data={toSeries(trends.replicaLag)} unit="s" />
               </div>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Error rate trend</h3>
+              <h3 className="text-lg font-medium">
+                {t("charts.error.title")}
+              </h3>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                API error rate (%) across services.
+                {t("charts.error.body")}
               </p>
               <div className="mt-4">
                 <LineChart data={toSeries(trends.errorRate)} unit="%" />
@@ -630,7 +635,9 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Restore points</h3>
+                <h3 className="text-lg font-medium">
+                  {t("restorePoints.title")}
+                </h3>
               </div>
               <div className="space-y-3 p-6">
                 {restorePoints.map((point) => (
@@ -643,23 +650,25 @@ export default function DatabaseConsolePage() {
                         {point.label}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        Age {point.age} • {point.region}
+                        {t("restorePoints.age", {
+                          age: point.age,
+                          region: point.region,
+                        })}
                       </p>
                     </div>
                     <button
                       type="button"
                       onClick={() =>
                         openConfirm({
-                          title: "Restore from point",
-                          description:
-                            "This will restore the database to this snapshot.",
+                          title: t("restorePoints.restoreTitle"),
+                          description: t("restorePoints.restoreBody"),
                           tone: "danger",
                           onConfirm: () => handleRestorePoint(point.id),
                         })
                       }
                       className="rounded-full border border-rose-200 bg-rose-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-100 dark:border-rose-200/40 dark:bg-rose-200/10 dark:text-rose-200 dark:hover:bg-rose-200/20"
                     >
-                      Restore
+                      {t("restorePoints.restore")}
                     </button>
                   </div>
                 ))}
@@ -667,7 +676,9 @@ export default function DatabaseConsolePage() {
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Rollback history</h3>
+                <h3 className="text-lg font-medium">
+                  {t("rollback.title")}
+                </h3>
               </div>
               <div className="space-y-3 p-6">
                 {rollbackHistory.map((item) => (
@@ -690,9 +701,11 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-medium">Restore runbook</h3>
+                <h3 className="text-lg font-medium">
+                  {t("runbook.title")}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Guided steps for safe restore execution.
+                  {t("runbook.subtitle")}
                 </p>
               </div>
               <ClipboardCheck className="h-6 w-6 text-emerald-500" />
@@ -718,47 +731,52 @@ export default function DatabaseConsolePage() {
                 onClick={() => showToast("Runbook opened.", "info")}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Open runbook
+                {t("runbook.open")}
               </button>
               <button
                 type="button"
                 onClick={() =>
                   runbookSteps[0]
                     ? handleRunbookComplete(runbookSteps[0].id)
-                    : showToast("No runbook steps available.", "info")
+                    : showToast(t("toast.runbookEmpty"), "info")
                 }
                 className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
               >
-                Complete next step
+                {t("runbook.completeNext")}
               </button>
               <button
                 type="button"
                 onClick={handleRunbookReset}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Reset runbook
+                {t("runbook.reset")}
               </button>
             </div>
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Replication guardrails</h3>
+              <h3 className="text-lg font-medium">
+                {t("guardrails.replication.title")}
+              </h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-white/70">
-                Auto-failover armed. Replica lag triggers alerts at 2.5s.
+                {t("guardrails.replication.body")}
               </p>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Security posture</h3>
+              <h3 className="text-lg font-medium">
+                {t("guardrails.security.title")}
+              </h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-white/70">
-                Encrypted at rest. Row-level access enforced on sensitive
-                tables.
+                {t("guardrails.security.body")}
               </p>
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h3 className="text-lg font-medium">Performance budget</h3>
+              <h3 className="text-lg font-medium">
+                {t("guardrails.performance.title")}
+              </h3>
               <p className="mt-3 text-sm text-slate-600 dark:text-white/70">
-                P95 latency target 120ms. Current error rate 0.2%.
+                {t("guardrails.performance.body")}
               </p>
             </div>
           </div>
@@ -766,9 +784,11 @@ export default function DatabaseConsolePage() {
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-lg font-medium">Database protections</h3>
+                <h3 className="text-lg font-medium">
+                  {t("protections.title")}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Verify backups, audits, and emergency access paths.
+                  {t("protections.subtitle")}
                 </p>
               </div>
               <ShieldCheck className="h-6 w-6 text-emerald-500" />
@@ -776,21 +796,27 @@ export default function DatabaseConsolePage() {
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Backups
+                  {t("protections.items.backups.label")}
                 </p>
-                <p className="mt-2 text-sm font-semibold">Verified</p>
+                <p className="mt-2 text-sm font-semibold">
+                  {t("protections.items.backups.value")}
+                </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Access Keys
+                  {t("protections.items.keys.label")}
                 </p>
-                <p className="mt-2 text-sm font-semibold">Rotated 5d</p>
+                <p className="mt-2 text-sm font-semibold">
+                  {t("protections.items.keys.value")}
+                </p>
               </div>
               <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-xs dark:border-white/10 dark:bg-white/10">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Audit Trail
+                  {t("protections.items.audit.label")}
                 </p>
-                <p className="mt-2 text-sm font-semibold">Enabled</p>
+                <p className="mt-2 text-sm font-semibold">
+                  {t("protections.items.audit.value")}
+                </p>
               </div>
             </div>
             <div className="mt-6 flex flex-wrap gap-2">
@@ -798,31 +824,29 @@ export default function DatabaseConsolePage() {
                 type="button"
                 onClick={() =>
                   openConfirm({
-                    title: "Initiate point-in-time restore",
-                    description:
-                      "This will restore the database to a previous snapshot.",
+                    title: t("protections.pitrTitle"),
+                    description: t("protections.pitrBody"),
                     tone: "danger",
                     onConfirm: handlePointInTimeRestore,
                   })
                 }
                 className="rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-xs uppercase tracking-[0.2em] text-rose-600 hover:bg-rose-100 dark:border-rose-200/40 dark:bg-rose-200/10 dark:text-rose-200 dark:hover:bg-rose-200/20"
               >
-                Point-in-time restore
+                {t("protections.pitr")}
               </button>
               <button
                 type="button"
                 onClick={() =>
                   openConfirm({
-                    title: "Rollback last migration",
-                    description:
-                      "This will rollback the most recent migration step.",
+                    title: t("protections.rollbackTitle"),
+                    description: t("protections.rollbackBody"),
                     tone: "danger",
                     onConfirm: handleRollback,
                   })
                 }
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Rollback migration
+                {t("protections.rollback")}
               </button>
             </div>
           </div>

@@ -24,7 +24,7 @@
       "graph": "Mi grafo",
       "tutor": "Tutor IA",
       "upload": "Subir contenido",
-      "marketplace": "Marketplace",
+      "marketplace": "Mercado",
       "career": "Ruta profesional",
       "history": "Historial",
       "profile": "Perfil",
@@ -101,7 +101,7 @@
       "google": "Continuar con Google",
       "github": "Continuar con GitHub",
       "apple": "Continuar con Apple",
-      "passkey": "Usar una passkey"
+      "passkey": "Usar una clave de acceso"
     },
     "switch": {
       "signup": "¿No tienes cuenta? Regístrate",
@@ -112,12 +112,12 @@
       "note": "No se requiere cuenta. Explora con datos de muestra."
     },
     "errors": {
-      "missingEmail": "Introduce tu correo para usar passkeys.",
-      "unsupportedPasskey": "Las passkeys no son compatibles con este navegador.",
-      "passkeyStart": "No se pudo iniciar el acceso con passkey.",
-      "passkeyCanceled": "Solicitud de passkey cancelada.",
-      "passkeyVerify": "Falló la verificación de passkey.",
-      "passkeyFailed": "Falló el inicio de sesión con passkey.",
+      "missingEmail": "Introduce tu correo para usar claves de acceso.",
+      "unsupportedPasskey": "Las claves de acceso no son compatibles con este navegador.",
+      "passkeyStart": "No se pudo iniciar el acceso con clave de acceso.",
+      "passkeyCanceled": "Solicitud de clave de acceso cancelada.",
+      "passkeyVerify": "Falló la verificación de clave de acceso.",
+      "passkeyFailed": "Falló el inicio de sesión con clave de acceso.",
       "providerFailed": "Falló el inicio con proveedor."
     }
   },
@@ -134,7 +134,7 @@
     },
     "security": {
       "title": "Seguridad",
-      "body": "Gestiona passkeys y preferencias de inicio de sesión.",
+      "body": "Gestiona claves de acceso y preferencias de inicio de sesión.",
       "cta": "Abrir seguridad"
     },
     "focus": {
@@ -162,7 +162,7 @@
           "time": "Hace 2 horas"
         },
         "upload": {
-          "title": "Subido \"Lecture_05.pdf\"",
+          "title": "Subido \"Clase_05.pdf\"",
           "time": "Ayer"
         }
       }
@@ -241,7 +241,7 @@
         "studio": "Estudio",
         "graph": "Grafo de memoria",
         "practice": "Práctica",
-        "marketplace": "Marketplace"
+        "marketplace": "Mercado"
       },
       "signOut": "Cerrar sesión",
       "demo": "Explorar demo",
@@ -255,7 +255,7 @@
         "ctaPrimary": "Comenzar la experiencia",
         "ctaSecondary": "Entrar al estudio",
         "tagline": {
-          "one": "Offline-first",
+          "one": "Offline primero",
           "two": "Centrado en humanos",
           "three": "Consciente del sistema"
         }
@@ -274,7 +274,7 @@
       "subjects": {
         "title": "Materias",
         "headline": "Cada disciplina, un estudio.",
-        "body": "Matemáticas, física, química, biología, cálculo, estadística, álgebra lineal, matemática discreta, CS, programación, economía, finanzas, historia, literatura, idiomas, diseño, música, medicina, ingeniería, derecho y más.",
+        "body": "Matemáticas, física, química, biología, cálculo, estadística, álgebra lineal, matemática discreta, informática, programación, economía, finanzas, historia, literatura, idiomas, diseño, música, medicina, ingeniería, derecho y más.",
         "list": {
           "math": "Matemáticas",
           "physics": "Física",
@@ -284,7 +284,7 @@
           "statistics": "Estadística",
           "linearAlgebra": "Álgebra lineal",
           "discreteMath": "Matemática discreta",
-          "cs": "CS",
+          "cs": "Informática",
           "programming": "Programación",
           "economics": "Economía",
           "finance": "Finanzas",
@@ -327,7 +327,7 @@
           "body": "Ejercicios, reflexiones y tareas inmersivas que se sincronizan entre dispositivos."
         },
         "offline": {
-          "title": "Offline-first",
+          "title": "Offline primero",
           "body": "Sigue estudiando sin señal. Sincroniza elegantemente al volver."
         }
       },
@@ -370,9 +370,994 @@
         "byline": "Ilmora Studio por Arsalan — construyendo sistemas de aprendizaje ético para el largo arco de la maestría. Sigue el trabajo en",
         "link": "GitHub",
         "robots": "Robots",
-        "sitemap": "Sitemap",
-        "manifest": "Manifest"
+        "sitemap": "Mapa del sitio",
+        "manifest": "Manifiesto"
       }
+    }
+  },
+  "upload": {
+    "title": "Agregar material",
+    "demoNotice": "El modo demo guarda las cargas solo como borradores. Sin procesamiento ni sincronizacion.",
+    "card": {
+      "title": "Subir clases o notas",
+      "subtitle": "Formatos compatibles: PDF, TXT (Max 10MB)"
+    },
+    "actions": {
+      "select": "Seleccionar documento",
+      "remove": "Quitar",
+      "savingDraft": "Guardando borrador...",
+      "analyzing": "Analizando...",
+      "saveDraft": "Guardar borrador",
+      "startExtraction": "Iniciar extraccion",
+      "viewNotes": "Ver notas",
+      "startQuiz": "Iniciar cuestionario",
+      "uploadAnother": "Subir otro archivo"
+    },
+    "status": {
+      "draftSaved": "Borrador guardado!",
+      "processed": "Documento procesado!"
+    },
+    "why": {
+      "title": "¿Por que subir?",
+      "items": {
+        "notes": "Genera notas de repaso al instante.",
+        "chat": "Chatea con tus documentos (RAG).",
+        "quizzes": "Crea cuestionarios de practica automaticamente."
+      }
+    },
+    "drafts": {
+      "title": "Cargas en borrador",
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "justNow": "Ahora mismo"
+    },
+    "toast": {
+      "draftSaved": "Borrador guardado localmente (demo).",
+      "mustLogin": "Debes iniciar sesion para subir.",
+      "sessionExpired": "Sesion caducada. Inicia sesion de nuevo.",
+      "processed": "Documento procesado correctamente!",
+      "failed": "La carga fallo. Verifica el archivo e intentalo de nuevo."
+    },
+    "errors": {
+      "uploadFailed": "La carga fallo"
+    }
+  },
+  "practice": {
+    "title": "Modo practica",
+    "subtitle": "Pon a prueba tu dominio sin presion.",
+    "setup": {
+      "label": "¿Que quieres practicar?",
+      "placeholder": "p. ej. Recursion, Termodinamica, Quimica Organica",
+      "loading": "Pensando...",
+      "cta": "Comenzar"
+    },
+    "question": {
+      "title": "Pregunta"
+    },
+    "answer": {
+      "label": "Tu respuesta",
+      "placeholder": "Escribe tu explicacion aqui...",
+      "loading": "Calificando...",
+      "cta": "Enviar respuesta"
+    },
+    "result": {
+      "question": "Pregunta",
+      "feedback": "Retroalimentacion",
+      "cta": "Practicar otro tema"
+    },
+    "demoQuestions": {
+      "one": "Explica la recursion e identifica un caso base en un proceso real.",
+      "two": "¿Cual es la intuicion detras de los eigenvectores y como simplifican un sistema?",
+      "three": "Describe como la repeticion espaciada mejora el recuerdo con el tiempo."
+    },
+    "demoFeedback": {
+      "one": "Borrador de feedback: buena intuicion. Agrega un ejemplo concreto y aclara el caso base.",
+      "two": "Borrador de feedback: buen enfoque. Menciona que los eigenvectores mantienen la direccion bajo transformacion.",
+      "three": "Borrador de feedback: buen resumen. Vinculalo con las curvas de olvido para mas profundidad."
+    },
+    "prompts": {
+      "generate": "Genera una pregunta conceptual de practica sobre \"{topic}\". La pregunta debe probar comprension profunda, no solo memoria. No proporciones la respuesta.",
+      "submit": "Mi respuesta es: {answer}. Evalua esta respuesta. Si esta mal, explica por que conceptualmente. Si esta bien, confirma y amplia un poco."
+    }
+  },
+  "graph": {
+    "title": "Explorador del grafo de conocimiento",
+    "errors": {
+      "fetchFailed": "No se pudo obtener el grafo"
+    },
+    "empty": {
+      "title": "No se pudo cargar el grafo de conocimiento.",
+      "body": "Asegurate de que el backend este en ejecucion."
+    }
+  },
+  "marketplace": {
+    "title": "Mercado",
+    "subtitle": "Notas premium y packs de estudio de estudiantes top.",
+    "loading": "Cargando el mercado...",
+    "empty": {
+      "title": "Aun no hay packs disponibles",
+      "body": "Se el primero en publicar tus notas."
+    },
+    "card": {
+      "new": "Nuevo",
+      "price": "PKR {price}",
+      "free": "Gratis"
+    },
+    "actions": {
+      "create": "Crear pack de estudio",
+      "view": "Ver detalles"
+    }
+  },
+  "career": {
+    "title": "Inteligencia de carrera",
+    "subtitle": "Estrategia basada en IA para conectar tu carrera con la industria.",
+    "form": {
+      "label": "Rol objetivo (opcional)",
+      "placeholder": "p. ej. Desarrollador Full Stack, Cientifico de Datos..."
+    },
+    "actions": {
+      "loading": "Analizando plan de estudios...",
+      "generate": "Generar ruta"
+    },
+    "result": {
+      "title": "Estrategia personalizada",
+      "time": "Tiempo estimado: {time}"
+    },
+    "errors": {
+      "failed": "No se pudo generar la ruta."
+    }
+  },
+  "onboarding": {
+    "fallbackName": "Estudiante",
+    "title": "Bienvenido a Ilmora",
+    "subtitle": "Personalicemos la experiencia segun tus necesidades academicas.",
+    "intro": {
+      "eyebrow": "Antes de entrar",
+      "body": "{name}, estamos por construir un estudio alrededor de tus objetivos: un grafo de memoria que crece con cada sesion, rituales de practica ajustados a tu ritmo y un panel que captura cada logro."
+    },
+    "fields": {
+      "fullName": "Nombre completo",
+      "curriculum": "Curriculo / Junta",
+      "curriculumPlaceholder": "Selecciona tu curriculo...",
+      "curriculumHint": "Esto adapta tu ruta de aprendizaje y estilo de evaluacion.",
+      "degree": "Programa de estudios",
+      "degreePlaceholder": "p. ej. Lic. en Ciencias de la Computacion",
+      "semester": "Semestre actual",
+      "semesterPlaceholder": "Selecciona semestre",
+      "semesterOption": "{n}º semestre",
+      "subjects": "Asignaturas actuales",
+      "subjectsHint": "Separadas por comas",
+      "subjectsPlaceholder": "p. ej. DSA, Algebra lineal, Psicologia",
+      "language": "Idioma preferido",
+      "languageOptions": {
+        "english": "Ingles",
+        "urdu": "Urdu"
+      },
+      "learningStyle": "Estilo de aprendizaje",
+      "learningOptions": {
+        "visual": "Visual (Diagramas, Grafos)",
+        "socratic": "Socratico (Hazme preguntas)",
+        "eli5": "ELI5 (Analogias simples)"
+      },
+      "careerGoals": "Carrera sonada (separadas por comas)",
+      "careerGoalsPlaceholder": "p. ej. Arquitecto de IA, Ingeniero Civil, Product Manager"
+    },
+    "actions": {
+      "saving": "Guardando perfil...",
+      "start": "Empezar a aprender"
+    },
+    "errors": {
+      "sessionExpired": "Sesion caducada",
+      "updateFailed": "No se pudo actualizar el perfil",
+      "generic": "Algo salio mal. Intentalo de nuevo."
+    }
+  },
+  "noteDetail": {
+    "empty": "Nota no encontrada.",
+    "aiComingSoon": "La estructuracion con IA llegara en la siguiente fase.",
+    "actions": {
+      "ai": "Estructura IA",
+      "edit": "Editar",
+      "save": "Guardar"
+    },
+    "errors": {
+      "fetchFailed": "Error de API",
+      "networkCache": "Fallo de red, comprobando cache sin conexion..."
+    }
+  },
+  "security": {
+    "eyebrow": "Configuracion",
+    "title": "Seguridad y claves de acceso",
+    "demoNotice": "Modo demo: las claves de acceso y proveedores son solo vista previa.",
+    "passkeys": {
+      "title": "Claves de acceso",
+      "body": "Usa una clave de acceso para iniciar sesion al instante en este dispositivo. Las claves de acceso nunca salen de tu dispositivo y reemplazan las contrasenas."
+    },
+    "providers": {
+      "title": "Proveedores vinculados",
+      "body": "Puedes usar estos proveedores en la pantalla de inicio de sesion cuando esten habilitados en tu proveedor de identidad.",
+      "available": "Disponible al iniciar sesion"
+    },
+    "actions": {
+      "back": "Volver al panel",
+      "working": "Trabajando...",
+      "createPasskey": "Crear clave de acceso"
+    },
+    "errors": {
+      "unsupported": "Las claves de acceso no son compatibles aqui.",
+      "sessionExpired": "Sesion caducada. Inicia sesion otra vez.",
+      "startFailed": "No se pudo iniciar el registro de clave de acceso.",
+      "canceled": "Solicitud de clave de acceso cancelada.",
+      "verifyFailed": "La verificacion de clave de acceso fallo.",
+      "failed": "El registro de clave de acceso fallo."
+    },
+    "toast": {
+      "success": "Clave de acceso agregada con exito."
+    }
+  },
+  "history": {
+    "eyebrow": "Historial",
+    "title": "Cronologia de sesiones",
+    "subtitle": "Cada sesion del estudio, carga y ritual queda registrado aqui.",
+    "stats": {
+      "sessions": {
+        "label": "Sesiones",
+        "value": "12 esta semana"
+      },
+      "uploads": {
+        "label": "Cargas",
+        "value": "4 packs sincronizados"
+      },
+      "momentum": {
+        "label": "Impulso",
+        "value": "84 de consistencia"
+      }
+    },
+    "filters": {
+      "label": "Filtros",
+      "all": "Todos",
+      "studio": "Estudio",
+      "upload": "Cargas",
+      "practice": "Practica"
+    },
+    "types": {
+      "studio": "Estudio",
+      "upload": "Carga",
+      "practice": "Practica"
+    },
+    "items": {
+      "graphRecall": {
+        "title": "Sesion de repaso del grafo",
+        "detail": "18 min de inmersion"
+      },
+      "lecture": {
+        "title": "Clase_05.pdf",
+        "detail": "Nodos de conocimiento generados"
+      },
+      "recursion": {
+        "title": "Ejercicios de recursion",
+        "detail": "14 prompts completados"
+      },
+      "socratic": {
+        "title": "Revision socratica",
+        "detail": "12 prompts • aumento de confianza"
+      }
+    },
+    "times": {
+      "twoHours": "Hace 2 horas",
+      "yesterday": "Ayer",
+      "twoDays": "Hace 2 dias",
+      "threeDays": "Hace 3 dias"
+    }
+  },
+  "chat": {
+    "header": {
+      "phaseTag": "FASE 1 PROTO",
+      "demoBadge": "Borradores demo",
+      "status": {
+        "online": "En linea",
+        "offline": "Modo sin conexion"
+      }
+    },
+    "empty": {
+      "title": "Bienvenido a Ilmora",
+      "body": "Soy tu companero de aprendizaje con IA. Puedo ayudarte a entender conceptos, repasar temas y seguir tu progreso."
+    },
+    "input": {
+      "placeholder": "Pregunta lo que quieras a Ilmora...",
+      "helper": "Ilmora es un tutor de IA disenado para aprender, no para hacer trampas."
+    }
+  },
+  "bottomNav": {
+    "home": "Inicio",
+    "graph": "Grafo",
+    "chat": "Conversacion",
+    "history": "Historial",
+    "store": "Tienda",
+    "profile": "Perfil"
+  },
+  "errorPage": {
+    "eyebrow": "Algo salio mal",
+    "title": "Ilmora tuvo un tropiezo",
+    "body": "Intenta recargar o vuelve al estudio.",
+    "actions": {
+      "retry": "Reintentar",
+      "home": "Ir al inicio"
+    },
+    "code": "Codigo: {code}"
+  },
+  "globalError": {
+    "title": "Falla del sistema",
+    "body": "Un error critico interrumpio la simulacion. El estado fue capturado.",
+    "cta": "Reiniciar interfaz"
+  },
+  "notFound": {
+    "body": "El concepto que buscas parece faltar en el grafo.",
+    "actions": {
+      "home": "Volver al inicio",
+      "back": "Volver"
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading System Admin...",
+    "title": "Ilmora Global Command Center",
+    "subtitle": "System Status & Multitenant Oversight",
+    "search": {
+      "title": "Global admin search",
+      "placeholder": "Search incidents, audit events, or roles",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "submit": "Search"
+    },
+    "stats": {
+      "totalUsers": {
+        "title": "Total Users",
+        "delta": "+6% WoW"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "delta": "+1 this month"
+      },
+      "interactions": {
+        "title": "Total Interactions",
+        "sub": "AI messages processed",
+        "delta": "+12% WoW"
+      },
+      "flagged": {
+        "title": "Flagged Issues",
+        "sub": "Requires attention",
+        "delta": "-2 since yesterday"
+      }
+    },
+    "kpis": {
+      "openIncidents": {
+        "title": "Open Incidents",
+        "delta": "+1 this week"
+      },
+      "auditEvents": {
+        "title": "Audit Events",
+        "delta": "+14% WoW"
+      },
+      "accessRequests": {
+        "title": "Access Requests",
+        "delta": "2 pending"
+      },
+      "dbJobs": {
+        "title": "DB Jobs",
+        "delta": "1 running"
+      }
+    },
+    "quickLinks": {
+      "databaseTitle": "Database Console",
+      "database": "Replicas, performance, jobs",
+      "auditTitle": "Audit Logs",
+      "audit": "Security, data access, changes",
+      "incidentTitle": "Incident Log",
+      "incidents": "Incidents, mitigations, status",
+      "rolesTitle": "Roles & Access",
+      "roles": "Permissions and approvals",
+      "healthTitle": "System Health",
+      "health": "Runtime, queues, uptime"
+    },
+    "priority": {
+      "title": "Priority Review Queue",
+      "empty": "No pending issues. System healthy.",
+      "context": "Context:",
+      "by": "by {email}",
+      "resolve": "Resolve"
+    },
+    "actions": {
+      "title": "System Actions",
+      "provision": "+ Provision New Institution",
+      "manageCurricula": "Manage Curricula",
+      "viewLogs": "View Server Logs"
+    },
+    "databaseOverview": {
+      "primary": "Primary DB",
+      "healthy": "Healthy",
+      "replicaLag": "Replica Lag",
+      "storage": "Storage Used",
+      "latency": "P95 Latency"
+    },
+    "databaseActivity": {
+      "title": "Database Activity",
+      "subtitle": "Live queries, maintenance jobs, and service health.",
+      "inspect": "Inspect",
+      "status": {
+        "ok": "OK",
+        "running": "Running"
+      },
+      "times": {
+        "one": "18s ago",
+        "two": "2 min ago",
+        "three": "7 min ago"
+      }
+    },
+    "databaseHealth": {
+      "title": "Database Health",
+      "subtitle": "Replication, storage, latency, and backup status.",
+      "cta": "Open database console"
+    }
+  },
+  "adminIntegrations": {
+    "title": "System Integrations",
+    "subtitle": "Connect Ilmora to external LMS and event listeners.",
+    "tabs": {
+      "integrations": "LMS & Tools",
+      "webhooks": "Webhooks"
+    },
+    "form": {
+      "title": "Add New {kind}",
+      "integration": "Integration",
+      "webhook": "Webhook",
+      "type": "Type",
+      "integrationTypeAria": "Integration type",
+      "webhookTypeAria": "Webhook event type",
+      "integrationTypes": {
+        "lms": "Learning Management System",
+        "payment": "Payment Gateway",
+        "sso": "Single Sign-On"
+      },
+      "name": "Name",
+      "targetUrl": "Target URL",
+      "namePlaceholder": "e.g. Canvas NUST",
+      "urlPlaceholder": "https://api.mysite.com/webhook",
+      "create": "Create"
+    },
+    "list": {
+      "deleteIntegration": "Delete integration",
+      "deleteWebhook": "Delete webhook",
+      "empty": "No {tab} configured yet."
+    },
+    "toast": {
+      "demoFallback": "Integrations are using demo data.",
+      "nameRequired": "Enter an integration name.",
+      "urlRequired": "Enter a webhook URL.",
+      "createdDemo": "Created in demo mode.",
+      "created": "Created successfully.",
+      "createFailed": "Creation failed.",
+      "removedDemo": "Removed in demo mode.",
+      "removed": "Removed successfully.",
+      "removeFailed": "Removal failed."
+    }
+  },
+  "adminAudit": {
+    "loading": "Cargando registros...",
+    "eyebrow": "Registros de auditoria",
+    "title": "Rastro de seguridad",
+    "subtitle": "Rastrea acceso, cambios de configuracion y exportaciones de datos.",
+    "lastUpdated": "Ultima actualizacion {time}",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando",
+    "autoRefresh": "Actualizacion automatica {state}",
+    "on": "Activado",
+    "off": "Desactivado",
+    "exportCsv": "Exportar CSV",
+    "ackAll": "Reconocer todo",
+    "ackConfirm": {
+      "title": "Reconocer todos los eventos",
+      "body": "Esto limpiara la cola de auditoria actual. Continuar?"
+    },
+    "summary": {
+      "total": "Total",
+      "high": "Alta",
+      "medium": "Media",
+      "low": "Baja"
+    },
+    "filters": {
+      "title": "Filtros",
+      "search": "Buscar actividad",
+      "levels": {
+        "all": "Todos",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      }
+    },
+    "events": {
+      "title": "Eventos recientes",
+      "emptyTitle": "Ningun evento coincide con este filtro.",
+      "emptyBody": "Prueba limpiar filtros o ir a actividad de incidentes.",
+      "clearFilters": "Limpiar filtros",
+      "viewIncidents": "Ver incidentes"
+    },
+    "retention": "Retencion de auditoria: 400 dias • Exportacion de cumplimiento habilitada.",
+    "toast": {
+      "demoFallback": "Los registros de auditoria usan datos de demo.",
+      "exportQueuedDemo": "Exportacion de auditoria en cola (demo).",
+      "exportQueued": "Exportacion de auditoria en cola.",
+      "exportFailed": "Fallo la exportacion de auditoria.",
+      "ackDemo": "Cola de auditoria reconocida (demo).",
+      "ack": "Cola de auditoria reconocida.",
+      "ackFailed": "Fallo el reconocimiento de auditoria."
+    }
+  },
+  "adminIncidents": {
+    "loading": "Cargando incidentes...",
+    "eyebrow": "Registro de incidentes",
+    "title": "Incidentes operativos",
+    "subtitle": "Rastrea investigaciones, mitigaciones y ventanas de resolucion.",
+    "lastUpdated": "Ultima actualizacion {time}",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando",
+    "autoRefresh": "Actualizacion automatica {state}",
+    "on": "Activado",
+    "off": "Desactivado",
+    "exportCsv": "Exportar CSV",
+    "exportJson": "Exportar JSON",
+    "summary": {
+      "total": "Total",
+      "investigating": "Investigando",
+      "monitoring": "Monitoreando",
+      "resolved": "Resuelto"
+    },
+    "filters": {
+      "title": "Filtros",
+      "search": "Buscar incidentes",
+      "status": {
+        "all": "Todos",
+        "investigating": "Investigando",
+        "monitoring": "Monitoreando",
+        "resolved": "Resuelto"
+      },
+      "severity": {
+        "all": "Todos",
+        "title": "Seguridad y claves de acceso",
+        "demoNotice": "Modo demo: las claves de acceso y proveedores son solo vista previa.",
+        "low": "Baja"
+      }
+          "body": "Usa una clave de acceso para iniciar sesion al instante en este dispositivo. Las claves de acceso nunca salen de tu dispositivo y reemplazan las contrasenas."
+    "feedTitle": "Feed de incidentes",
+    "empty": {
+      "title": "Ningun incidente coincide con tus filtros.",
+      "body": "Ajusta los filtros o crea un nuevo incidente.",
+      "clearFilters": "Limpiar filtros",
+      "createIncident": "Crear incidente"
+    },
+    "servicesLabel": "Servicios:",
+    "actions": {
+      "viewDetails": "Ver detalles",
+      "ack": "Reconocer",
+      "resolve": "Resolver"
+    },
+    "confirm": {
+      "ack": {
+        "title": "Reconocer incidente",
+        "body": "Registrar reconocimiento para este incidente."
+        "createPasskey": "Crear clave de acceso"
+      "resolve": {
+        "title": "Resolver incidente",
+        "unsupported": "Las claves de acceso no son compatibles aqui.",
+      }
+        "startFailed": "No se pudo iniciar el registro de clave de acceso.",
+        "canceled": "Solicitud de clave de acceso cancelada.",
+        "verifyFailed": "La verificacion de clave de acceso fallo.",
+        "failed": "El registro de clave de acceso fallo."
+    "detail": {
+      "eyebrow": "Detalle del incidente",
+        "success": "Clave de acceso agregada con exito."
+      "severity": "Severidad",
+      "owner": "Responsable",
+      "region": "Region",
+      "timeline": "Linea de tiempo",
+      "notes": "Notas",
+      "notesEmpty": "Aun no hay notas.",
+      "notePlaceholder": "Agregar nota",
+      "addNote": "Agregar nota",
+      "confirmAck": {
+        "title": "Reconocer incidente",
+        "body": "Registrar un reconocimiento para este incidente."
+      },
+      "acknowledge": "Reconocer",
+      "followUp": "Crear seguimiento"
+    },
+    "timeline": {
+      "reported": "Incidente reportado",
+      "mitigation": "Mitigacion desplegada",
+      "resolved": "Incidente resuelto"
+    },
+    "toast": {
+      "demoFallback": "El registro de incidentes usa datos de demo.",
+      "detailsFailed": "No se pudieron cargar los detalles del incidente.",
+      "noteFailed": "No se pudo guardar la nota.",
+      "updatedDemo": "Incidente actualizado (demo).",
+      "updated": "Incidente actualizado.",
+      "updateFailed": "Fallo la actualizacion del incidente.",
+      "exported": "Registro de incidentes exportado.",
+      "acknowledged": "Incidente reconocido.",
+      "followUp": "Tarea de seguimiento creada."
+    }
+  },
+  "adminHealth": {
+    "eyebrow": "Salud del sistema",
+    "title": "Disponibilidad y resiliencia",
+    "subtitle": "Rastrea estado de servicios, incidentes y preparacion operativa.",
+    "lastUpdated": "Ultima actualizacion {time}",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando",
+    "autoRefresh": "Actualizacion automatica {state}",
+    "on": "Activado",
+    "off": "Desactivado",
+    "cards": {
+      "uptime": {
+        "title": "Disponibilidad global",
+        "body": "99.95% en regiones este mes."
+      },
+      "queue": {
+        "title": "Salud de cola",
+        "body": "3 workers en linea • demora promedio 320ms."
+      },
+      "alerts": {
+        "title": "Alertas activas",
+        "body": "2 advertencias • 0 criticas."
+      }
+    },
+    "create": {
+      "title": "Crear incidente",
+      "placeholder": "Resumen del incidente",
+      "statusAria": "Estado del incidente",
+      "statusOptions": {
+        "investigating": "Investigando",
+        "identified": "Identificado",
+        "monitoring": "Monitoreando"
+      },
+      "submit": "Crear"
+    },
+    "services": {
+      "title": "Estado del servicio",
+      "uptime": "Disponibilidad {value}"
+    },
+    "timeline": {
+      "title": "Linea de tiempo de incidentes",
+      "resolve": "Resolver",
+      "viewDetails": "Ver detalles",
+      "viewAll": "Ver registro completo de incidentes",
+      "confirmResolve": {
+        "title": "Resolver incidente",
+        "body": "Marca este incidente como resuelto y archivarlo."
+      }
+    },
+    "detail": {
+      "eyebrow": "Detalle del incidente",
+      "close": "Cerrar",
+      "severity": "Severidad",
+      "owner": "Responsable",
+      "services": "Servicios",
+      "impactPending": "Detalles de impacto pendientes.",
+      "timeline": "Linea de tiempo",
+      "confirmAck": {
+        "title": "Reconocer incidente",
+        "body": "Registrar un reconocimiento para este incidente."
+      },
+      "acknowledge": "Reconocer",
+      "followUp": "Crear seguimiento",
+      "toast": {
+        "acknowledged": "Incidente reconocido.",
+        "followUp": "Tarea de seguimiento creada."
+      }
+    },
+    "toast": {
+      "demoFallback": "La salud del sistema usa datos de demo.",
+      "titleRequired": "Ingresa un titulo de incidente.",
+      "createdDemo": "Incidente creado (demo).",
+      "created": "Incidente creado.",
+      "createFailed": "Fallo al crear el incidente.",
+      "resolvedDemo": "Incidente resuelto (demo).",
+      "resolved": "Incidente resuelto.",
+      "resolveFailed": "Fallo al resolver el incidente."
+    }
+  },
+  "adminDatabase": {
+    "eyebrow": "Consola de base de datos",
+    "title": "Centro de control de datos",
+    "subtitle": "Supervisa replicacion, salud de consultas y operaciones de mantenimiento.",
+    "lastUpdated": "Ultima actualizacion {time}",
+    "refresh": "Actualizar",
+    "refreshing": "Actualizando",
+    "autoRefresh": "Actualizacion automatica {state}",
+    "on": "Activado",
+    "off": "Desactivado",
+    "cluster": {
+      "live": "En vivo",
+      "promoteTitle": "Promover replica",
+      "promoteBody": "Esto promovera la replica a primaria. Continuar?",
+      "promote": "Promover replica",
+      "failoverTitle": "Ejecutar simulacion de failover",
+      "failoverBody": "Esto ejecuta una simulacion de failover. Confirma para continuar.",
+      "failover": "Ejecutar simulacion de failover",
+      "latencyTrend": "Tendencia de latencia",
+      "latency": "Latencia",
+      "storage": "Almacenamiento",
+      "backups": "Copias de seguridad",
+      "backupTime": "hace 4 h"
+    },
+    "slowQueries": {
+      "title": "Consultas lentas",
+      "time": "Tiempo {time}",
+      "impact": "Impacto {impact}",
+      "inspect": "Inspeccionar",
+      "terminateTitle": "Terminar consulta",
+      "terminateBody": "Esto terminara una consulta en vivo inmediatamente.",
+      "terminate": "Terminar"
+    },
+    "maintenance": {
+      "title": "Cola de mantenimiento",
+      "runTitle": "Ejecutar trabajo de mantenimiento",
+      "runBody": "Esto iniciara el trabajo de mantenimiento ahora.",
+      "runNow": "Ejecutar ahora",
+      "backupTitle": "Ejecutar snapshot de backup",
+      "backupBody": "Dispara un backup de snapshot para el cluster primario.",
+      "backup": "Ejecutar snapshot de backup"
+    },
+    "charts": {
+      "latency": {
+        "title": "Histograma de latencia",
+        "body": "Distribucion de latencia de consultas durante la ultima hora."
+      },
+      "replica": {
+        "title": "Tendencia de retraso de replicas",
+        "body": "Retraso en segundos (ultimas 7 muestras)."
+      },
+      "error": {
+        "title": "Tendencia de tasa de errores",
+        "body": "Tasa de errores de API (%) en servicios."
+      }
+    },
+    "restorePoints": {
+      "title": "Puntos de restauracion",
+      "age": "Antiguedad {age} • {region}",
+      "restoreTitle": "Restaurar desde punto",
+      "restoreBody": "Esto restaurara la base de datos a este snapshot.",
+      "restore": "Restaurar"
+    },
+    "rollback": {
+      "title": "Historial de reversos"
+    },
+    "runbook": {
+      "title": "Runbook de restauracion",
+      "subtitle": "Pasos guiados para una restauracion segura.",
+      "open": "Abrir runbook",
+      "completeNext": "Completar siguiente paso",
+      "reset": "Restablecer runbook"
+    },
+    "guardrails": {
+      "replication": {
+        "title": "Guardarrailes de replicacion",
+        "body": "Auto-failover armado. Retraso de replica dispara alertas a 2.5s."
+      },
+      "security": {
+        "title": "Postura de seguridad",
+        "body": "Cifrado en reposo. Acceso a nivel de fila en tablas sensibles."
+      },
+      "performance": {
+        "title": "Presupuesto de rendimiento",
+        "body": "Objetivo P95 de latencia 120ms. Tasa de error actual 0.2%."
+      }
+    },
+    "protections": {
+      "title": "Protecciones de base de datos",
+      "subtitle": "Verifica backups, auditorias y rutas de acceso de emergencia.",
+      "items": {
+        "backups": { "label": "Backups", "value": "Verificado" },
+        "keys": { "label": "Claves de acceso", "value": "Rotadas 5 d" },
+        "audit": { "label": "Rastro de auditoria", "value": "Habilitado" }
+      },
+      "pitrTitle": "Iniciar restauracion point-in-time",
+      "pitrBody": "Esto restaurara la base de datos a un snapshot previo.",
+      "pitr": "Restauracion point-in-time",
+      "rollbackTitle": "Revertir ultima migracion",
+      "rollbackBody": "Esto revertira el paso de migracion mas reciente.",
+      "rollback": "Revertir migracion"
+    },
+    "toast": {
+      "demoFallback": "La consola de base de datos usa datos de demo.",
+      "backupQueuedDemo": "Snapshot de backup en cola (demo).",
+      "backupQueued": "Snapshot de backup en cola.",
+      "backupFailed": "Fallo la solicitud de backup.",
+      "jobStartedDemo": "Trabajo iniciado (demo).",
+      "jobStarted": "Trabajo iniciado.",
+      "jobFailed": "Fallo al iniciar el trabajo.",
+      "queryTerminatedDemo": "Consulta terminada (demo).",
+      "queryTerminated": "Consulta terminada.",
+      "queryFailed": "Fallo al terminar la consulta.",
+      "rollbackQueuedDemo": "Rollback en cola (demo).",
+      "rollbackQueued": "Rollback en cola.",
+      "rollbackFailed": "Fallo el rollback.",
+      "pitrDemo": "PITR iniciado (demo).",
+      "pitr": "PITR iniciado.",
+      "pitrFailed": "Fallo el PITR.",
+      "runbookStepDemo": "Paso de runbook completado (demo).",
+      "runbookStep": "Paso de runbook completado.",
+      "runbookFailed": "Fallo la actualizacion del runbook.",
+      "runbookResetDemo": "Runbook restablecido (demo).",
+      "runbookReset": "Runbook restablecido.",
+      "runbookResetFailed": "Fallo el restablecimiento del runbook.",
+      "restoreDemo": "Restauracion en cola (demo).",
+      "restore": "Restauracion en cola.",
+      "restoreFailed": "Fallo la restauracion.",
+      "inspect": "Inspeccion de consulta abierta.",
+      "runbookEmpty": "No hay pasos de runbook disponibles."
+    }
+  },
+  "adminRoles": {
+    "eyebrow": "Roles y acceso",
+    "title": "Arquitectura de permisos",
+    "subtitle": "Configura roles, aprobaciones y limites de acceso.",
+    "loading": "Cargando roles...",
+    "confirm": {
+      "proceed": "Continuar"
+    },
+    "create": {
+      "placeholder": "Nombre del rol",
+      "scopeAria": "Alcance del rol",
+      "scopes": {
+        "global": "Global",
+        "institution": "Institucion",
+        "department": "Departamento"
+      },
+      "submit": "Crear rol"
+    },
+    "activeRoles": "Roles activos",
+    "roleMeta": "{count} miembros • {scope}",
+    "manage": "Administrar",
+    "permissions": {
+      "title": "Matriz de permisos",
+      "subtitle": "Configura acceso para {name}.",
+      "subtitleFallback": "rol",
+      "selectRole": "Seleccionar rol",
+      "export": "Exportar matriz",
+      "cloneTitle": "Clonar rol seleccionado",
+      "cloneBody": "Esto creara una copia del rol seleccionado y sus permisos.",
+      "clone": "Clonar rol",
+      "groups": {
+        "data": "Datos",
+        "security": "Seguridad",
+        "aiContent": "IA y contenido",
+        "operations": "Operaciones"
+      },
+      "labels": {
+        "db": {
+          "read": "Leer base de datos",
+          "write": "Escribir datos",
+          "export": "Exportar registros"
+        },
+        "audit": {
+          "view": "Ver registros de auditoria",
+          "export": "Exportar registros de auditoria"
+        },
+        "incident": {
+          "manage": "Gestionar incidentes"
+        },
+        "content": {
+          "review": "Revisar contenido"
+        },
+        "model": {
+          "configure": "Configurar modelos"
+        },
+        "studio": {
+          "manage": "Gestionar studio"
+        },
+        "integrations": {
+          "manage": "Gestionar integraciones"
+        },
+        "roles": {
+          "manage": "Gestionar roles"
+        },
+        "system": {
+          "health": "Ver salud del sistema"
+        }
+      },
+      "state": {
+        "on": "Activado",
+        "off": "Desactivado"
+      }
+    },
+    "insights": {
+      "title": "Insights de auditoria de roles",
+      "subtitle": "Distribucion de severidad e intensidad (entradas cargadas).",
+      "mix": "Mezcla de severidad",
+      "trend": "Tendencia de severidad"
+    },
+    "actors": {
+      "title": "Clasificacion de actores",
+      "subtitle": "Admins mas activos en la vista actual.",
+      "empty": "Aun no hay actividad de auditoria cargada.",
+      "events": "{count} eventos"
+    },
+    "audit": {
+      "title": "Historial de auditoria de roles",
+      "levels": {
+        "all": "Todos",
+        "high": "Alta",
+        "medium": "Media",
+        "low": "Baja"
+      },
+      "export": "Exportar CSV",
+      "search": "Buscar auditoria de roles",
+      "empty": {
+        "title": "No hay entradas de auditoria de roles que coincidan con tus filtros.",
+        "body": "Ajusta los filtros o limpia la busqueda.",
+        "clear": "Limpiar filtros"
+      },
+      "pagination": "Pagina {page} de {total}",
+      "prev": "Anterior",
+      "next": "Siguiente"
+    },
+    "footer": {
+      "notice": "Las politicas de acceso se aplican por institucion y se sincronizan cada hora."
+    },
+    "access": {
+      "title": "Solicitudes de acceso",
+      "approveAllTitle": "Aprobar todas las solicitudes",
+      "approveAllBody": "Esto aprobara todas las solicitudes de acceso pendientes.",
+      "approveAll": "Aprobar todas",
+      "denyAllTitle": "Denegar todas las solicitudes",
+      "denyAllBody": "Esto negara todas las solicitudes de acceso pendientes.",
+      "denyAll": "Denegar todas",
+      "approve": "Aprobar",
+      "deny": "Denegar",
+      "notice": "Las aprobaciones se registran automaticamente en el rastro de auditoria."
+    },
+    "templates": {
+      "confirmTitle": "Aplicar plantilla {name}",
+      "confirmBody": "Esto sobrescribira el conjunto de permisos actual para el rol seleccionado.",
+      "labels": {
+        "administrator": "Administrador",
+        "operator": "Operador",
+        "readOnly": "Solo lectura"
+      }
+    },
+    "toast": {
+      "matrixExported": "Matriz de permisos exportada.",
+      "auditExported": "Auditoria de roles exportada.",
+      "cloneSelect": "Selecciona un rol para clonar.",
+      "cloneDemo": "Rol clonado (demo).",
+      "clone": "Rol clonado.",
+      "cloneFailed": "Fallo el clonado del rol.",
+      "auditDemo": "La auditoria de roles usa datos de demo.",
+      "rolesDemo": "Los datos de roles usan datos de demo.",
+      "permissionDemo": "Permiso actualizado (demo).",
+      "permissionUpdated": "Permiso actualizado.",
+      "permissionFailed": "Fallo la actualizacion de permisos.",
+      "noAccessRequests": "No hay solicitudes de acceso para actualizar.",
+      "accessUpdatedDemo": "Solicitudes de acceso actualizadas (demo).",
+      "accessUpdated": "Solicitudes de acceso actualizadas.",
+      "bulkFailed": "Fallo la actualizacion masiva.",
+      "templateDemo": "Plantilla aplicada (demo).",
+      "templateApplied": "Plantilla aplicada.",
+      "templateFailed": "Fallo al aplicar plantilla.",
+      "roleNameRequired": "Ingresa un nombre de rol.",
+      "roleCreatedDemo": "Rol creado en modo demo.",
+      "roleCreated": "Rol creado.",
+      "roleCreateFailed": "Fallo al crear el rol.",
+      "accessDecisionDemo": "Solicitud de acceso actualizada (demo).",
+      "accessDecision": "Solicitud de acceso actualizada.",
+      "accessDecisionFailed": "Fallo al actualizar la solicitud de acceso."
     }
   }
 }

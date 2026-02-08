@@ -6,8 +6,10 @@ import { useAuth } from "@/context/AuthContext";
 import { BrainCircuit, Send, Check } from "lucide-react";
 import { v4 as uuidv4 } from "uuid";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function PracticePage() {
+  const t = useTranslations("practice");
   const { user, demoMode, token } = useAuth();
   const [topic, setTopic] = useState("");
   const [step, setStep] = useState<"setup" | "question" | "result">("setup");
@@ -17,15 +19,15 @@ export default function PracticePage() {
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(uuidv4());
   const demoQuestions = [
-    "Explain recursion and identify a base case in a real-world process.",
-    "What is the intuition behind eigenvectors, and how do they simplify a system?",
-    "Describe how spaced repetition improves recall over time.",
+    t("demoQuestions.one"),
+    t("demoQuestions.two"),
+    t("demoQuestions.three"),
   ];
 
   const demoFeedback = [
-    "Draft feedback: solid intuition. Add a concrete example and clarify the base case.",
-    "Draft feedback: good framing. Mention how eigenvectors keep direction under transformation.",
-    "Draft feedback: strong summary. Tie it to forgetting curves for extra depth.",
+    t("demoFeedback.one"),
+    t("demoFeedback.two"),
+    t("demoFeedback.three"),
   ];
 
   const generateQuestion = async () => {
@@ -53,7 +55,7 @@ export default function PracticePage() {
         },
         body: JSON.stringify({
           sessionId: sessionId,
-          content: `Generate a conceptual practice question about "${topic}". The question should test deep understanding, not just memory. Do not provide the answer.`,
+          content: t("prompts.generate", { topic }),
           mode: "socratic",
         }),
       });
@@ -92,7 +94,7 @@ export default function PracticePage() {
         },
         body: JSON.stringify({
           sessionId: sessionId,
-          content: `My answer is: ${userAnswer}. Evaluate this answer. If wrong, explain why conceptually. If right, confirm and expand slightly.`,
+          content: t("prompts.submit", { answer: userAnswer }),
           mode: "socratic",
         }),
       });
@@ -117,9 +119,9 @@ export default function PracticePage() {
                 <BrainCircuit className="h-6 w-6" />
               </div>
               <div>
-                <h1 className="text-xl font-semibold">Practice Mode</h1>
+                <h1 className="text-xl font-semibold">{t("title")}</h1>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Test your mastery without the pressure.
+                  {t("subtitle")}
                 </p>
               </div>
             </header>
@@ -128,14 +130,14 @@ export default function PracticePage() {
               {step === "setup" && (
                 <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
                   <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
-                    What do you want to practice?
+                    {t("setup.label")}
                   </label>
                   <div className="flex gap-2">
                     <input
                       type="text"
                       value={topic}
                       onChange={(e) => setTopic(e.target.value)}
-                      placeholder="e.g. Recursion, Thermodynamics, Organic Chemistry"
+                      placeholder={t("setup.placeholder")}
                       className="flex-1 rounded-lg border border-slate-200 bg-white/90 p-3 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                     />
                     <button
@@ -143,7 +145,7 @@ export default function PracticePage() {
                       disabled={loading || !topic}
                       className="flex items-center gap-2 rounded-lg bg-slate-900 px-6 font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
                     >
-                      {loading ? "Thinking..." : "Start"}
+                      {loading ? t("setup.loading") : t("setup.cta")}
                       {!loading && <Send className="w-4 h-4" />}
                     </button>
                   </div>
@@ -154,7 +156,7 @@ export default function PracticePage() {
                 <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
                   <div className="mb-6">
                     <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-slate-600 dark:text-white/60">
-                      Question
+                      {t("question.title")}
                     </h3>
                     <p className="whitespace-pre-wrap text-lg leading-relaxed text-slate-900 dark:text-white">
                       {question}
@@ -163,12 +165,12 @@ export default function PracticePage() {
 
                   <div className="mt-6">
                     <label className="mb-2 block text-sm font-medium text-slate-700 dark:text-white/70">
-                      Your Answer
+                      {t("answer.label")}
                     </label>
                     <textarea
                       value={userAnswer}
                       onChange={(e) => setUserAnswer(e.target.value)}
-                      placeholder="Type your explanation here..."
+                      placeholder={t("answer.placeholder")}
                       className="h-32 w-full resize-none rounded-lg border border-slate-200 bg-white/90 p-4 outline-none focus:ring-2 focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                     />
                     <button
@@ -176,7 +178,7 @@ export default function PracticePage() {
                       disabled={loading || !userAnswer}
                       className="mt-4 w-full rounded-lg bg-slate-900 py-3 font-medium text-white hover:bg-slate-800 disabled:opacity-50 dark:bg-white dark:text-black dark:hover:bg-white/90"
                     >
-                      {loading ? "Grading..." : "Submit Answer"}
+                      {loading ? t("answer.loading") : t("answer.cta")}
                     </button>
                   </div>
                 </div>
@@ -186,7 +188,7 @@ export default function PracticePage() {
                 <div className="ilmora-scroll-accent rounded-2xl border border-slate-200 bg-white/70 p-6 backdrop-blur dark:border-white/10 dark:bg-white/5">
                   <div className="mb-6 border-b border-slate-200 pb-6 dark:border-white/10">
                     <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-400 dark:text-white/50">
-                      Question
+                      {t("result.question")}
                     </h3>
                     <p className="line-clamp-2 text-sm text-slate-600 dark:text-white/60">
                       {question}
@@ -195,7 +197,7 @@ export default function PracticePage() {
 
                   <div className="mb-6">
                     <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-emerald-600 dark:text-emerald-300">
-                      <Check className="w-4 h-4" /> Feedback
+                      <Check className="w-4 h-4" /> {t("result.feedback")}
                     </h3>
                     <article className="prose prose-sm max-w-none text-slate-900 dark:prose-invert">
                       <div className="whitespace-pre-wrap">{feedback}</div>
@@ -211,7 +213,7 @@ export default function PracticePage() {
                     }}
                     className="w-full rounded-lg border border-slate-200 bg-white/80 py-3 font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/80 dark:hover:bg-white/20"
                   >
-                    Practice Another Topic
+                    {t("result.cta")}
                   </button>
                 </div>
               )}

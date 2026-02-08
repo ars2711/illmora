@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { MessageBubble } from "./MessageBubble";
 import { ChatInput } from "./ChatInput";
 import { Wifi, WifiOff } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface ChatLayoutProps {
   messages: any[];
@@ -19,6 +20,7 @@ export function ChatLayout({
   isProcessing,
   demoMode,
 }: ChatLayoutProps) {
+  const t = useTranslations("chat");
   const bottomRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -32,13 +34,13 @@ export function ChatLayout({
         <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
           Ilmora{" "}
           <span className="text-xs font-medium text-gray-400 ml-2 tracking-wide">
-            PHASE 1 PROTO
+            {t("header.phaseTag")}
           </span>
         </h1>
         <div className="flex items-center gap-2">
           {demoMode && (
             <span className="rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-amber-700">
-              Demo drafts
+              {t("header.demoBadge")}
             </span>
           )}
           <div
@@ -54,7 +56,7 @@ export function ChatLayout({
             ) : (
               <WifiOff className="w-3 h-3" />
             )}
-            {isOnline ? "Online" : "Offline Mode"}
+            {isOnline ? t("header.status.online") : t("header.status.offline")}
           </div>
         </div>
       </header>
@@ -68,12 +70,9 @@ export function ChatLayout({
                 <span className="text-3xl">👋</span>
               </div>
               <h2 className="text-xl font-semibold text-gray-700 mb-2">
-                Welcome to Ilmora
+                {t("empty.title")}
               </h2>
-              <p className="max-w-md">
-                I am your AI learning companion. I can help you understand
-                concepts, review topics, and track your progress.
-              </p>
+              <p className="max-w-md">{t("empty.body")}</p>
             </div>
           ) : (
             messages.map((msg, idx) => (

@@ -2,50 +2,52 @@
 
 import { useMemo, useState } from "react";
 import { Clock, Sparkles, BookOpen, Upload, Filter } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const demoHistory = [
   {
     id: "h1",
     type: "studio",
-    title: "Graph recall session",
-    detail: "18 min deep dive",
-    time: "2 hours ago",
+    title: "graphRecall",
+    detail: "deepDive",
+    time: "twoHours",
     icon: Sparkles,
   },
   {
     id: "h2",
     type: "upload",
-    title: "Lecture_05.pdf",
-    detail: "Knowledge nodes generated",
-    time: "Yesterday",
+    title: "lecture",
+    detail: "nodesGenerated",
+    time: "yesterday",
     icon: Upload,
   },
   {
     id: "h3",
     type: "practice",
-    title: "Recursion drills",
-    detail: "14 prompts completed",
-    time: "2 days ago",
+    title: "recursion",
+    detail: "prompts",
+    time: "twoDays",
     icon: BookOpen,
   },
   {
     id: "h4",
     type: "studio",
-    title: "Socratic review",
-    detail: "12 prompts • confidence boost",
-    time: "3 days ago",
+    title: "socratic",
+    detail: "confidence",
+    time: "threeDays",
     icon: Sparkles,
   },
 ];
 
 const filters = [
-  { id: "all", label: "All" },
-  { id: "studio", label: "Studio" },
-  { id: "upload", label: "Uploads" },
-  { id: "practice", label: "Practice" },
+  { id: "all", label: "all" },
+  { id: "studio", label: "studio" },
+  { id: "upload", label: "upload" },
+  { id: "practice", label: "practice" },
 ];
 
 export default function HistoryPage() {
+  const t = useTranslations("history");
   const [activeFilter, setActiveFilter] = useState("all");
 
   const filteredHistory = useMemo(() => {
@@ -60,38 +62,44 @@ export default function HistoryPage() {
         <div className="relative z-10 mx-auto max-w-4xl p-6">
           <header className="mb-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <Clock size={14} /> History
+              <Clock size={14} /> {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-2xl font-semibold">Session timeline</h1>
+            <h1 className="mt-4 text-2xl font-semibold">{t("title")}</h1>
             <p className="text-slate-500 dark:text-white/60">
-              Every studio session, upload, and ritual is captured here.
+              {t("subtitle")}
             </p>
           </header>
 
           <div className="mb-6 grid gap-4 rounded-3xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:grid-cols-3">
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Sessions
+                {t("stats.sessions.label")}
               </p>
-              <p className="mt-2 text-lg font-semibold">12 this week</p>
+              <p className="mt-2 text-lg font-semibold">
+                {t("stats.sessions.value")}
+              </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Uploads
+                {t("stats.uploads.label")}
               </p>
-              <p className="mt-2 text-lg font-semibold">4 packs synced</p>
+              <p className="mt-2 text-lg font-semibold">
+                {t("stats.uploads.value")}
+              </p>
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Momentum
+                {t("stats.momentum.label")}
               </p>
-              <p className="mt-2 text-lg font-semibold">84 consistency</p>
+              <p className="mt-2 text-lg font-semibold">
+                {t("stats.momentum.value")}
+              </p>
             </div>
           </div>
 
           <div className="mb-6 flex flex-wrap items-center gap-2">
             <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <Filter size={12} /> Filters
+              <Filter size={12} /> {t("filters.label")}
             </div>
             {filters.map((filter) => (
               <button
@@ -104,7 +112,7 @@ export default function HistoryPage() {
                     : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                {filter.label}
+                {t(`filters.${filter.label}`)}
               </button>
             ))}
           </div>
@@ -117,14 +125,14 @@ export default function HistoryPage() {
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-slate-900 dark:text-white">
-                    {item.type}: {item.title}
+                    {t(`types.${item.type}`)}: {t(`items.${item.title}.title`)}
                   </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    {item.detail}
+                    {t(`items.${item.title}.detail`)}
                   </p>
                 </div>
                 <span className="text-xs uppercase tracking-[0.2em] text-slate-400 dark:text-white/50">
-                  {item.time}
+                  {t(`times.${item.time}`)}
                 </span>
               </div>
             ))}

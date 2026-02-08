@@ -14,7 +14,7 @@
       "ur": "Ourdou",
       "ar": "Arabe",
       "fr": "Français",
-      "hi": "Hindi"
+      "hi": "Hindi (langue)"
     }
   },
   "sidebar": {
@@ -24,7 +24,7 @@
       "graph": "Mon graphe",
       "tutor": "Tuteur IA",
       "upload": "Importer du contenu",
-      "marketplace": "Marketplace",
+      "marketplace": "Marche",
       "career": "Parcours carrière",
       "history": "Historique",
       "profile": "Profil",
@@ -89,7 +89,7 @@
       "body": "Vous entrez dans un studio guidé : un graphe mémoire vivant, des rituels de révision et des sessions IA proches d'une performance. Chaque page est conçue pour mémoriser le contexte et maintenir votre élan."
     },
     "fields": {
-      "email": "Email",
+      "email": "E-mail",
       "password": "Mot de passe"
     },
     "actions": {
@@ -206,7 +206,7 @@
           "detail": "Quiz adaptatif • 12 questions • boost de confiance"
         },
         "momentum": {
-          "title": "Momentum",
+          "title": "Elan",
           "detail": "3 sessions cette semaine • 84 % de constance"
         }
       },
@@ -238,10 +238,10 @@
     "public": {
       "brandTag": "Moteur cognitif",
       "nav": {
-        "studio": "Studio",
+        "studio": "Atelier",
         "graph": "Graphe mémoire",
         "practice": "Pratique",
-        "marketplace": "Marketplace"
+        "marketplace": "Marche"
       },
       "signOut": "Se déconnecter",
       "demo": "Explorer la démo",
@@ -255,7 +255,7 @@
         "ctaPrimary": "Commencer l'expérience",
         "ctaSecondary": "Entrer dans le studio",
         "tagline": {
-          "one": "Offline-first",
+          "one": "Hors ligne d'abord",
           "two": "Centré humain",
           "three": "Conscient du système"
         }
@@ -284,19 +284,19 @@
           "statistics": "Statistiques",
           "linearAlgebra": "Algèbre linéaire",
           "discreteMath": "Mathématiques discrètes",
-          "cs": "CS",
+          "cs": "Informatique",
           "programming": "Programmation",
           "economics": "Économie",
-          "finance": "Finance",
+          "finance": "Finances",
           "history": "Histoire",
           "literature": "Littérature",
           "languages": "Langues",
-          "design": "Design",
+          "design": "Conception",
           "music": "Musique",
           "medicine": "Médecine",
           "engineering": "Ingénierie",
           "law": "Droit",
-          "art": "Art",
+          "art": "Arts",
           "psychology": "Psychologie",
           "philosophy": "Philosophie",
           "astronomy": "Astronomie"
@@ -327,7 +327,7 @@
           "body": "Exercices, réflexions et tâches immersives synchronisées entre appareils."
         },
         "offline": {
-          "title": "Offline-first",
+          "title": "Hors ligne d'abord",
           "body": "Continuez à étudier sans signal. Synchronisation élégante au retour."
         }
       },
@@ -359,8 +359,8 @@
         "body": "Passez du clair au sombre, ajustez votre ambiance de focus et caler le rythme sur votre flux d'étude.",
         "tags": {
           "one": "Thème",
-          "two": "Tempo",
-          "three": "Focus"
+          "two": "Rythme",
+          "three": "Concentration"
         }
       },
       "credits": {
@@ -370,9 +370,994 @@
         "byline": "Ilmora Studio par Arsalan — construire des systèmes d'apprentissage éthiques pour la longue maîtrise. Suivez le travail sur",
         "link": "GitHub",
         "robots": "Robots",
-        "sitemap": "Sitemap",
+        "sitemap": "Plan du site",
         "manifest": "Manifeste"
       }
+    }
+  },
+  "upload": {
+    "title": "Ajouter des contenus",
+    "demoNotice": "Mode demo : les uploads sont stockes comme brouillons uniquement. Aucun traitement ni synchronisation.",
+    "card": {
+      "title": "Televerser des cours ou des notes",
+      "subtitle": "Formats pris en charge : PDF, TXT (Max 10MB)"
+    },
+    "actions": {
+      "select": "Selectionner un document",
+      "remove": "Retirer",
+      "savingDraft": "Enregistrement du brouillon...",
+      "analyzing": "Analyse...",
+      "saveDraft": "Sauvegarder le brouillon",
+      "startExtraction": "Demarrer l'extraction",
+      "viewNotes": "Voir les notes",
+      "startQuiz": "Lancer le quiz",
+      "uploadAnother": "Televerser un autre fichier"
+    },
+    "status": {
+      "draftSaved": "Brouillon enregistre !",
+      "processed": "Document traite !"
+    },
+    "why": {
+      "title": "Pourquoi televerser ?",
+      "items": {
+        "notes": "Generez des notes de revision instantanement.",
+        "chat": "Discutez avec vos documents (RAG).",
+        "quizzes": "Creez des quizzes automatiquement."
+      }
+    },
+    "drafts": {
+      "title": "Brouillons d'upload",
+      "today": "Aujourd'hui",
+      "yesterday": "Hier",
+      "justNow": "A l'instant"
+    },
+    "toast": {
+      "draftSaved": "Brouillon enregistre localement (demo).",
+      "mustLogin": "Vous devez etre connecte pour televerser.",
+      "sessionExpired": "Session expiree. Veuillez vous reconnecter.",
+      "processed": "Document traite avec succes !",
+      "failed": "Echec de l'upload. Verifiez le fichier et reessayez."
+    },
+    "errors": {
+      "uploadFailed": "Echec de l'upload"
+    }
+  },
+  "practice": {
+    "title": "Mode pratique",
+    "subtitle": "Testez votre maitrise sans pression.",
+    "setup": {
+      "label": "Que voulez-vous pratiquer ?",
+      "placeholder": "ex. Recursion, Thermodynamique, Chimie organique",
+      "loading": "Reflexion...",
+      "cta": "Demarrer"
+    },
+    "question": {
+      "title": "Question"
+    },
+    "answer": {
+      "label": "Votre reponse",
+      "placeholder": "Tapez votre explication ici...",
+      "loading": "Evaluation...",
+      "cta": "Envoyer la reponse"
+    },
+    "result": {
+      "question": "Question",
+      "feedback": "Retour",
+      "cta": "Pratiquer un autre sujet"
+    },
+    "demoQuestions": {
+      "one": "Expliquez la recursion et identifiez un cas de base dans un processus reel.",
+      "two": "Quelle est l'intuition derriere les vecteurs propres, et comment simplifient-ils un systeme ?",
+      "three": "Decrivez comment la repetition espacee ameliore le rappel dans le temps."
+    },
+    "demoFeedback": {
+      "one": "Feedback de brouillon : bonne intuition. Ajoutez un exemple concret et clarifiez le cas de base.",
+      "two": "Feedback de brouillon : bon cadrage. Mentionnez que les vecteurs propres gardent leur direction sous transformation.",
+      "three": "Feedback de brouillon : bon resume. Reliez-le aux courbes de l'oubli pour plus de profondeur."
+    },
+    "prompts": {
+      "generate": "Generez une question de pratique conceptuelle sur \"{topic}\". La question doit tester une comprehension profonde, pas la memoire. Ne fournissez pas la reponse.",
+      "submit": "Ma reponse est : {answer}. Evaluez cette reponse. Si elle est fausse, expliquez pourquoi conceptuellement. Si elle est juste, confirmez et elargissez legerement."
+    }
+  },
+  "graph": {
+    "title": "Explorateur de graphe de connaissance",
+    "errors": {
+      "fetchFailed": "Impossible de recuperer le graphe"
+    },
+    "empty": {
+      "title": "Impossible de charger le graphe de connaissance.",
+      "body": "Assurez-vous que le backend est en cours d'execution."
+    }
+  },
+  "marketplace": {
+    "title": "Marche",
+    "subtitle": "Notes premium et packs d'etude des meilleurs etudiants.",
+    "loading": "Chargement du marche...",
+    "empty": {
+      "title": "Aucun pack disponible pour l'instant",
+      "body": "Soyez le premier a publier vos notes."
+    },
+    "card": {
+      "new": "Nouveau",
+      "price": "PKR {price}",
+      "free": "Gratuit"
+    },
+    "actions": {
+      "create": "Creer un pack d'etude",
+      "view": "Voir les details"
+    }
+  },
+  "career": {
+    "title": "Intelligence de carriere",
+    "subtitle": "Strategie guidee par l'IA pour relier vos etudes aux besoins de l'industrie.",
+    "form": {
+      "label": "Role cible (optionnel)",
+      "placeholder": "ex. Developpeur Full Stack, Data Scientist..."
+    },
+    "actions": {
+      "loading": "Analyse du programme...",
+      "generate": "Generer la feuille de route"
+    },
+    "result": {
+      "title": "Strategie personnalisee",
+      "time": "Temps estime : {time}"
+    },
+    "errors": {
+      "failed": "Echec de generation de la feuille de route."
+    }
+  },
+  "onboarding": {
+    "fallbackName": "Etudiant",
+    "title": "Bienvenue sur Ilmora",
+    "subtitle": "Personnalisons l'experience selon vos besoins academiques.",
+    "intro": {
+      "eyebrow": "Avant d'entrer",
+      "body": "{name}, nous allons construire un studio autour de vos objectifs : un graphe de memoire qui grandit a chaque session, des rituels de pratique adaptes a votre rythme et un tableau de bord qui capture chaque victoire."
+    },
+    "fields": {
+      "fullName": "Nom complet",
+      "curriculum": "Programme / Conseil",
+      "curriculumPlaceholder": "Selectionnez votre programme...",
+      "curriculumHint": "Cela adapte votre parcours d'apprentissage et le style d'evaluation.",
+      "degree": "Programme d'etudes",
+      "degreePlaceholder": "ex. Licence Informatique",
+      "semester": "Semestre actuel",
+      "semesterPlaceholder": "Selectionner le semestre",
+      "semesterOption": "{n}e semestre",
+      "subjects": "Matières actuelles",
+      "subjectsHint": "Separees par des virgules",
+      "subjectsPlaceholder": "ex. DSA, Algebre lineaire, Psychologie",
+      "language": "Langue preferee",
+      "languageOptions": {
+        "english": "Anglais",
+        "urdu": "Ourdou"
+      },
+      "learningStyle": "Style d'apprentissage",
+      "learningOptions": {
+        "visual": "Visuel (Diagrammes, Graphes)",
+        "socratic": "Socratique (Posez-moi des questions)",
+        "eli5": "ELI5 (Analogies simples)"
+      },
+      "careerGoals": "Carriere de reve (separees par des virgules)",
+      "careerGoalsPlaceholder": "ex. Architecte IA, Ingenieur civil, Product Manager"
+    },
+    "actions": {
+      "saving": "Enregistrement du profil...",
+      "start": "Commencer a apprendre"
+    },
+    "errors": {
+      "sessionExpired": "Session expiree",
+      "updateFailed": "Echec de mise a jour du profil",
+      "generic": "Une erreur est survenue. Veuillez reessayer."
+    }
+  },
+  "noteDetail": {
+    "empty": "Note introuvable.",
+    "aiComingSoon": "La structuration IA arrive dans la prochaine phase.",
+    "actions": {
+      "ai": "Structurer via IA",
+      "edit": "Modifier",
+      "save": "Sauvegarder"
+    },
+    "errors": {
+      "fetchFailed": "Erreur API",
+      "networkCache": "Echec reseau, verification du cache hors ligne..."
+    }
+  },
+  "security": {
+    "eyebrow": "Parametres",
+    "title": "Securite et passkeys",
+    "demoNotice": "Mode demo : les passkeys et fournisseurs sont en apercu uniquement.",
+    "passkeys": {
+      "title": "Cles d'acces",
+      "body": "Utilisez une passkey pour une connexion instantanee sur cet appareil. Les passkeys ne quittent jamais votre appareil et remplacent les mots de passe."
+    },
+    "providers": {
+      "title": "Fournisseurs lies",
+      "body": "Vous pouvez utiliser ces fournisseurs sur l'ecran de connexion lorsqu'ils sont actives dans votre fournisseur d'identite.",
+      "available": "Disponible a la connexion"
+    },
+    "actions": {
+      "back": "Retour au tableau de bord",
+      "working": "Traitement...",
+      "createPasskey": "Creer une passkey"
+    },
+    "errors": {
+      "unsupported": "Les passkeys ne sont pas supportees ici.",
+      "sessionExpired": "Session expiree. Veuillez vous reconnecter.",
+      "startFailed": "Impossible de demarrer l'enregistrement de passkey.",
+      "canceled": "Demande de passkey annulee.",
+      "verifyFailed": "Echec de verification de la passkey.",
+      "failed": "Echec de l'enregistrement de la passkey."
+    },
+    "toast": {
+      "success": "Passkey ajoutee avec succes."
+    }
+  },
+  "history": {
+    "eyebrow": "Historique",
+    "title": "Chronologie des sessions",
+    "subtitle": "Chaque session studio, upload et rituel est capture ici.",
+    "stats": {
+      "sessions": {
+        "label": "Seances",
+        "value": "12 cette semaine"
+      },
+      "uploads": {
+        "label": "Televersements",
+        "value": "4 packs synchronises"
+      },
+      "momentum": {
+        "label": "Dynamique",
+        "value": "84 de constance"
+      }
+    },
+    "filters": {
+      "label": "Filtres",
+      "all": "Tous",
+      "studio": "Atelier",
+      "upload": "Televersements",
+      "practice": "Pratique"
+    },
+    "types": {
+      "studio": "Atelier",
+      "upload": "Televersement",
+      "practice": "Pratique"
+    },
+    "items": {
+      "graphRecall": {
+        "title": "Session de rappel du graphe",
+        "detail": "18 min d'immersion"
+      },
+      "lecture": {
+        "title": "Cours_05.pdf",
+        "detail": "Noeuds de connaissance generes"
+      },
+      "recursion": {
+        "title": "Exercices de recursion",
+        "detail": "14 prompts termines"
+      },
+      "socratic": {
+        "title": "Revision socratique",
+        "detail": "12 prompts • gain de confiance"
+      }
+    },
+    "times": {
+      "twoHours": "Il y a 2 heures",
+      "yesterday": "Hier",
+      "twoDays": "Il y a 2 jours",
+      "threeDays": "Il y a 3 jours"
+    }
+  },
+  "chat": {
+    "header": {
+      "phaseTag": "PROTO PHASE 1",
+      "demoBadge": "Brouillons demo",
+      "status": {
+        "online": "En ligne",
+        "offline": "Mode hors ligne"
+      }
+    },
+    "empty": {
+      "title": "Bienvenue sur Ilmora",
+      "body": "Je suis votre compagnon d'apprentissage IA. Je peux vous aider a comprendre les concepts, reviser des sujets et suivre vos progres."
+    },
+    "input": {
+      "placeholder": "Demandez n'importe quoi a Ilmora...",
+      "helper": "Ilmora est un tuteur IA concu pour l'apprentissage, pas pour tricher."
+    }
+  },
+  "bottomNav": {
+    "home": "Accueil",
+    "graph": "Graphe",
+    "chat": "Discussion",
+    "history": "Historique",
+    "store": "Boutique",
+    "profile": "Profil"
+  },
+  "errorPage": {
+    "eyebrow": "Quelque chose s'est mal passe",
+    "title": "Ilmora a rencontre un probleme",
+    "body": "Essayez de recharger, ou retournez au studio.",
+    "actions": {
+      "retry": "Reessayer",
+      "home": "Aller a l'accueil"
+    },
+    "code": "Code : {code}"
+  },
+  "globalError": {
+    "title": "Dysfonctionnement du systeme",
+    "body": "Une erreur critique a interrompu la simulation. L'etat a ete capture.",
+    "cta": "Redemarrer l'interface"
+  },
+  "notFound": {
+    "body": "Le concept que vous cherchez semble manquer du graphe.",
+    "actions": {
+      "home": "Retour a l'accueil",
+      "back": "Retour"
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading System Admin...",
+    "title": "Ilmora Global Command Center",
+    "subtitle": "System Status & Multitenant Oversight",
+    "search": {
+      "title": "Global admin search",
+      "placeholder": "Search incidents, audit events, or roles",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "submit": "Search"
+    },
+    "stats": {
+      "totalUsers": {
+        "title": "Total Users",
+        "delta": "+6% WoW"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "delta": "+1 this month"
+      },
+      "interactions": {
+        "title": "Total Interactions",
+        "sub": "AI messages processed",
+        "delta": "+12% WoW"
+      },
+      "flagged": {
+        "title": "Flagged Issues",
+        "sub": "Requires attention",
+        "delta": "-2 since yesterday"
+      }
+    },
+    "kpis": {
+      "openIncidents": {
+        "title": "Open Incidents",
+        "delta": "+1 this week"
+      },
+      "auditEvents": {
+        "title": "Audit Events",
+        "delta": "+14% WoW"
+      },
+      "accessRequests": {
+        "title": "Access Requests",
+        "delta": "2 pending"
+      },
+      "dbJobs": {
+        "title": "DB Jobs",
+        "delta": "1 running"
+      }
+    },
+    "quickLinks": {
+      "databaseTitle": "Database Console",
+      "database": "Replicas, performance, jobs",
+      "auditTitle": "Audit Logs",
+      "audit": "Security, data access, changes",
+      "incidentTitle": "Incident Log",
+      "incidents": "Incidents, mitigations, status",
+      "rolesTitle": "Roles & Access",
+      "roles": "Permissions and approvals",
+      "healthTitle": "System Health",
+      "health": "Runtime, queues, uptime"
+    },
+    "priority": {
+      "title": "Priority Review Queue",
+      "empty": "No pending issues. System healthy.",
+      "context": "Context:",
+      "by": "by {email}",
+      "resolve": "Resolve"
+    },
+    "actions": {
+      "title": "System Actions",
+      "provision": "+ Provision New Institution",
+      "manageCurricula": "Manage Curricula",
+      "viewLogs": "View Server Logs"
+    },
+    "databaseOverview": {
+      "primary": "Primary DB",
+      "healthy": "Healthy",
+      "replicaLag": "Replica Lag",
+      "storage": "Storage Used",
+      "latency": "P95 Latency"
+    },
+    "databaseActivity": {
+      "title": "Database Activity",
+      "subtitle": "Live queries, maintenance jobs, and service health.",
+      "inspect": "Inspect",
+      "status": {
+        "ok": "OK",
+        "running": "Running"
+      },
+      "times": {
+        "one": "18s ago",
+        "two": "2 min ago",
+        "three": "7 min ago"
+      }
+    },
+    "databaseHealth": {
+      "title": "Database Health",
+      "subtitle": "Replication, storage, latency, and backup status.",
+      "cta": "Open database console"
+    }
+  },
+  "adminIntegrations": {
+    "title": "System Integrations",
+    "subtitle": "Connect Ilmora to external LMS and event listeners.",
+    "tabs": {
+      "integrations": "LMS & Tools",
+      "webhooks": "Webhooks"
+    },
+    "form": {
+      "title": "Add New {kind}",
+      "integration": "Integration",
+      "webhook": "Webhook",
+      "type": "Type",
+      "integrationTypeAria": "Integration type",
+      "webhookTypeAria": "Webhook event type",
+      "integrationTypes": {
+        "lms": "Learning Management System",
+        "payment": "Payment Gateway",
+        "sso": "Single Sign-On"
+      },
+      "name": "Name",
+      "targetUrl": "Target URL",
+      "namePlaceholder": "e.g. Canvas NUST",
+      "urlPlaceholder": "https://api.mysite.com/webhook",
+      "create": "Create"
+    },
+    "list": {
+      "deleteIntegration": "Delete integration",
+      "deleteWebhook": "Delete webhook",
+      "empty": "No {tab} configured yet."
+    },
+    "toast": {
+      "demoFallback": "Integrations are using demo data.",
+      "nameRequired": "Enter an integration name.",
+      "urlRequired": "Enter a webhook URL.",
+      "createdDemo": "Created in demo mode.",
+      "created": "Created successfully.",
+      "createFailed": "Creation failed.",
+      "removedDemo": "Removed in demo mode.",
+      "removed": "Removed successfully.",
+      "removeFailed": "Removal failed."
+    }
+  },
+  "adminAudit": {
+    "loading": "Chargement des journaux...",
+    "eyebrow": "Journaux d'audit",
+    "title": "Piste de securite",
+    "subtitle": "Suivez les acces, changements de configuration et exports de donnees.",
+    "lastUpdated": "Derniere mise a jour {time}",
+    "refresh": "Actualiser",
+    "refreshing": "Actualisation",
+    "autoRefresh": "Actualisation auto {state}",
+    "on": "Active",
+    "off": "Desactive",
+    "exportCsv": "Exporter CSV",
+    "ackAll": "Tout accuser",
+    "ackConfirm": {
+      "title": "Accuser tous les evenements",
+      "body": "Cela videra la file d'audit actuelle. Continuer ?"
+    },
+    "summary": {
+      "total": "Total",
+      "high": "Elevee",
+      "medium": "Moyenne",
+      "low": "Faible"
+    },
+    "filters": {
+      "title": "Filtres",
+      "search": "Rechercher l'activite",
+      "levels": {
+        "all": "Tous",
+        "high": "Elevee",
+        "medium": "Moyenne",
+        "low": "Faible"
+      }
+    },
+    "events": {
+      "title": "Evenements recents",
+      "emptyTitle": "Aucun evenement ne correspond a ce filtre.",
+      "emptyBody": "Essayez de nettoyer les filtres ou d'aller aux incidents.",
+      "clearFilters": "Effacer les filtres",
+      "viewIncidents": "Voir les incidents"
+    },
+    "retention": "Retention d'audit : 400 jours • Export de conformite active.",
+    "toast": {
+      "demoFallback": "Les journaux d'audit utilisent des donnees de demo.",
+      "exportQueuedDemo": "Export d'audit en file (demo).",
+      "exportQueued": "Export d'audit en file.",
+      "exportFailed": "Echec de l'export d'audit.",
+      "ackDemo": "File d'audit accusee (demo).",
+      "ack": "File d'audit accusee.",
+      "ackFailed": "Echec de l'accuse d'audit."
+    }
+  },
+  "adminIncidents": {
+    "loading": "Chargement des incidents...",
+    "eyebrow": "Journal des incidents",
+    "title": "Incidents operationnels",
+    "subtitle": "Suivez les investigations, mitigations et fenetres de resolution.",
+    "lastUpdated": "Derniere mise a jour {time}",
+    "refresh": "Actualiser",
+    "refreshing": "Actualisation",
+    "autoRefresh": "Actualisation auto {state}",
+    "on": "Active",
+    "off": "Desactive",
+    "exportCsv": "Exporter CSV",
+    "exportJson": "Exporter JSON",
+    "summary": {
+      "total": "Total",
+      "investigating": "En investigation",
+      "monitoring": "En surveillance",
+      "resolved": "Resolus"
+    },
+    "filters": {
+      "title": "Filtres",
+      "search": "Rechercher des incidents",
+      "status": {
+        "all": "Tous",
+        "investigating": "En investigation",
+        "monitoring": "En surveillance",
+        "resolved": "Resolus"
+      },
+      "severity": {
+        "all": "Tous",
+        "high": "Elevee",
+        "medium": "Moyenne",
+        "low": "Faible"
+      }
+    },
+    "feedTitle": "Flux d'incidents",
+    "empty": {
+      "title": "Aucun incident ne correspond a vos filtres.",
+      "body": "Ajustez les filtres ou creez un nouvel incident.",
+      "clearFilters": "Effacer les filtres",
+      "createIncident": "Creer un incident"
+    },
+    "servicesLabel": "Services :",
+    "actions": {
+      "viewDetails": "Voir les details",
+      "ack": "Accuser",
+      "resolve": "Resoudre"
+    },
+    "confirm": {
+      "ack": {
+        "title": "Accuser l'incident",
+        "body": "Enregistrer un accuse pour cet incident."
+      },
+      "resolve": {
+        "title": "Resoudre l'incident",
+        "body": "Marquer cet incident comme resolu et l'archiver."
+      }
+    },
+    "pagination": "Page {page} sur {total}",
+    "prev": "Prec",
+    "next": "Suiv",
+    "detail": {
+      "eyebrow": "Detail de l'incident",
+      "close": "Fermer",
+      "severity": "Gravite",
+      "owner": "Responsable",
+      "region": "Region",
+      "timeline": "Chronologie",
+      "notes": "Notes",
+      "notesEmpty": "Pas encore de notes.",
+      "notePlaceholder": "Ajouter une note",
+      "addNote": "Ajouter une note",
+      "confirmAck": {
+        "title": "Accuser l'incident",
+        "body": "Enregistrer un accuse pour cet incident."
+      },
+      "acknowledge": "Accuser",
+      "followUp": "Creer un suivi"
+    },
+    "timeline": {
+      "reported": "Incident signale",
+      "mitigation": "Mitigation deployee",
+      "resolved": "Incident resolu"
+    },
+    "toast": {
+      "demoFallback": "Le journal des incidents utilise des donnees de demo.",
+      "detailsFailed": "Impossible de charger les details de l'incident.",
+      "noteFailed": "Echec de l'enregistrement de la note.",
+      "updatedDemo": "Incident mis a jour (demo).",
+      "updated": "Incident mis a jour.",
+      "updateFailed": "Echec de la mise a jour de l'incident.",
+      "exported": "Journal des incidents exporte.",
+      "acknowledged": "Incident accuse.",
+      "followUp": "Tache de suivi creee."
+    }
+  },
+  "adminHealth": {
+    "eyebrow": "Sante du systeme",
+    "title": "Disponibilite et resilience",
+    "subtitle": "Suivez l'etat des services, les incidents et la preparation operationnelle.",
+    "lastUpdated": "Derniere mise a jour {time}",
+    "refresh": "Actualiser",
+    "refreshing": "Actualisation",
+    "autoRefresh": "Actualisation auto {state}",
+    "on": "Active",
+    "off": "Desactive",
+    "cards": {
+      "uptime": {
+        "title": "Disponibilite globale",
+        "body": "99,95 % dans les regions ce mois-ci."
+      },
+      "queue": {
+        "title": "Sante de la file",
+        "body": "3 workers en ligne • delai moyen 320 ms."
+      },
+      "alerts": {
+        "title": "Alertes actives",
+        "body": "2 avertissements • 0 critique."
+      }
+    },
+    "create": {
+      "title": "Creer un incident",
+      "placeholder": "Resume de l'incident",
+      "statusAria": "Statut de l'incident",
+      "statusOptions": {
+        "investigating": "En investigation",
+        "identified": "Identifie",
+        "monitoring": "En surveillance"
+      },
+      "submit": "Creer"
+    },
+    "services": {
+      "title": "Etat du service",
+      "uptime": "Disponibilite {value}"
+    },
+    "timeline": {
+      "title": "Chronologie des incidents",
+      "resolve": "Resoudre",
+      "viewDetails": "Voir les details",
+      "viewAll": "Voir le journal complet des incidents",
+      "confirmResolve": {
+        "title": "Resoudre l'incident",
+        "body": "Marquer cet incident comme resolu et l'archiver."
+      }
+    },
+    "detail": {
+      "eyebrow": "Detail de l'incident",
+      "close": "Fermer",
+      "severity": "Gravite",
+      "owner": "Responsable",
+      "services": "Services",
+      "impactPending": "Details d'impact en attente.",
+      "timeline": "Chronologie",
+      "confirmAck": {
+        "title": "Accuser l'incident",
+        "body": "Enregistrer un accuse pour cet incident."
+      },
+      "acknowledge": "Accuser",
+      "followUp": "Creer un suivi",
+      "toast": {
+        "acknowledged": "Incident accuse.",
+        "followUp": "Tache de suivi creee."
+      }
+    },
+    "toast": {
+      "demoFallback": "La sante du systeme utilise des donnees de demo.",
+      "titleRequired": "Saisissez un titre d'incident.",
+      "createdDemo": "Incident cree (demo).",
+      "created": "Incident cree.",
+      "createFailed": "Echec de la creation de l'incident.",
+      "resolvedDemo": "Incident resolu (demo).",
+      "resolved": "Incident resolu.",
+      "resolveFailed": "Echec de la resolution de l'incident."
+    }
+  },
+  "adminDatabase": {
+    "eyebrow": "Console de base de donnees",
+    "title": "Centre de controle des donnees",
+    "subtitle": "Surveille la replication, la sante des requetes et les operations de maintenance.",
+    "lastUpdated": "Derniere mise a jour {time}",
+    "refresh": "Actualiser",
+    "refreshing": "Actualisation",
+    "autoRefresh": "Actualisation auto {state}",
+    "on": "Active",
+    "off": "Desactive",
+    "cluster": {
+      "live": "En direct",
+      "promoteTitle": "Promouvoir le replica",
+      "promoteBody": "Cela promouvra le replica en primaire. Continuer ?",
+      "promote": "Promouvoir le replica",
+      "failoverTitle": "Executer un test de basculement",
+      "failoverBody": "Cela lance une simulation de basculement. Confirmez pour continuer.",
+      "failover": "Executer un test de basculement",
+      "latencyTrend": "Tendance de latence",
+      "latency": "Latence",
+      "storage": "Stockage",
+      "backups": "Sauvegardes",
+      "backupTime": "Il y a 4 h"
+    },
+    "slowQueries": {
+      "title": "Requetes lentes",
+      "time": "Temps {time}",
+      "impact": "Impact {impact}",
+      "inspect": "Inspecter",
+      "terminateTitle": "Terminer la requete",
+      "terminateBody": "Cela terminera immediatement une requete en cours.",
+      "terminate": "Terminer"
+    },
+    "maintenance": {
+      "title": "File de maintenance",
+      "runTitle": "Executer une tache de maintenance",
+      "runBody": "Cela demarrera la tache de maintenance maintenant.",
+      "runNow": "Executer maintenant",
+      "backupTitle": "Executer un snapshot de sauvegarde",
+      "backupBody": "Declencher un snapshot de sauvegarde pour le cluster primaire.",
+      "backup": "Executer un snapshot"
+    },
+    "charts": {
+      "latency": {
+        "title": "Histogramme de latence",
+        "body": "Distribution de la latence des requetes sur la derniere heure."
+      },
+      "replica": {
+        "title": "Tendance du retard de replica",
+        "body": "Retard en secondes (7 echantillons)."
+      },
+      "error": {
+        "title": "Tendance du taux d'erreur",
+        "body": "Taux d'erreur API (%) sur les services."
+      }
+    },
+    "restorePoints": {
+      "title": "Points de restauration",
+      "age": "Age {age} • {region}",
+      "restoreTitle": "Restaurer depuis un point",
+      "restoreBody": "Cela restaurera la base de donnees a ce snapshot.",
+      "restore": "Restaurer"
+    },
+    "rollback": {
+      "title": "Historique des retours"
+    },
+    "runbook": {
+      "title": "Runbook de restauration",
+      "subtitle": "Etapes guidees pour une restauration sure.",
+      "open": "Ouvrir le runbook",
+      "completeNext": "Completer l'etape suivante",
+      "reset": "Reinitialiser le runbook"
+    },
+    "guardrails": {
+      "replication": {
+        "title": "Garde-fous de replication",
+        "body": "Auto-basculement arme. Le retard du replica declenche des alertes a 2.5s."
+      },
+      "security": {
+        "title": "Posture de securite",
+        "body": "Chiffre au repos. Acces au niveau ligne pour les tables sensibles."
+      },
+      "performance": {
+        "title": "Budget de performance",
+        "body": "Objectif de latence P95 120ms. Taux d'erreur actuel 0.2%."
+      }
+    },
+    "protections": {
+      "title": "Protections de base de donnees",
+      "subtitle": "Verifier sauvegardes, audits et chemins d'acces d'urgence.",
+      "items": {
+        "backups": { "label": "Sauvegardes", "value": "Verifiees" },
+        "keys": { "label": "Cles d'acces", "value": "Rotees 5 j" },
+        "audit": { "label": "Piste d'audit", "value": "Activee" }
+      },
+      "pitrTitle": "Lancer une restauration point-in-time",
+      "pitrBody": "Cela restaurera la base de donnees a un snapshot precedent.",
+      "pitr": "Restauration point-in-time",
+      "rollbackTitle": "Annuler la derniere migration",
+      "rollbackBody": "Cela annulera la derniere etape de migration.",
+      "rollback": "Annuler la migration"
+    },
+    "toast": {
+      "demoFallback": "La console de base de donnees utilise des donnees de demo.",
+      "backupQueuedDemo": "Snapshot de sauvegarde en file (demo).",
+      "backupQueued": "Snapshot de sauvegarde en file.",
+      "backupFailed": "Echec de la demande de sauvegarde.",
+      "jobStartedDemo": "Tache demarree (demo).",
+      "jobStarted": "Tache demarree.",
+      "jobFailed": "Echec du demarrage de la tache.",
+      "queryTerminatedDemo": "Requete terminee (demo).",
+      "queryTerminated": "Requete terminee.",
+      "queryFailed": "Echec de l'arret de la requete.",
+      "rollbackQueuedDemo": "Rollback en file (demo).",
+      "rollbackQueued": "Rollback en file.",
+      "rollbackFailed": "Echec du rollback.",
+      "pitrDemo": "PITR lance (demo).",
+      "pitr": "PITR lance.",
+      "pitrFailed": "Echec du PITR.",
+      "runbookStepDemo": "Etape du runbook terminee (demo).",
+      "runbookStep": "Etape du runbook terminee.",
+      "runbookFailed": "Echec de la mise a jour du runbook.",
+      "runbookResetDemo": "Runbook reinitialise (demo).",
+      "runbookReset": "Runbook reinitialise.",
+      "runbookResetFailed": "Echec de la reinitialisation du runbook.",
+      "restoreDemo": "Restauration en file (demo).",
+      "restore": "Restauration en file.",
+      "restoreFailed": "Echec de la restauration.",
+      "inspect": "Inspection de requete ouverte.",
+      "runbookEmpty": "Aucune etape de runbook disponible."
+    }
+  },
+  "adminRoles": {
+    "eyebrow": "Roles et acces",
+    "title": "Architecture des permissions",
+    "subtitle": "Configurez les roles, les approbations et les limites d'acces.",
+    "loading": "Chargement des roles...",
+    "confirm": {
+      "proceed": "Continuer"
+    },
+    "create": {
+      "placeholder": "Nom du role",
+      "scopeAria": "Portee du role",
+      "scopes": {
+        "global": "Global",
+        "institution": "Institution",
+        "department": "Departement"
+      },
+      "submit": "Creer le role"
+    },
+    "activeRoles": "Roles actifs",
+    "roleMeta": "{count} membres • {scope}",
+    "manage": "Gerer",
+    "permissions": {
+      "title": "Matrice des permissions",
+      "subtitle": "Configurez l'acces pour {name}.",
+      "subtitleFallback": "role",
+      "selectRole": "Selectionner un role",
+      "export": "Exporter la matrice",
+      "cloneTitle": "Cloner le role selectionne",
+      "cloneBody": "Cela creera une copie du role selectionne et de ses permissions.",
+      "clone": "Cloner le role",
+      "groups": {
+        "data": "Donnees",
+        "security": "Securite",
+        "aiContent": "IA et contenu",
+        "operations": "Operations"
+      },
+      "labels": {
+        "db": {
+          "read": "Lire la base de donnees",
+          "write": "Ecrire des donnees",
+          "export": "Exporter les enregistrements"
+        },
+        "audit": {
+          "view": "Voir les journaux d'audit",
+          "export": "Exporter les journaux d'audit"
+        },
+        "incident": {
+          "manage": "Gerer les incidents"
+        },
+        "content": {
+          "review": "Reviser le contenu"
+        },
+        "model": {
+          "configure": "Configurer les modeles"
+        },
+        "studio": {
+          "manage": "Gerer le studio"
+        },
+        "integrations": {
+          "manage": "Gerer les integrations"
+        },
+        "roles": {
+          "manage": "Gerer les roles"
+        },
+        "system": {
+          "health": "Voir la sante du systeme"
+        }
+      },
+      "state": {
+        "on": "Active",
+        "off": "Desactive"
+      }
+    },
+    "insights": {
+      "title": "Apercus d'audit des roles",
+      "subtitle": "Distribution de gravite et intensite (entrees chargees).",
+      "mix": "Repartition des gravites",
+      "trend": "Tendance de gravite"
+    },
+    "actors": {
+      "title": "Classement des acteurs",
+      "subtitle": "Admins les plus actifs dans la vue actuelle.",
+      "empty": "Aucune activite d'audit chargee.",
+      "events": "{count} evenements"
+    },
+    "audit": {
+      "title": "Historique d'audit des roles",
+      "levels": {
+        "all": "Tous",
+        "high": "Elevee",
+        "medium": "Moyenne",
+        "low": "Faible"
+      },
+      "export": "Exporter CSV",
+      "search": "Rechercher l'audit des roles",
+      "empty": {
+        "title": "Aucune entree d'audit de role ne correspond a vos filtres.",
+        "body": "Ajustez les filtres ou effacez la recherche.",
+        "clear": "Effacer les filtres"
+      },
+      "pagination": "Page {page} sur {total}",
+      "prev": "Prec",
+      "next": "Suiv"
+    },
+    "footer": {
+      "notice": "Les politiques d'acces sont appliquees par institution et synchronisees chaque heure."
+    },
+    "access": {
+      "title": "Demandes d'acces",
+      "approveAllTitle": "Approuver toutes les demandes",
+      "approveAllBody": "Cela approuvera toutes les demandes d'acces en attente.",
+      "approveAll": "Approuver tout",
+      "denyAllTitle": "Refuser toutes les demandes",
+      "denyAllBody": "Cela refusera toutes les demandes d'acces en attente.",
+      "denyAll": "Refuser tout",
+      "approve": "Approuver",
+      "deny": "Refuser",
+      "notice": "Les approbations sont enregistrees automatiquement dans la piste d'audit."
+    },
+    "templates": {
+      "confirmTitle": "Appliquer le modele {name}",
+      "confirmBody": "Cela ecrasera le jeu de permissions actuel pour le role selectionne.",
+      "labels": {
+        "administrator": "Administrateur",
+        "operator": "Operateur",
+        "readOnly": "Lecture seule"
+      }
+    },
+    "toast": {
+      "matrixExported": "Matrice des permissions exportee.",
+      "auditExported": "Audit des roles exporte.",
+      "cloneSelect": "Selectionnez un role a cloner.",
+      "cloneDemo": "Role clone (demo).",
+      "clone": "Role clone.",
+      "cloneFailed": "Echec du clonage du role.",
+      "auditDemo": "L'audit des roles utilise des donnees de demo.",
+      "rolesDemo": "Les donnees de roles utilisent des donnees de demo.",
+      "permissionDemo": "Permission mise a jour (demo).",
+      "permissionUpdated": "Permission mise a jour.",
+      "permissionFailed": "Echec de la mise a jour des permissions.",
+      "noAccessRequests": "Aucune demande d'acces a mettre a jour.",
+      "accessUpdatedDemo": "Demandes d'acces mises a jour (demo).",
+      "accessUpdated": "Demandes d'acces mises a jour.",
+      "bulkFailed": "Echec de la mise a jour en masse.",
+      "templateDemo": "Modele applique (demo).",
+      "templateApplied": "Modele applique.",
+      "templateFailed": "Echec de l'application du modele.",
+      "roleNameRequired": "Saisissez un nom de role.",
+      "roleCreatedDemo": "Role cree en mode demo.",
+      "roleCreated": "Role cree.",
+      "roleCreateFailed": "Echec de la creation du role.",
+      "accessDecisionDemo": "Demande d'acces mise a jour (demo).",
+      "accessDecision": "Demande d'acces mise a jour.",
+      "accessDecisionFailed": "Echec de la mise a jour de la demande d'acces."
     }
   }
 }

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { ArrowLeft, Home, FileWarning } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function NotFound() {
   const router = useRouter();
+  const t = useTranslations("notFound");
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center bg-slate-50 text-slate-800 dark:bg-black dark:text-white">
@@ -21,7 +23,7 @@ export default function NotFound() {
           404
         </h1>
         <p className="text-lg text-slate-500 dark:text-white/60 mb-8 max-w-sm mx-auto">
-          The concept you're looking for seems to be missing from the graph.
+          {t("body")}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-3 justify-center">
@@ -30,14 +32,14 @@ export default function NotFound() {
             className="flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-medium text-white transition-transform hover:scale-105 dark:bg-white dark:text-black"
           >
             <Home className="w-4 h-4" />
-            Return Home
+            {t("actions.home")}
           </Link>
           <button
             onClick={() => router.back()}
             className="flex items-center gap-2 rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-900 transition-colors hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
           >
             <ArrowLeft className="w-4 h-4" />
-            Go Back
+            {t("actions.back")}
           </button>
         </div>
       </div>

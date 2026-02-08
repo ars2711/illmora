@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { AlertTriangle, RefreshCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function GlobalError({
   error,
@@ -10,6 +11,7 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const t = useTranslations("globalError");
   useEffect(() => {
     console.error(error);
   }, [error]);
@@ -25,18 +27,17 @@ export default function GlobalError({
           </div>
 
           <h2 className="text-3xl font-bold mb-2 tracking-tight">
-            System Malfunction
+            {t("title")}
           </h2>
           <p className="mb-8 text-red-700/80 dark:text-red-200/60">
-            A critical error interrupted the simulation. The state has been
-            captured.
+            {t("body")}
           </p>
           <button
             onClick={() => reset()}
             className="inline-flex items-center gap-2 rounded-full bg-red-600 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-red-500/20 transition-transform hover:scale-105 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600"
           >
             <RefreshCcw className="w-4 h-4" />
-            Reboot Interface
+            {t("cta")}
           </button>
         </div>
       </body>

@@ -7,8 +7,10 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import ProtectedRoute from "@/components/layout/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 function GraphContent() {
+  const t = useTranslations("graph");
   const [data, setData] = useState<{ nodes: any[]; edges: any[] } | null>(null);
   const [loading, setLoading] = useState(true);
   const { user, token } = useAuth();
@@ -21,7 +23,7 @@ function GraphContent() {
             Authorization: token ? `Bearer ${token}` : "",
           },
         });
-        if (!res.ok) throw new Error("Failed to fetch graph");
+        if (!res.ok) throw new Error(t("errors.fetchFailed"));
         const json = await res.json();
         setData(json);
       } catch (err) {
@@ -48,7 +50,7 @@ function GraphContent() {
                 <ArrowLeft className="h-5 w-5 text-slate-600 dark:text-white/70" />
               </Link>
               <h1 className="text-xl font-semibold">
-                Knowledge Graph Explorer
+                {t("title")}
               </h1>
             </div>
           </header>
@@ -65,10 +67,8 @@ function GraphContent() {
               />
             ) : (
               <div className="mt-20 text-center text-slate-500 dark:text-white/60">
-                <p>Could not load knowledge graph.</p>
-                <p className="text-sm">
-                  Make sure the backend is running at localhost:8000.
-                </p>
+                <p>{t("empty.title")}</p>
+                <p className="text-sm">{t("empty.body")}</p>
               </div>
             )}
           </main>

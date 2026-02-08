@@ -9,8 +9,10 @@ import { Shield, ArrowLeft, Loader2, KeyRound } from "lucide-react";
 import { FaGoogle, FaGithub, FaApple } from "react-icons/fa";
 import { useState } from "react";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function SecuritySettingsPage() {
+  const t = useTranslations("security");
   const { user, demoMode, token } = useAuth();
   const { showToast } = useToast();
   const [passkeyLoading, setPasskeyLoading] = useState(false);
@@ -18,13 +20,13 @@ export default function SecuritySettingsPage() {
   const handlePasskeyCreate = async () => {
     if (!user) return;
     if (!window.PublicKeyCredential) {
-      showToast("Passkeys are not supported here.", "error");
+      showToast(t("errors.unsupported"), "error");
       return;
     }
     setPasskeyLoading(true);
     try {
       if (!token) {
-        showToast("Session expired. Please sign in again.", "error");
+        showToast(t("errors.sessionExpired"), "error");
         return;
       }
       const optionsRes = await fetch(
@@ -38,13 +40,13 @@ export default function SecuritySettingsPage() {
         },
       );
       if (!optionsRes.ok) {
-        throw new Error("Unable to start passkey registration.");
+        throw new Error(t("errors.startFailed"));
       }
       const optionsData = await optionsRes.json();
       const publicKey = normalizePublicKeyOptions(optionsData.publicKey);
       const credential = await navigator.credentials.create({ publicKey });
       if (!credential) {
-        throw new Error("Passkey request canceled.");
+        throw new Error(t("errors.canceled"));
       }
       const verifyRes = await fetch(
         buildApiUrl("/api/v1/auth/passkeys/register/verify"),
@@ -58,11 +60,11 @@ export default function SecuritySettingsPage() {
         },
       );
       if (!verifyRes.ok) {
-        throw new Error("Passkey verification failed.");
+        throw new Error(t("errors.verifyFailed"));
       }
-      showToast("Passkey added successfully.", "success");
+      showToast(t("toast.success"), "success");
     } catch (error: any) {
-      showToast(error?.message ?? "Passkey registration failed.", "error");
+      showToast(error?.message ?? t("errors.failed"), "error");
     } finally {
       setPasskeyLoading(false);
     }
@@ -81,10 +83,10 @@ export default function SecuritySettingsPage() {
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                    Settings
+                    {t("eyebrow")}
                   </p>
                   <h1 className="text-2xl font-semibold">
-                    Security & Passkeys
+                    {t("title")}
                   </h1>
                 </div>
               </div>
@@ -93,13 +95,13 @@ export default function SecuritySettingsPage() {
                 className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
                 <ArrowLeft className="h-4 w-4" />
-                Back to dashboard
+                {t("actions.back")}
               </Link>
             </header>
 
             {demoMode && (
               <div className="mb-8 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-sm text-amber-900 dark:border-amber-200/20 dark:bg-amber-200/10 dark:text-amber-100/90">
-                Demo mode: passkeys and providers are preview-only.
+                {t("demoNotice")}
               </div>
             )}
 
@@ -110,10 +112,9 @@ export default function SecuritySettingsPage() {
                     <KeyRound className="h-5 w-5 py-0.5" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold">Passkeys</h2>
+                    <h2 className="text-lg font-semibold">{t("passkeys.title")}</h2>
                     <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                      Use a passkey for instant sign-in on this device. Passkeys
-                      never leave your device and replace passwords.
+                      {t("passkeys.body")}
                     </p>
                   </div>
                 </div>
@@ -126,20 +127,19 @@ export default function SecuritySettingsPage() {
                   {passkeyLoading ? (
                     <span className="inline-flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      Working...
+                      {t("actions.working")}
                     </span>
                   ) : (
-                    "Create passkey"
+                    t("actions.createPasskey")
                   )}
                 </button>
               </div>
             </section>
 
             <section className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-              <h2 className="text-lg font-semibold">Linked providers</h2>
+              <h2 className="text-lg font-semibold">{t("providers.title")}</h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                You can use these providers on the login screen when enabled in
-                your identity provider.
+                {t("providers.body")}
               </p>
               <div className="mt-4 grid gap-3 sm:grid-cols-3">
                 {[
@@ -156,7 +156,7 @@ export default function SecuritySettingsPage() {
                     </div>
                     <p className="font-semibold">{name}</p>
                     <p className="mt-1 text-xs text-slate-500 dark:text-white/60">
-                      Available on sign in
+                      {t("providers.available")}
                     </p>
                   </div>
                 ))}

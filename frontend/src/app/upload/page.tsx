@@ -13,8 +13,10 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/context/ToastContext";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 function UploadContent() {
+  const t = useTranslations("upload");
   const { user, demoMode, token } = useAuth();
   const router = useRouter();
   const { showToast } = useToast();
@@ -23,10 +25,12 @@ function UploadContent() {
     "idle" | "uploading" | "success" | "error"
   >("idle");
   const [message, setMessage] = useState("");
-  const [drafts, setDrafts] = useState<{ name: string; createdAt: string }[]>([
-    { name: "Demo_Lecture_03.pdf", createdAt: "Today" },
-    { name: "Study_Notes_Systems.txt", createdAt: "Yesterday" },
-  ]);
+  const [drafts, setDrafts] = useState<{ name: string; createdAt: string }[]>(
+    () => [
+      { name: "Demo_Lecture_03.pdf", createdAt: t("drafts.today") },
+      { name: "Study_Notes_Systems.txt", createdAt: t("drafts.yesterday") },
+    ],
+  );
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -44,10 +48,10 @@ function UploadContent() {
       setTimeout(() => {
         setStatus("success");
         setDrafts((prev) => [
-          { name: file.name, createdAt: "Just now" },
+          { name: file.name, createdAt: t("drafts.justNow") },
           ...prev,
         ]);
-        showToast("Draft saved locally (demo).", "success");
+        showToast(t("toast.draftSaved"), "success");
         setFile(null);
       }, 600);
       return;
@@ -58,14 +62,14 @@ function UploadContent() {
     formData.append("file", file);
 
     if (!user) {
-      showToast("You must be logged in to upload.", "error");
+      showToast(t("toast.mustLogin"), "error");
       setStatus("idle");
       return;
     }
 
     try {
       if (!token) {
-        showToast("Session expired. Please sign in again.", "error");
+        showToast(t("toast.sessionExpired"), "error");
         setStatus("idle");
         return;
       }
@@ -77,27 +81,27 @@ function UploadContent() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Upload failed");
+      if (!res.ok) throw new Error(t("errors.uploadFailed"));
 
       setStatus("success");
-      showToast("Document processed successfully!", "success");
+      showToast(t("toast.processed"), "success");
       setFile(null);
 
       // Allow user to choose next action instead of forced redirect
     } catch (error) {
       setStatus("error");
       console.error(error);
-      showToast("Upload failed. Please check the file and try again.", "error");
+      showToast(t("toast.failed"), "error");
     }
   };
 
   return (
     <div className="mx-auto max-w-2xl p-6">
-      <h1 className="mb-6 text-2xl font-semibold">Add Material</h1>
+      <h1 className="mb-6 text-2xl font-semibold">{t("title")}</h1>
 
       {demoMode && (
         <div className="mb-6 rounded-2xl border border-amber-200/70 bg-amber-50/80 px-4 py-3 text-sm text-amber-800 dark:border-amber-200/20 dark:bg-amber-200/10 dark:text-amber-100/90">
-          Demo mode stores uploads as drafts only. No processing or syncing.
+          {t("demoNotice")}
         </div>
       )}
 
@@ -112,9 +116,9 @@ function UploadContent() {
           </div>
         </div>
 
-        <h3 className="mb-2 text-lg font-semibold">Upload Lectures or Notes</h3>
+        <h3 className="mb-2 text-lg font-semibold">{t("card.title")}</h3>
         <p className="mb-6 text-sm text-slate-500 dark:text-white/60">
-          Supported formats: PDF, TXT (Max 10MB)
+          {t("card.subtitle")}
         </p>
 
         <input
@@ -131,7 +135,7 @@ function UploadContent() {
             htmlFor="file-upload"
             className="inline-block cursor-pointer rounded-full bg-slate-900 px-6 py-3 font-medium text-white transition hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
           >
-            Select Document
+            {t("actions.select")}
           </label>
         ) : (
           <div className="flex flex-col items-center gap-4">
@@ -142,7 +146,7 @@ function UploadContent() {
                 onClick={() => setFile(null)}
                 className="ml-2 text-xs text-rose-500 hover:text-rose-600"
               >
-                Remove
+                {t("actions.remove")}
               </button>
             </div>
 
@@ -154,11 +158,11 @@ function UploadContent() {
               >
                 {status === "uploading"
                   ? demoMode
-                    ? "Saving draft..."
-                    : "Analyzing..."
+                    ? t("actions.savingDraft")
+                    : t("actions.analyzing")
                   : demoMode
-                    ? "Save Draft"
-                    : "Start Extraction"}
+                    ? t("actions.saveDraft")
+                    : t("actions.startExtraction")}
               </button>
             )}
           </div>
@@ -169,7 +173,7 @@ function UploadContent() {
             <div className="flex items-center justify-center gap-2 rounded-lg bg-emerald-50 p-3 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-200">
               <CheckCircle className="h-5 w-5" />
               <span className="text-sm font-medium">
-                {demoMode ? "Draft saved!" : "Document processed!"}
+                {demoMode ? t("status.draftSaved") : t("status.processed")}
               </span>
             </div>
             {!demoMode && (
@@ -178,13 +182,13 @@ function UploadContent() {
                   onClick={() => router.push("/notes")}
                   className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/80 dark:hover:bg-white/10"
                 >
-                  View Notes
+                  {t("actions.viewNotes")}
                 </button>
                 <button
                   onClick={() => router.push("/practice")}
                   className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
-                  Start Quiz
+                  {t("actions.startQuiz")}
                 </button>
               </div>
             )}
@@ -192,7 +196,7 @@ function UploadContent() {
               onClick={() => setStatus("idle")}
               className="mt-2 text-center text-xs text-slate-500 underline hover:text-slate-700 dark:text-white/60 dark:hover:text-white"
             >
-              Upload another file
+              {t("actions.uploadAnother")}
             </button>
           </div>
         )}
@@ -206,19 +210,19 @@ function UploadContent() {
       </div>
 
       <div className="mt-8">
-        <h3 className="mb-4 font-semibold">Why upload?</h3>
+        <h3 className="mb-4 font-semibold">{t("why.title")}</h3>
         <ul className="space-y-3 text-sm text-slate-600 dark:text-white/60">
           <li className="flex gap-2">
             <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
-            Generate revision notes instantly.
+            {t("why.items.notes")}
           </li>
           <li className="flex gap-2">
             <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
-            Chat with your documents (RAG).
+            {t("why.items.chat")}
           </li>
           <li className="flex gap-2">
             <CheckCircle className="mt-0.5 h-4 w-4 text-emerald-500" />
-            Create practice quizzes automatically.
+            {t("why.items.quizzes")}
           </li>
         </ul>
       </div>
@@ -226,7 +230,7 @@ function UploadContent() {
       {demoMode && (
         <div className="mt-8 rounded-2xl border border-slate-200 bg-white/70 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
           <p className="mb-3 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/50">
-            Draft uploads
+            {t("drafts.title")}
           </p>
           <div className="space-y-2">
             {drafts.map((draft) => (

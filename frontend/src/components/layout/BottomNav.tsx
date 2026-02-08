@@ -12,25 +12,27 @@ import {
   Clock,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
+import { useTranslations } from "next-intl";
 
 export function BottomNav() {
   const pathname = usePathname();
   const { demoMode } = useAuth();
+  const t = useTranslations("bottomNav");
 
   const isActive = (path: string) => pathname === path;
 
   const navItems = demoMode
     ? [
-        { href: "/dashboard", label: "Home", icon: Home },
-        { href: "/graph", label: "Graph", icon: BookOpen },
-        { href: "/chat", label: "Chat", icon: MessageCircle },
-        { href: "/dashboard/history", label: "History", icon: Clock },
+        { href: "/dashboard", label: t("home"), icon: Home },
+        { href: "/graph", label: t("graph"), icon: BookOpen },
+        { href: "/chat", label: t("chat"), icon: MessageCircle },
+        { href: "/dashboard/history", label: t("history"), icon: Clock },
       ]
     : [
-        { href: "/dashboard", label: "Home", icon: Home },
-        { href: "/marketplace", label: "Store", icon: ShoppingBag },
-        { href: "/chat", label: "Chat", icon: MessageCircle },
-        { href: "/profile", label: "Profile", icon: User },
+        { href: "/dashboard", label: t("home"), icon: Home },
+        { href: "/marketplace", label: t("store"), icon: ShoppingBag },
+        { href: "/chat", label: t("chat"), icon: MessageCircle },
+        { href: "/profile", label: t("profile"), icon: User },
       ];
 
   return (

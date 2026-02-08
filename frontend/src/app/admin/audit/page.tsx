@@ -10,6 +10,7 @@ import { adminGet, adminPost } from "@/lib/admin-api";
 import useAutoRefresh from "@/hooks/use-auto-refresh";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
 
 const demoAuditEvents = [
   {
@@ -42,6 +43,7 @@ function AuditContent() {
   const searchParams = useSearchParams();
   const { token, demoMode } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminAudit");
   const [auditEvents, setAuditEvents] = useState(demoAuditEvents);
   const [activeFilter, setActiveFilter] = useState("All");
   const [search, setSearch] = useState("");
@@ -71,7 +73,7 @@ function AuditContent() {
       setLastUpdated(new Date());
     } catch (error) {
       console.error(error);
-      showToast("Audit logs are using demo data.", "warning");
+      showToast(t("toast.demoFallback"), "warning");
     } finally {
       setIsRefreshing(false);
     }
@@ -117,31 +119,31 @@ function AuditContent() {
 
   const handleExport = async () => {
     if (demoMode) {
-      showToast("Audit export queued (demo).", "success");
+      showToast(t("toast.exportQueuedDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/audit/export", token);
-      showToast("Audit export queued.", "success");
+      showToast(t("toast.exportQueued"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Audit export failed.", "error");
+      showToast(t("toast.exportFailed"), "error");
     }
   };
 
   const handleAcknowledge = async () => {
     if (demoMode) {
       setAuditEvents([]);
-      showToast("Audit queue acknowledged (demo).", "success");
+      showToast(t("toast.ackDemo"), "success");
       return;
     }
     try {
       await adminPost("/api/v1/admin/audit/ack", token);
       setAuditEvents([]);
-      showToast("Audit queue acknowledged.", "success");
+      showToast(t("toast.ack"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Audit acknowledge failed.", "error");
+      showToast(t("toast.ackFailed"), "error");
     }
   };
 
@@ -173,22 +175,22 @@ function AuditContent() {
         <div className="relative z-10 p-6">
           <header className="mb-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <FileText size={14} /> Audit Logs
+              <FileText size={14} /> {t("eyebrow")}
             </p>
-            <h1 className="mt-4 text-3xl font-semibold">Security trail</h1>
+            <h1 className="mt-4 text-3xl font-semibold">{t("title")}</h1>
             <p className="text-slate-500 dark:text-white/60">
-              Track access, configuration changes, and data exports.
+              {t("subtitle")}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
-                Last updated {lastUpdatedLabel}
+                {t("lastUpdated", { time: lastUpdatedLabel })}
               </span>
               <button
                 type="button"
                 onClick={load}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                {isRefreshing ? "Refreshing" : "Refresh"}
+                {isRefreshing ? t("refreshing") : t("refresh")}
               </button>
               <button
                 type="button"
@@ -199,30 +201,29 @@ function AuditContent() {
                     : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                Auto refresh {autoRefresh ? "On" : "Off"}
+                {t("autoRefresh", { state: autoRefresh ? t("on") : t("off") })}
               </button>
               <button
                 type="button"
                 onClick={handleExport}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                Export CSV
+                {t("exportCsv")}
               </button>
               <button
                 type="button"
                 onClick={() =>
                   setConfirm({
                     open: true,
-                    title: "Acknowledge all events",
-                    description:
-                      "This will clear the current audit queue. Continue?",
+                    title: t("ackConfirm.title"),
+                    description: t("ackConfirm.body"),
                     tone: "danger",
                     onConfirm: handleAcknowledge,
                   })
                 }
                 className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
               >
-                Acknowledge all
+                {t("ackAll")}
               </button>
             </div>
           </header>
@@ -230,13 +231,13 @@ function AuditContent() {
           <div className="mb-6 grid gap-4 rounded-3xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:grid-cols-4">
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Total
+                {t("summary.total")}
               </p>
               <p className="mt-2 text-lg font-semibold">{summary.total}</p>
             </div>
             <div className="rounded-2xl border border-rose-200 bg-rose-50/70 p-3 text-sm dark:border-rose-200/40 dark:bg-rose-200/10">
               <p className="text-xs uppercase tracking-[0.2em] text-rose-600 dark:text-rose-200">
-                High
+                {t("summary.high")}
               </p>
               <p className="mt-2 text-lg font-semibold text-rose-700 dark:text-rose-100">
                 {summary.high}
@@ -244,7 +245,7 @@ function AuditContent() {
             </div>
             <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-3 text-sm dark:border-amber-200/40 dark:bg-amber-200/10">
               <p className="text-xs uppercase tracking-[0.2em] text-amber-600 dark:text-amber-200">
-                Medium
+                {t("summary.medium")}
               </p>
               <p className="mt-2 text-lg font-semibold text-amber-700 dark:text-amber-100">
                 {summary.medium}
@@ -252,7 +253,7 @@ function AuditContent() {
             </div>
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Low
+                {t("summary.low")}
               </p>
               <p className="mt-2 text-lg font-semibold">{summary.low}</p>
             </div>
@@ -260,9 +261,9 @@ function AuditContent() {
 
           <div className="mb-6 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <Filter size={12} /> Filters
+              <Filter size={12} /> {t("filters.title")}
             </span>
-            {"All High Medium Low".split(" ").map((level) => (
+            {["All", "High", "Medium", "Low"].map((level) => (
               <button
                 key={level}
                 type="button"
@@ -273,20 +274,20 @@ function AuditContent() {
                     : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                {level}
+                {t(`filters.levels.${level.toLowerCase()}`)}
               </button>
             ))}
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search activity"
+              placeholder={t("filters.search")}
               className="ml-auto min-w-[200px] rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
             />
           </div>
 
           <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-              <h3 className="text-lg font-medium">Recent events</h3>
+              <h3 className="text-lg font-medium">{t("events.title")}</h3>
             </div>
             <div className="divide-y divide-slate-200 dark:divide-white/10">
               {filteredEvents.map((event) => (
@@ -315,10 +316,10 @@ function AuditContent() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">
-                      No events match this filter.
+                      {t("events.emptyTitle")}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-white/60">
-                      Try clearing filters or jump to incident activity.
+                      {t("events.emptyBody")}
                     </p>
                   </div>
                   <div className="flex flex-wrap justify-center gap-2">
@@ -327,13 +328,13 @@ function AuditContent() {
                       onClick={handleClearFilters}
                       className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                     >
-                      Clear filters
+                      {t("events.clearFilters")}
                     </button>
                     <Link
                       href="/admin/incidents"
                       className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                     >
-                      View incidents
+                      {t("events.viewIncidents")}
                     </Link>
                   </div>
                 </div>
@@ -345,7 +346,7 @@ function AuditContent() {
             <div className="flex items-center gap-3">
               <ShieldCheck className="h-5 w-5 text-emerald-500" />
               <p className="text-sm text-slate-600 dark:text-white/70">
-                Audit retention: 400 days • Export compliance enabled.
+                {t("retention")}
               </p>
             </div>
           </div>
@@ -356,8 +357,9 @@ function AuditContent() {
 }
 
 export default function AuditLogsPage() {
+  const t = useTranslations("adminAudit");
   return (
-    <Suspense fallback={<div className="p-6">Loading logs...</div>}>
+    <Suspense fallback={<div className="p-6">{t("loading")}</div>}>
       <AuditContent />
     </Suspense>
   );

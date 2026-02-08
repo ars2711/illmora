@@ -162,7 +162,7 @@
           "time": "2 گھنٹے پہلے"
         },
         "upload": {
-          "title": "اپ لوڈ: \"Lecture_05.pdf\"",
+          "title": "اپ لوڈ: \"لیکچر_05.pdf\"",
           "time": "کل"
         }
       }
@@ -255,9 +255,9 @@
         "ctaPrimary": "تجربہ شروع کریں",
         "ctaSecondary": "اسٹوڈیو میں جائیں",
         "tagline": {
-          "one": "Offline-first",
-          "two": "Human-centered",
-          "three": "System-aware"
+          "one": "آف لائن فرسٹ",
+          "two": "انسان مرکز",
+          "three": "نظام آگاہ"
         }
       },
       "heroCard": {
@@ -274,7 +274,7 @@
       "subjects": {
         "title": "مضامین",
         "headline": "ہر شعبہ، ایک اسٹوڈیو۔",
-        "body": "ریاضی، فزکس، کیمسٹری، بایولوجی، کیلکولس، اسٹیٹسٹکس، لینیئر الجبرا، ڈسکریٹ میتھ، CS، پروگرامنگ، اکنامکس، فنانس، ہسٹری، لٹریچر، لینگوئجز، ڈیزائن، میوزک، میڈیسن، انجینئرنگ، قانون اور مزید۔",
+        "body": "ریاضی، فزکس، کیمسٹری، بایولوجی، کیلکولس، اسٹیٹسٹکس، لینیئر الجبرا، ڈسکریٹ میتھ، کمپیوٹر سائنس، پروگرامنگ، اکنامکس، فنانس، ہسٹری، لٹریچر، لینگوئجز، ڈیزائن، میوزک، میڈیسن، انجینئرنگ، قانون اور مزید۔",
         "list": {
           "math": "ریاضی",
           "physics": "فزکس",
@@ -284,7 +284,7 @@
           "statistics": "اسٹیٹسٹکس",
           "linearAlgebra": "لینیئر الجبرا",
           "discreteMath": "ڈسکریٹ میتھ",
-          "cs": "CS",
+          "cs": "کمپیوٹر سائنس",
           "programming": "پروگرامنگ",
           "economics": "اکنامکس",
           "finance": "فنانس",
@@ -327,7 +327,7 @@
           "body": "ڈرِلز، عکاسیاں، اور امیمرسیو ٹاسکس جو آلات پر سنک ہوتے ہیں۔"
         },
         "offline": {
-          "title": "Offline-first",
+          "title": "آف لائن فرسٹ",
           "body": "سگنل کے بغیر بھی پڑھیں۔ واپسی پر خوبصورت سنک۔"
         }
       },
@@ -369,10 +369,995 @@
         "stack": "Next.js, FastAPI, Firebase, Postgres + pgvector, Framer Motion اور بہت سا لیٹ نائٹ جاز۔",
         "byline": "Ilmora Studio by Arsalan — اخلاقی لرننگ سسٹمز بنا رہے ہیں۔ کام دیکھیں",
         "link": "GitHub",
-        "robots": "Robots",
-        "sitemap": "Sitemap",
-        "manifest": "Manifest"
+        "robots": "روبوٹس",
+        "sitemap": "سائٹ میپ",
+        "manifest": "مینفیسٹ"
       }
+    }
+  },
+  "upload": {
+    "title": "مواد شامل کریں",
+    "demoNotice": "ڈیمو موڈ: اپ لوڈز صرف ڈرافٹس کے طور پر محفوظ ہوتے ہیں۔ کوئی پروسیسنگ یا سنک نہیں۔",
+    "card": {
+      "title": "لیکچرز یا نوٹس اپ لوڈ کریں",
+      "subtitle": "سپورٹڈ فارمیٹس: PDF, TXT (Max 10MB)"
+    },
+    "actions": {
+      "select": "دستاویز منتخب کریں",
+      "remove": "ہٹائیں",
+      "savingDraft": "ڈرافٹ محفوظ ہو رہا ہے...",
+      "analyzing": "تجزیہ ہو رہا ہے...",
+      "saveDraft": "ڈرافٹ محفوظ کریں",
+      "startExtraction": "ایکسٹریکشن شروع کریں",
+      "viewNotes": "نوٹس دیکھیں",
+      "startQuiz": "کوئز شروع کریں",
+      "uploadAnother": "ایک اور فائل اپ لوڈ کریں"
+    },
+    "status": {
+      "draftSaved": "ڈرافٹ محفوظ ہوگیا!",
+      "processed": "دستاویز پروسیس ہوگئی!"
+    },
+    "why": {
+      "title": "کیوں اپ لوڈ کریں؟",
+      "items": {
+        "notes": "فوری ریویژن نوٹس بنائیں۔",
+        "chat": "اپنے دستاویزات سے چیٹ کریں (RAG)۔",
+        "quizzes": "خودکار پریکٹس کوئز بنائیں۔"
+      }
+    },
+    "drafts": {
+      "title": "ڈرافٹ اپ لوڈز",
+      "today": "آج",
+      "yesterday": "کل",
+      "justNow": "ابھی"
+    },
+    "toast": {
+      "draftSaved": "ڈرافٹ مقامی طور پر محفوظ ہوا (ڈیمو).",
+      "mustLogin": "اپ لوڈ کرنے کے لئے لاگ اِن ضروری ہے۔",
+      "sessionExpired": "سیشن ختم ہوگیا۔ دوبارہ سائن اِن کریں۔",
+      "processed": "دستاویز کامیابی سے پروسیس ہوگئی!",
+      "failed": "اپ لوڈ ناکام۔ فائل چیک کریں اور دوبارہ کوشش کریں۔"
+    },
+    "errors": {
+      "uploadFailed": "اپ لوڈ ناکام"
+    }
+  },
+  "practice": {
+    "title": "پریکٹس موڈ",
+    "subtitle": "بغیر دباؤ کے اپنی مہارت جانچیں۔",
+    "setup": {
+      "label": "آپ کیا پریکٹس کرنا چاہتے ہیں؟",
+      "placeholder": "مثال: ریکرشن، تھرموڈائنامکس، آرگینک کیمسٹری",
+      "loading": "سوچ رہے ہیں...",
+      "cta": "شروع کریں"
+    },
+    "question": {
+      "title": "سوال"
+    },
+    "answer": {
+      "label": "آپ کا جواب",
+      "placeholder": "اپنی وضاحت یہاں لکھیں...",
+      "loading": "جانچ ہو رہی ہے...",
+      "cta": "جواب جمع کریں"
+    },
+    "result": {
+      "question": "سوال",
+      "feedback": "فیڈبیک",
+      "cta": "ایک اور موضوع کی پریکٹس"
+    },
+    "demoQuestions": {
+      "one": "ریکَرشن کی وضاحت کریں اور کسی حقیقی عمل میں بیس کیس کی نشاندہی کریں۔",
+      "two": "ایگن ویکٹرز کے پیچھے ادراک کیا ہے، اور وہ سسٹم کو کیسے سادہ بناتے ہیں؟",
+      "three": "بیان کریں کہ spaced repetition وقت کے ساتھ یادداشت کیسے بہتر بناتا ہے۔"
+    },
+    "demoFeedback": {
+      "one": "ڈرافٹ فیڈبیک: اچھی سمجھ۔ ایک ٹھوس مثال شامل کریں اور بیس کیس واضح کریں۔",
+      "two": "ڈرافٹ فیڈبیک: اچھی فریمینگ۔ بتائیں کہ ایگن ویکٹرز ٹرانسفارمیشن میں سمت برقرار رکھتے ہیں۔",
+      "three": "ڈرافٹ فیڈبیک: اچھا خلاصہ۔ مزید گہرائی کے لئے اسے forgetting curves سے جوڑیں۔"
+    },
+    "prompts": {
+      "generate": "\"{topic}\" پر ایک مفہومی پریکٹس سوال تیار کریں۔ سوال گہری سمجھ پرکھے، صرف یادداشت پر نہیں۔ جواب نہ دیں۔",
+      "submit": "میرا جواب ہے: {answer}. اس جواب کا جائزہ لیں۔ اگر غلط ہو تو مفہومی طور پر بتائیں کیوں۔ اگر درست ہو تو تصدیق کریں اور تھوڑا بڑھائیں۔"
+    }
+  },
+  "graph": {
+    "title": "نالج گراف ایکسپلورر",
+    "errors": {
+      "fetchFailed": "گراف حاصل کرنے میں ناکامی"
+    },
+    "empty": {
+      "title": "نالج گراف لوڈ نہیں ہو سکا۔",
+      "body": "یقینی بنائیں کہ بیک اینڈ چل رہا ہے۔"
+    }
+  },
+  "marketplace": {
+    "title": "مارکیٹ پلیس",
+    "subtitle": "ٹاپ طلبہ کے پریمیم نوٹس اور اسٹڈی پیکس۔",
+    "loading": "مارکیٹ پلیس لوڈ ہو رہا ہے...",
+    "empty": {
+      "title": "ابھی کوئی پیک دستیاب نہیں",
+      "body": "اپنے نوٹس پہلے شائع کریں۔"
+    },
+    "card": {
+      "new": "نیا",
+      "price": "PKR {price}",
+      "free": "مفت"
+    },
+    "actions": {
+      "create": "اسٹڈی پیک بنائیں",
+      "view": "تفصیلات دیکھیں"
+    }
+  },
+  "career": {
+    "title": "کیرئیر انٹیلیجنس",
+    "subtitle": "AI سے چلنے والی حکمت عملی جو آپ کی ڈگری کو صنعت کی ضروریات سے جوڑتی ہے۔",
+    "form": {
+      "label": "ٹارگٹ رول (اختیاری)",
+      "placeholder": "مثال: فل اسٹیک ڈویلپر، ڈیٹا سائنٹسٹ..."
+    },
+    "actions": {
+      "loading": "سلیبس کا تجزیہ ہو رہا ہے...",
+      "generate": "روڈ میپ بنائیں"
+    },
+    "result": {
+      "title": "ذاتی حکمت عملی",
+      "time": "اندازاً وقت: {time}"
+    },
+    "errors": {
+      "failed": "روڈ میپ تیار نہیں ہو سکا۔"
+    }
+  },
+  "onboarding": {
+    "fallbackName": "طالب علم",
+    "title": "Ilmora میں خوش آمدید",
+    "subtitle": "اپنی تعلیمی ضروریات کے مطابق تجربہ ترتیب دیں۔",
+    "intro": {
+      "eyebrow": "داخل ہونے سے پہلے",
+      "body": "{name}, ہم آپ کے اہداف کے گرد ایک اسٹوڈیو بنا رہے ہیں: ایک میموری گراف جو ہر سیشن کے ساتھ بڑھتا ہے، آپ کے ردھم کے مطابق پریکٹس رچوئلز، اور ایک ڈیش بورڈ جو ہر جیت کو محفوظ رکھتا ہے۔"
+    },
+    "fields": {
+      "fullName": "پورا نام",
+      "curriculum": "کریکولم / بورڈ",
+      "curriculumPlaceholder": "اپنا کریکولم منتخب کریں...",
+      "curriculumHint": "یہ آپ کے لرننگ پاتھ اور اسسمنٹ اسٹائل کو ٹیون کرتا ہے۔",
+      "degree": "ڈگری پروگرام",
+      "degreePlaceholder": "مثال: بی ایس کمپیوٹر سائنس",
+      "semester": "موجودہ سمسٹر",
+      "semesterPlaceholder": "سمسٹر منتخب کریں",
+      "semesterOption": "{n}واں سمسٹر",
+      "subjects": "موجودہ مضامین",
+      "subjectsHint": "کاما سے جدا کریں",
+      "subjectsPlaceholder": "مثال: DSA، لینیئر الجبرا، نفسیات",
+      "language": "پسندیدہ زبان",
+      "languageOptions": {
+        "english": "انگریزی",
+        "urdu": "اردو"
+      },
+      "learningStyle": "سیکھنے کا انداز",
+      "learningOptions": {
+        "visual": "ویژول (ڈایاگرامز، گرافز)",
+        "socratic": "سقراطی (مجھ سے سوال کریں)",
+        "eli5": "ELI5 (سادہ مثالیں)"
+      },
+      "careerGoals": "خوابوں کا کیرئیر (کاما سے جدا کریں)",
+      "careerGoalsPlaceholder": "مثال: AI آرکیٹکٹ، سول انجینئر، پروڈکٹ مینیجر"
+    },
+    "actions": {
+      "saving": "پروفائل محفوظ ہو رہا ہے...",
+      "start": "سیکھنا شروع کریں"
+    },
+    "errors": {
+      "sessionExpired": "سیشن ختم ہوگیا",
+      "updateFailed": "پروفائل اپڈیٹ نہیں ہو سکا",
+      "generic": "کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔"
+    }
+  },
+  "noteDetail": {
+    "empty": "نوٹ نہیں ملا۔",
+    "aiComingSoon": "AI اسٹرکچرنگ اگلی بلڈ فیز میں آئے گی۔",
+    "actions": {
+      "ai": "AI اسٹرکچر",
+      "edit": "ترمیم",
+      "save": "محفوظ کریں"
+    },
+    "errors": {
+      "fetchFailed": "API خرابی",
+      "networkCache": "نیٹ ورک ناکام، آف لائن کیش چیک ہو رہا ہے..."
+    }
+  },
+  "security": {
+    "eyebrow": "سیٹنگز",
+    "title": "سیکورٹی اور پاس کیز",
+    "demoNotice": "ڈیمو موڈ: پاس کیز اور پرووائیڈرز صرف پری ویو ہیں۔",
+    "passkeys": {
+      "title": "پاس کیز",
+      "body": "اس ڈیوائس پر فوری سائن اِن کے لئے پاس کی استعمال کریں۔ پاس کیز آپ کے ڈیوائس سے باہر نہیں جاتیں اور پاس ورڈز کی جگہ لیتی ہیں۔"
+    },
+    "providers": {
+      "title": "لنکڈ پرووائیڈرز",
+      "body": "جب آپ کے identity provider میں فعال ہوں تو آپ لاگ اِن اسکرین پر ان پرووائیڈرز کو استعمال کر سکتے ہیں۔",
+      "available": "سائن اِن پر دستیاب"
+    },
+    "actions": {
+      "back": "ڈیش بورڈ پر واپس",
+      "working": "کام جاری ہے...",
+      "createPasskey": "پاس کی بنائیں"
+    },
+    "errors": {
+      "unsupported": "یہاں پاس کیز سپورٹڈ نہیں ہیں۔",
+      "sessionExpired": "سیشن ختم ہوگیا۔ دوبارہ سائن اِن کریں۔",
+      "startFailed": "پاس کی رجسٹریشن شروع نہیں ہو سکا۔",
+      "canceled": "پاس کی درخواست منسوخ کر دی گئی۔",
+      "verifyFailed": "پاس کی توثیق ناکام ہوئی۔",
+      "failed": "پاس کی رجسٹریشن ناکام ہوئی۔"
+    },
+    "toast": {
+      "success": "پاس کی کامیابی سے شامل ہو گئی۔"
+    }
+  },
+  "history": {
+    "eyebrow": "ہسٹری",
+    "title": "سیشن ٹائم لائن",
+    "subtitle": "ہر اسٹوڈیو سیشن، اپ لوڈ اور رچوئل یہاں محفوظ ہوتا ہے۔",
+    "stats": {
+      "sessions": {
+        "label": "سیشنز",
+        "value": "اس ہفتے 12"
+      },
+      "uploads": {
+        "label": "اپ لوڈز",
+        "value": "4 پیکس سنک ہوئے"
+      },
+      "momentum": {
+        "label": "موومنٹم",
+        "value": "84 تسلسل"
+      }
+    },
+    "filters": {
+      "label": "فلٹرز",
+      "all": "سب",
+      "studio": "اسٹوڈیو",
+      "upload": "اپ لوڈز",
+      "practice": "پریکٹس"
+    },
+    "types": {
+      "studio": "اسٹوڈیو",
+      "upload": "اپ لوڈ",
+      "practice": "پریکٹس"
+    },
+    "items": {
+      "graphRecall": {
+        "title": "گراف ریکال سیشن",
+        "detail": "18 منٹ ڈیپ ڈائیو"
+      },
+      "lecture": {
+        "title": "لیکچر_05.pdf",
+        "detail": "نالج نوڈز بنے"
+      },
+      "recursion": {
+        "title": "ریکَرشن ڈرلز",
+        "detail": "14 پرامپٹس مکمل"
+      },
+      "socratic": {
+        "title": "سوکراتک ریویو",
+        "detail": "12 پرامپٹس • اعتماد میں اضافہ"
+      }
+    },
+    "times": {
+      "twoHours": "2 گھنٹے پہلے",
+      "yesterday": "کل",
+      "twoDays": "2 دن پہلے",
+      "threeDays": "3 دن پہلے"
+    }
+  },
+  "chat": {
+    "header": {
+      "phaseTag": "فیز 1 پروٹو",
+      "demoBadge": "ڈیمو ڈرافٹس",
+      "status": {
+        "online": "آن لائن",
+        "offline": "آف لائن موڈ"
+      }
+    },
+    "empty": {
+      "title": "Ilmora میں خوش آمدید",
+      "body": "میں آپ کا AI لرننگ ساتھی ہوں۔ میں آپ کو تصورات سمجھنے، موضوعات کا ریویو کرنے، اور آپ کی پیش رفت ٹریک کرنے میں مدد کر سکتا ہوں۔"
+    },
+    "input": {
+      "placeholder": "Ilmora سے کچھ بھی پوچھیں...",
+      "helper": "Ilmora ایک AI ٹیوٹر ہے جو سیکھنے کے لیے ہے، چیٹنگ کے لیے نہیں۔"
+    }
+  },
+  "bottomNav": {
+    "home": "ہوم",
+    "graph": "گراف",
+    "chat": "چیٹ",
+    "history": "ہسٹری",
+    "store": "اسٹور",
+    "profile": "پروفائل"
+  },
+  "errorPage": {
+    "eyebrow": "کچھ غلط ہو گیا",
+    "title": "Ilmora میں رکاوٹ آ گئی",
+    "body": "ری لوڈ کریں یا اسٹوڈیو پر واپس جائیں۔",
+    "actions": {
+      "retry": "دوبارہ کوشش",
+      "home": "ہوم جائیں"
+    },
+    "code": "کوڈ: {code}"
+  },
+  "globalError": {
+    "title": "سسٹم خرابی",
+    "body": "ایک سنگین خرابی نے سمولیشن روک دیا۔ حالت محفوظ کر لی گئی ہے۔",
+    "cta": "انٹرفیس ری بوٹ کریں"
+  },
+  "notFound": {
+    "body": "جس تصور کو آپ تلاش کر رہے ہیں وہ گراف میں موجود نہیں۔",
+    "actions": {
+      "home": "ہوم واپس جائیں",
+      "back": "واپس جائیں"
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading System Admin...",
+    "title": "Ilmora Global Command Center",
+    "subtitle": "System Status & Multitenant Oversight",
+    "search": {
+      "title": "Global admin search",
+      "placeholder": "Search incidents, audit events, or roles",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "submit": "Search"
+    },
+    "stats": {
+      "totalUsers": {
+        "title": "Total Users",
+        "delta": "+6% WoW"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "delta": "+1 this month"
+      },
+      "interactions": {
+        "title": "Total Interactions",
+        "sub": "AI messages processed",
+        "delta": "+12% WoW"
+      },
+      "flagged": {
+        "title": "Flagged Issues",
+        "sub": "Requires attention",
+        "delta": "-2 since yesterday"
+      }
+    },
+    "kpis": {
+      "openIncidents": {
+        "title": "Open Incidents",
+        "delta": "+1 this week"
+      },
+      "auditEvents": {
+        "title": "Audit Events",
+        "delta": "+14% WoW"
+      },
+      "accessRequests": {
+        "title": "Access Requests",
+        "delta": "2 pending"
+      },
+      "dbJobs": {
+        "title": "DB Jobs",
+        "delta": "1 running"
+      }
+    },
+    "quickLinks": {
+      "databaseTitle": "Database Console",
+      "database": "Replicas, performance, jobs",
+      "auditTitle": "Audit Logs",
+      "audit": "Security, data access, changes",
+      "incidentTitle": "Incident Log",
+      "incidents": "Incidents, mitigations, status",
+      "rolesTitle": "Roles & Access",
+      "roles": "Permissions and approvals",
+      "healthTitle": "System Health",
+      "health": "Runtime, queues, uptime"
+    },
+    "priority": {
+      "title": "Priority Review Queue",
+      "empty": "No pending issues. System healthy.",
+      "context": "Context:",
+      "by": "by {email}",
+      "resolve": "Resolve"
+    },
+    "actions": {
+      "title": "System Actions",
+      "provision": "+ Provision New Institution",
+      "manageCurricula": "Manage Curricula",
+      "viewLogs": "View Server Logs"
+    },
+    "databaseOverview": {
+      "primary": "Primary DB",
+      "healthy": "Healthy",
+      "replicaLag": "Replica Lag",
+      "storage": "Storage Used",
+      "latency": "P95 Latency"
+    },
+    "databaseActivity": {
+      "title": "Database Activity",
+      "subtitle": "Live queries, maintenance jobs, and service health.",
+      "inspect": "Inspect",
+      "status": {
+        "ok": "OK",
+        "running": "Running"
+      },
+      "times": {
+        "one": "18s ago",
+        "two": "2 min ago",
+        "three": "7 min ago"
+      }
+    },
+    "databaseHealth": {
+      "title": "Database Health",
+      "subtitle": "Replication, storage, latency, and backup status.",
+      "cta": "Open database console"
+    }
+  },
+  "adminIntegrations": {
+    "title": "System Integrations",
+    "subtitle": "Connect Ilmora to external LMS and event listeners.",
+    "tabs": {
+      "integrations": "LMS & Tools",
+      "webhooks": "Webhooks"
+    },
+    "form": {
+      "title": "Add New {kind}",
+      "integration": "Integration",
+      "webhook": "Webhook",
+      "type": "Type",
+      "integrationTypeAria": "Integration type",
+      "webhookTypeAria": "Webhook event type",
+      "integrationTypes": {
+        "lms": "Learning Management System",
+        "payment": "Payment Gateway",
+        "sso": "Single Sign-On"
+      },
+      "name": "Name",
+      "targetUrl": "Target URL",
+      "namePlaceholder": "e.g. Canvas NUST",
+      "urlPlaceholder": "https://api.mysite.com/webhook",
+      "create": "Create"
+    },
+    "list": {
+      "deleteIntegration": "Delete integration",
+      "deleteWebhook": "Delete webhook",
+      "empty": "No {tab} configured yet."
+    },
+    "toast": {
+      "demoFallback": "Integrations are using demo data.",
+      "nameRequired": "Enter an integration name.",
+      "urlRequired": "Enter a webhook URL.",
+      "createdDemo": "Created in demo mode.",
+      "created": "Created successfully.",
+      "createFailed": "Creation failed.",
+      "removedDemo": "Removed in demo mode.",
+      "removed": "Removed successfully.",
+      "removeFailed": "Removal failed."
+    }
+  },
+  "adminAudit": {
+    "loading": "لاگز لوڈ ہو رہے ہیں...",
+    "eyebrow": "آڈٹ لاگز",
+    "title": "سیکیورٹی ٹریل",
+    "subtitle": "رسائی، کنفیگریشن تبدیلیاں اور ڈیٹا ایکسپورٹس ٹریک کریں۔",
+    "lastUpdated": "آخری اپڈیٹ {time}",
+    "refresh": "ریفریش",
+    "refreshing": "ریفریش ہو رہا ہے",
+    "autoRefresh": "خودکار ریفریش {state}",
+    "on": "آن",
+    "off": "آف",
+    "exportCsv": "CSV ایکسپورٹ کریں",
+    "ackAll": "سب کی توثیق کریں",
+    "ackConfirm": {
+      "title": "تمام ایونٹس کی توثیق کریں",
+      "body": "یہ موجودہ آڈٹ قطار صاف کر دے گا۔ جاری رکھیں؟"
+    },
+    "summary": {
+      "total": "کل",
+      "high": "زیادہ",
+      "medium": "درمیانہ",
+      "low": "کم"
+    },
+    "filters": {
+      "title": "فلٹرز",
+      "search": "سرگرمی تلاش کریں",
+      "levels": {
+        "all": "سب",
+        "high": "زیادہ",
+        "medium": "درمیانہ",
+        "low": "کم"
+      }
+    },
+    "events": {
+      "title": "حالیہ ایونٹس",
+      "emptyTitle": "اس فلٹر سے کوئی ایونٹ نہیں ملا۔",
+      "emptyBody": "فلٹر صاف کریں یا انسڈنٹ سرگرمی دیکھیں۔",
+      "clearFilters": "فلٹر صاف کریں",
+      "viewIncidents": "انسڈنٹس دیکھیں"
+    },
+    "retention": "آڈٹ ریٹینشن: 400 دن • ایکسپورٹ کمپلائنس فعال۔",
+    "toast": {
+      "demoFallback": "آڈٹ لاگز ڈیمو ڈیٹا استعمال کر رہے ہیں۔",
+      "exportQueuedDemo": "آڈٹ ایکسپورٹ قطار میں (ڈیمو)۔",
+      "exportQueued": "آڈٹ ایکسپورٹ قطار میں۔",
+      "exportFailed": "آڈٹ ایکسپورٹ ناکام۔",
+      "ackDemo": "آڈٹ قطار کی توثیق (ڈیمو)۔",
+      "ack": "آڈٹ قطار کی توثیق۔",
+      "ackFailed": "آڈٹ توثیق ناکام۔"
+    }
+  },
+  "adminIncidents": {
+    "loading": "انسڈنٹس لوڈ ہو رہے ہیں...",
+    "eyebrow": "انسڈنٹ لاگ",
+    "title": "آپریشنل انسڈنٹس",
+    "subtitle": "تحقیقات، تخفیف اور حل کی ونڈوز ٹریک کریں۔",
+    "lastUpdated": "آخری اپڈیٹ {time}",
+    "refresh": "ریفریش",
+    "refreshing": "ریفریش ہو رہا ہے",
+    "autoRefresh": "خودکار ریفریش {state}",
+    "on": "آن",
+    "off": "آف",
+    "exportCsv": "CSV ایکسپورٹ کریں",
+    "exportJson": "JSON ایکسپورٹ کریں",
+    "summary": {
+      "total": "کل",
+      "investigating": "تحقیقات میں",
+      "monitoring": "مانیٹرنگ میں",
+      "resolved": "حل شدہ"
+    },
+    "filters": {
+      "title": "فلٹرز",
+      "search": "انسڈنٹس تلاش کریں",
+      "status": {
+        "all": "سب",
+        "investigating": "تحقیقات میں",
+        "monitoring": "مانیٹرنگ میں",
+        "resolved": "حل شدہ"
+      },
+      "severity": {
+        "all": "سب",
+        "high": "زیادہ",
+        "medium": "درمیانہ",
+        "low": "کم"
+      }
+    },
+    "feedTitle": "انسڈنٹ فیڈ",
+    "empty": {
+      "title": "آپ کے فلٹرز سے کوئی انسڈنٹ نہیں ملا۔",
+      "body": "فلٹرز ایڈجسٹ کریں یا نیا انسڈنٹ بنائیں۔",
+      "clearFilters": "فلٹر صاف کریں",
+      "createIncident": "انسڈنٹ بنائیں"
+    },
+    "servicesLabel": "سروسز:",
+    "actions": {
+      "viewDetails": "تفصیلات دیکھیں",
+      "ack": "توثیق کریں",
+      "resolve": "حل کریں"
+    },
+    "confirm": {
+      "ack": {
+        "title": "انسڈنٹ کی توثیق",
+        "body": "اس انسڈنٹ کے لیے توثیق ریکارڈ کریں۔"
+      },
+      "resolve": {
+        "title": "انسڈنٹ حل کریں",
+        "body": "اس انسڈنٹ کو حل شدہ نشان زد کر کے محفوظ کریں۔"
+      }
+    },
+    "pagination": "صفحہ {page} از {total}",
+    "prev": "پچھلا",
+    "next": "اگلا",
+    "detail": {
+      "eyebrow": "انسڈنٹ تفصیل",
+      "close": "بند کریں",
+      "severity": "شدت",
+      "owner": "ذمہ دار",
+      "region": "علاقہ",
+      "timeline": "ٹائم لائن",
+      "notes": "نوٹس",
+      "notesEmpty": "ابھی کوئی نوٹ نہیں۔",
+      "notePlaceholder": "نوٹ شامل کریں",
+      "addNote": "نوٹ شامل کریں",
+      "confirmAck": {
+        "title": "انسڈنٹ کی توثیق",
+        "body": "اس انسڈنٹ کے لیے توثیق ریکارڈ کریں۔"
+      },
+      "acknowledge": "توثیق کریں",
+      "followUp": "فالو اپ بنائیں"
+    },
+    "timeline": {
+      "reported": "انسڈنٹ رپورٹ ہوا",
+      "mitigation": "تخفیف نافذ ہوئی",
+      "resolved": "انسڈنٹ حل ہوا"
+    },
+    "toast": {
+      "demoFallback": "انسڈنٹ لاگ ڈیمو ڈیٹا استعمال کر رہا ہے۔",
+      "detailsFailed": "انسڈنٹ کی تفصیلات لوڈ نہ ہو سکیں۔",
+      "noteFailed": "نوٹ محفوظ نہیں ہو سکا۔",
+      "updatedDemo": "انسڈنٹ اپڈیٹ ہوا (ڈیمو)۔",
+      "updated": "انسڈنٹ اپڈیٹ ہوا۔",
+      "updateFailed": "انسڈنٹ اپڈیٹ ناکام۔",
+      "exported": "انسڈنٹ لاگ ایکسپورٹ ہوا۔",
+      "acknowledged": "انسڈنٹ کی توثیق ہو گئی۔",
+      "followUp": "فالو اپ ٹاسک بنایا گیا۔"
+    }
+  },
+  "adminHealth": {
+    "eyebrow": "سسٹم ہیلتھ",
+    "title": "اپ ٹائم اور ریزیلینس",
+    "subtitle": "سروس اسٹیٹس، انسڈنٹس اور آپریشنل تیاری ٹریک کریں۔",
+    "lastUpdated": "آخری اپڈیٹ {time}",
+    "refresh": "ریفریش",
+    "refreshing": "ریفریش ہو رہا ہے",
+    "autoRefresh": "خودکار ریفریش {state}",
+    "on": "آن",
+    "off": "آف",
+    "cards": {
+      "uptime": {
+        "title": "عالمی اپ ٹائم",
+        "body": "اس ماہ علاقوں میں 99.95%۔"
+      },
+      "queue": {
+        "title": "کیو ہیلتھ",
+        "body": "3 ورکر آن لائن • اوسط تاخیر 320ms۔"
+      },
+      "alerts": {
+        "title": "فعال الرٹس",
+        "body": "2 وارننگز • 0 کریٹیکل۔"
+      }
+    },
+    "create": {
+      "title": "انسڈنٹ بنائیں",
+      "placeholder": "انسڈنٹ خلاصہ",
+      "statusAria": "انسڈنٹ اسٹیٹس",
+      "statusOptions": {
+        "investigating": "تحقیقات میں",
+        "identified": "شناخت شدہ",
+        "monitoring": "مانیٹرنگ میں"
+      },
+      "submit": "بنائیں"
+    },
+    "services": {
+      "title": "سروس اسٹیٹس",
+      "uptime": "اپ ٹائم {value}"
+    },
+    "timeline": {
+      "title": "انسڈنٹ ٹائم لائن",
+      "resolve": "حل کریں",
+      "viewDetails": "تفصیلات دیکھیں",
+      "viewAll": "مکمل انسڈنٹ لاگ دیکھیں",
+      "confirmResolve": {
+        "title": "انسڈنٹ حل کریں",
+        "body": "اس انسڈنٹ کو حل شدہ نشان زد کر کے محفوظ کریں۔"
+      }
+    },
+    "detail": {
+      "eyebrow": "انسڈنٹ تفصیل",
+      "close": "بند کریں",
+      "severity": "شدت",
+      "owner": "ذمہ دار",
+      "services": "سروسز",
+      "impactPending": "اثر کی تفصیلات زیر التوا ہیں۔",
+      "timeline": "ٹائم لائن",
+      "confirmAck": {
+        "title": "انسڈنٹ کی توثیق",
+        "body": "اس انسڈنٹ کے لیے توثیق ریکارڈ کریں۔"
+      },
+      "acknowledge": "توثیق کریں",
+      "followUp": "فالو اپ بنائیں",
+      "toast": {
+        "acknowledged": "انسڈنٹ کی توثیق ہو گئی۔",
+        "followUp": "فالو اپ ٹاسک بنایا گیا۔"
+      }
+    },
+    "toast": {
+      "demoFallback": "سسٹم ہیلتھ ڈیمو ڈیٹا استعمال کر رہا ہے۔",
+      "titleRequired": "انسڈنٹ عنوان درج کریں۔",
+      "createdDemo": "انسڈنٹ بنا (ڈیمو)۔",
+      "created": "انسڈنٹ بنا۔",
+      "createFailed": "انسڈنٹ بنانا ناکام۔",
+      "resolvedDemo": "انسڈنٹ حل (ڈیمو)۔",
+      "resolved": "انسڈنٹ حل ہوا۔",
+      "resolveFailed": "انسڈنٹ حل ناکام۔"
+    }
+  },
+  "adminDatabase": {
+    "eyebrow": "ڈیٹابیس کنسول",
+    "title": "ڈیٹا کنٹرول سینٹر",
+    "subtitle": "ریپلیکیشن، کوئری ہیلتھ اور مینٹیننس آپریشنز مانیٹر کریں۔",
+    "lastUpdated": "آخری اپڈیٹ {time}",
+    "refresh": "ریفریش",
+    "refreshing": "ریفریش ہو رہا ہے",
+    "autoRefresh": "خودکار ریفریش {state}",
+    "on": "آن",
+    "off": "آف",
+    "cluster": {
+      "live": "لائیو",
+      "promoteTitle": "ریپلیکا پروموٹ کریں",
+      "promoteBody": "یہ ریپلیکا کو پرائمری بنائے گا۔ جاری رکھیں؟",
+      "promote": "ریپلیکا پروموٹ کریں",
+      "failoverTitle": "فیل اوور ڈرل چلائیں",
+      "failoverBody": "یہ فیل اوور سمیولیشن چلاتا ہے۔ آگے بڑھنے کی تصدیق کریں۔",
+      "failover": "فیل اوور ڈرل چلائیں",
+      "latencyTrend": "لیٹنسی ٹرینڈ",
+      "latency": "لیٹنسی",
+      "storage": "اسٹوریج",
+      "backups": "بیک اپس",
+      "backupTime": "4 گھنٹے پہلے"
+    },
+    "slowQueries": {
+      "title": "سست کوئریز",
+      "time": "وقت {time}",
+      "impact": "اثر {impact}",
+      "inspect": "معائنہ کریں",
+      "terminateTitle": "کوئری ختم کریں",
+      "terminateBody": "یہ فوری طور پر چلتی کوئری ختم کر دے گا۔",
+      "terminate": "ختم کریں"
+    },
+    "maintenance": {
+      "title": "مینٹیننس قطار",
+      "runTitle": "مینٹیننس جاب چلائیں",
+      "runBody": "یہ مینٹیننس جاب ابھی شروع کرے گا۔",
+      "runNow": "ابھی چلائیں",
+      "backupTitle": "بیک اپ اسنیپ شاٹ چلائیں",
+      "backupBody": "پرائمری کلسٹر کے لیے اسنیپ شاٹ بیک اپ ٹرگر کریں۔",
+      "backup": "بیک اپ اسنیپ شاٹ چلائیں"
+    },
+    "charts": {
+      "latency": {
+        "title": "لیٹنسی ہسٹوگرام",
+        "body": "گزشتہ ایک گھنٹے میں کوئری لیٹنسی کی تقسیم۔"
+      },
+      "replica": {
+        "title": "ریپلیکا لیگ ٹرینڈ",
+        "body": "سیکنڈز میں لیگ (آخری 7 نمونے)۔"
+      },
+      "error": {
+        "title": "ایرر ریٹ ٹرینڈ",
+        "body": "سروسز میں API ایرر ریٹ (%)۔"
+      }
+    },
+    "restorePoints": {
+      "title": "ری اسٹور پوائنٹس",
+      "age": "عمر {age} • {region}",
+      "restoreTitle": "پوائنٹ سے ری اسٹور",
+      "restoreBody": "یہ ڈیٹابیس کو اس اسنیپ شاٹ پر بحال کرے گا۔",
+      "restore": "بحال کریں"
+    },
+    "rollback": {
+      "title": "رول بیک ہسٹری"
+    },
+    "runbook": {
+      "title": "ری اسٹور رن بک",
+      "subtitle": "محفوظ بحالی کے لیے رہنمائی شدہ مراحل۔",
+      "open": "رن بک کھولیں",
+      "completeNext": "اگلا مرحلہ مکمل کریں",
+      "reset": "رن بک ری سیٹ کریں"
+    },
+    "guardrails": {
+      "replication": {
+        "title": "ریپلیکیشن گارڈ ریلز",
+        "body": "آٹو فیل اوور فعال۔ ریپلیکا لیگ 2.5s پر الرٹس ٹرگر کرتا ہے۔"
+      },
+      "security": {
+        "title": "سیکیورٹی پوسچر",
+        "body": "ریسٹ پر انکرپٹڈ۔ حساس ٹیبلز پر رو-لیول رسائی نافذ۔"
+      },
+      "performance": {
+        "title": "کارکردگی بجٹ",
+        "body": "P95 لیٹنسی ہدف 120ms۔ موجودہ ایرر ریٹ 0.2%۔"
+      }
+    },
+    "protections": {
+      "title": "ڈیٹابیس تحفظات",
+      "subtitle": "بیک اپس، آڈٹس اور ہنگامی رسائی راستے چیک کریں۔",
+      "items": {
+        "backups": { "label": "بیک اپس", "value": "تصدیق شدہ" },
+        "keys": { "label": "ایکسیس کیز", "value": "5 دن پہلے روٹیٹ" },
+        "audit": { "label": "آڈٹ ٹریل", "value": "فعال" }
+      },
+      "pitrTitle": "پوائنٹ اِن ٹائم ریسٹور شروع کریں",
+      "pitrBody": "یہ ڈیٹابیس کو پچھلے اسنیپ شاٹ پر بحال کرے گا۔",
+      "pitr": "پوائنٹ اِن ٹائم ریسٹور",
+      "rollbackTitle": "آخری مائیگریشن رول بیک",
+      "rollbackBody": "یہ حالیہ ترین مائیگریشن اسٹیپ رول بیک کرے گا۔",
+      "rollback": "مائیگریشن رول بیک"
+    },
+    "toast": {
+      "demoFallback": "ڈیٹابیس کنسول ڈیمو ڈیٹا استعمال کر رہا ہے۔",
+      "backupQueuedDemo": "بیک اپ اسنیپ شاٹ قطار میں (ڈیمو)۔",
+      "backupQueued": "بیک اپ اسنیپ شاٹ قطار میں۔",
+      "backupFailed": "بیک اپ درخواست ناکام۔",
+      "jobStartedDemo": "جاب شروع ہوئی (ڈیمو)۔",
+      "jobStarted": "جاب شروع ہوئی۔",
+      "jobFailed": "جاب شروع ہونے میں ناکامی۔",
+      "queryTerminatedDemo": "کوئری ختم (ڈیمو)۔",
+      "queryTerminated": "کوئری ختم۔",
+      "queryFailed": "کوئری ختم کرنا ناکام۔",
+      "rollbackQueuedDemo": "رول بیک قطار میں (ڈیمو)۔",
+      "rollbackQueued": "رول بیک قطار میں۔",
+      "rollbackFailed": "رول بیک ناکام۔",
+      "pitrDemo": "PITR شروع (ڈیمو)۔",
+      "pitr": "PITR شروع۔",
+      "pitrFailed": "PITR ناکام۔",
+      "runbookStepDemo": "رن بک مرحلہ مکمل (ڈیمو)۔",
+      "runbookStep": "رن بک مرحلہ مکمل۔",
+      "runbookFailed": "رن بک اپڈیٹ ناکام۔",
+      "runbookResetDemo": "رن بک ری سیٹ (ڈیمو)۔",
+      "runbookReset": "رن بک ری سیٹ۔",
+      "runbookResetFailed": "رن بک ری سیٹ ناکام۔",
+      "restoreDemo": "ری اسٹور قطار میں (ڈیمو)۔",
+      "restore": "ری اسٹور قطار میں۔",
+      "restoreFailed": "ری اسٹور ناکام۔",
+      "inspect": "کوئری انسپیکشن کھلی۔",
+      "runbookEmpty": "کوئی رن بک مرحلہ دستیاب نہیں۔"
+    }
+  },
+  "adminRoles": {
+    "eyebrow": "کردار اور رسائی",
+    "title": "اجازتوں کی ساخت",
+    "subtitle": "کردار، منظوریوں اور رسائی کی حدود ترتیب دیں۔",
+    "loading": "کردار لوڈ ہو رہے ہیں...",
+    "confirm": {
+      "proceed": "جاری رکھیں"
+    },
+    "create": {
+      "placeholder": "کردار کا نام",
+      "scopeAria": "کردار کا دائرہ",
+      "scopes": {
+        "global": "عالمی",
+        "institution": "ادارہ",
+        "department": "شعبہ"
+      },
+      "submit": "کردار بنائیں"
+    },
+    "activeRoles": "فعال کردار",
+    "roleMeta": "{count} اراکین • {scope}",
+    "manage": "انتظام",
+    "permissions": {
+      "title": "اجازتوں کا میٹرکس",
+      "subtitle": "{name} کے لیے رسائی ترتیب دیں۔",
+      "subtitleFallback": "کردار",
+      "selectRole": "کردار منتخب کریں",
+      "export": "میٹرکس ایکسپورٹ کریں",
+      "cloneTitle": "منتخب کردار کلون کریں",
+      "cloneBody": "یہ منتخب کردار اور اجازتوں کی نقل بنائے گا۔",
+      "clone": "کردار کلون کریں",
+      "groups": {
+        "data": "ڈیٹا",
+        "security": "سیکیورٹی",
+        "aiContent": "AI اور مواد",
+        "operations": "آپریشنز"
+      },
+      "labels": {
+        "db": {
+          "read": "ڈیٹابیس پڑھیں",
+          "write": "ڈیٹا لکھیں",
+          "export": "ریکارڈز ایکسپورٹ کریں"
+        },
+        "audit": {
+          "view": "آڈٹ لاگز دیکھیں",
+          "export": "آڈٹ لاگز ایکسپورٹ کریں"
+        },
+        "incident": {
+          "manage": "انسڈنٹس منظم کریں"
+        },
+        "content": {
+          "review": "مواد کا جائزہ لیں"
+        },
+        "model": {
+          "configure": "ماڈلز کنفیگر کریں"
+        },
+        "studio": {
+          "manage": "اسٹوڈیو منظم کریں"
+        },
+        "integrations": {
+          "manage": "انٹیگریشنز منظم کریں"
+        },
+        "roles": {
+          "manage": "کردار منظم کریں"
+        },
+        "system": {
+          "health": "سسٹم ہیلتھ دیکھیں"
+        }
+      },
+      "state": {
+        "on": "آن",
+        "off": "آف"
+      }
+    },
+    "insights": {
+      "title": "کردار آڈٹ بصیرتیں",
+      "subtitle": "شدت کی تقسیم اور شدت (لوڈ شدہ اندراجات)۔",
+      "mix": "شدت کا امتزاج",
+      "trend": "شدت کا رجحان"
+    },
+    "actors": {
+      "title": "ایکٹر لیڈر بورڈ",
+      "subtitle": "موجودہ منظر میں سب سے فعال ایڈمنز۔",
+      "empty": "ابھی کوئی آڈٹ سرگرمی لوڈ نہیں ہوئی۔",
+      "events": "{count} ایونٹس"
+    },
+    "audit": {
+      "title": "کردار آڈٹ ہسٹری",
+      "levels": {
+        "all": "سب",
+        "high": "زیادہ",
+        "medium": "درمیانہ",
+        "low": "کم"
+      },
+      "export": "CSV ایکسپورٹ کریں",
+      "search": "کردار آڈٹ تلاش کریں",
+      "empty": {
+        "title": "آپ کے فلٹرز سے کوئی کردار آڈٹ اندراج نہیں ملا۔",
+        "body": "فلٹرز ایڈجسٹ کریں یا تلاش صاف کریں۔",
+        "clear": "فلٹر صاف کریں"
+      },
+      "pagination": "صفحہ {page} از {total}",
+      "prev": "پچھلا",
+      "next": "اگلا"
+    },
+    "footer": {
+      "notice": "رسائی پالیسیز ہر ادارے پر نافذ ہوتی ہیں اور ہر گھنٹے ہم آہنگ ہوتی ہیں۔"
+    },
+    "access": {
+      "title": "رسائی کی درخواستیں",
+      "approveAllTitle": "تمام درخواستیں منظور کریں",
+      "approveAllBody": "یہ تمام زیرِ التوا رسائی کی درخواستیں منظور کرے گا۔",
+      "approveAll": "سب منظور کریں",
+      "denyAllTitle": "تمام درخواستیں مسترد کریں",
+      "denyAllBody": "یہ تمام زیرِ التوا رسائی کی درخواستیں مسترد کرے گا۔",
+      "denyAll": "سب مسترد کریں",
+      "approve": "منظور کریں",
+      "deny": "مسترد کریں",
+      "notice": "منظوریاں خودکار طور پر آڈٹ ٹریل میں درج ہوتی ہیں۔"
+    },
+    "templates": {
+      "confirmTitle": "{name} ٹیمپلیٹ لاگو کریں",
+      "confirmBody": "یہ منتخب کردار کے موجودہ اجازت سیٹ کو اوور رائٹ کرے گا۔",
+      "labels": {
+        "administrator": "ایڈمنسٹریٹر",
+        "operator": "آپریٹر",
+        "readOnly": "صرف مطالعہ"
+      }
+    },
+    "toast": {
+      "matrixExported": "اجازتوں کا میٹرکس ایکسپورٹ ہوا۔",
+      "auditExported": "کردار آڈٹ ایکسپورٹ ہوا۔",
+      "cloneSelect": "کلون کرنے کے لیے کردار منتخب کریں۔",
+      "cloneDemo": "کردار کلون ہوا (ڈیمو)۔",
+      "clone": "کردار کلون ہوا۔",
+      "cloneFailed": "کردار کلون ناکام۔",
+      "auditDemo": "کردار آڈٹ ڈیمو ڈیٹا استعمال کر رہا ہے۔",
+      "rolesDemo": "کردار ڈیٹا ڈیمو ڈیٹا استعمال کر رہا ہے۔",
+      "permissionDemo": "اجازت اپڈیٹ ہوئی (ڈیمو)۔",
+      "permissionUpdated": "اجازت اپڈیٹ ہوئی۔",
+      "permissionFailed": "اجازت اپڈیٹ ناکام۔",
+      "noAccessRequests": "اپڈیٹ کے لیے کوئی رسائی درخواست نہیں۔",
+      "accessUpdatedDemo": "رسائی درخواستیں اپڈیٹ ہوئیں (ڈیمو)۔",
+      "accessUpdated": "رسائی درخواستیں اپڈیٹ ہوئیں۔",
+      "bulkFailed": "بلک اپڈیٹ ناکام۔",
+      "templateDemo": "ٹیمپلیٹ لاگو ہوا (ڈیمو)۔",
+      "templateApplied": "ٹیمپلیٹ لاگو ہوا۔",
+      "templateFailed": "ٹیمپلیٹ لاگو ناکام۔",
+      "roleNameRequired": "کردار کا نام درج کریں۔",
+      "roleCreatedDemo": "کردار ڈیمو موڈ میں بنایا گیا۔",
+      "roleCreated": "کردار بنایا گیا۔",
+      "roleCreateFailed": "کردار بنانا ناکام۔",
+      "accessDecisionDemo": "رسائی درخواست اپڈیٹ ہوئی (ڈیمو)۔",
+      "accessDecision": "رسائی درخواست اپڈیٹ ہوئی۔",
+      "accessDecisionFailed": "رسائی درخواست اپڈیٹ ناکام۔"
     }
   }
 }

@@ -374,5 +374,990 @@
         "manifest": "Manifest"
       }
     }
+  },
+  "upload": {
+    "title": "Add Material",
+    "demoNotice": "Demo mode stores uploads as drafts only. No processing or syncing.",
+    "card": {
+      "title": "Upload Lectures or Notes",
+      "subtitle": "Supported formats: PDF, TXT (Max 10MB)"
+    },
+    "actions": {
+      "select": "Select Document",
+      "remove": "Remove",
+      "savingDraft": "Saving draft...",
+      "analyzing": "Analyzing...",
+      "saveDraft": "Save Draft",
+      "startExtraction": "Start Extraction",
+      "viewNotes": "View Notes",
+      "startQuiz": "Start Quiz",
+      "uploadAnother": "Upload another file"
+    },
+    "status": {
+      "draftSaved": "Draft saved!",
+      "processed": "Document processed!"
+    },
+    "why": {
+      "title": "Why upload?",
+      "items": {
+        "notes": "Generate revision notes instantly.",
+        "chat": "Chat with your documents (RAG).",
+        "quizzes": "Create practice quizzes automatically."
+      }
+    },
+    "drafts": {
+      "title": "Draft uploads",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "justNow": "Just now"
+    },
+    "toast": {
+      "draftSaved": "Draft saved locally (demo).",
+      "mustLogin": "You must be logged in to upload.",
+      "sessionExpired": "Session expired. Please sign in again.",
+      "processed": "Document processed successfully!",
+      "failed": "Upload failed. Please check the file and try again."
+    },
+    "errors": {
+      "uploadFailed": "Upload failed"
+    }
+  },
+  "practice": {
+    "title": "Practice Mode",
+    "subtitle": "Test your mastery without the pressure.",
+    "setup": {
+      "label": "What do you want to practice?",
+      "placeholder": "e.g. Recursion, Thermodynamics, Organic Chemistry",
+      "loading": "Thinking...",
+      "cta": "Start"
+    },
+    "question": {
+      "title": "Question"
+    },
+    "answer": {
+      "label": "Your Answer",
+      "placeholder": "Type your explanation here...",
+      "loading": "Grading...",
+      "cta": "Submit Answer"
+    },
+    "result": {
+      "question": "Question",
+      "feedback": "Feedback",
+      "cta": "Practice Another Topic"
+    },
+    "demoQuestions": {
+      "one": "Explain recursion and identify a base case in a real-world process.",
+      "two": "What is the intuition behind eigenvectors, and how do they simplify a system?",
+      "three": "Describe how spaced repetition improves recall over time."
+    },
+    "demoFeedback": {
+      "one": "Draft feedback: solid intuition. Add a concrete example and clarify the base case.",
+      "two": "Draft feedback: good framing. Mention how eigenvectors keep direction under transformation.",
+      "three": "Draft feedback: strong summary. Tie it to forgetting curves for extra depth."
+    },
+    "prompts": {
+      "generate": "Generate a conceptual practice question about \"{topic}\". The question should test deep understanding, not just memory. Do not provide the answer.",
+      "submit": "My answer is: {answer}. Evaluate this answer. If wrong, explain why conceptually. If right, confirm and expand slightly."
+    }
+  },
+  "graph": {
+    "title": "Knowledge Graph Explorer",
+    "errors": {
+      "fetchFailed": "Failed to fetch graph"
+    },
+    "empty": {
+      "title": "Could not load knowledge graph.",
+      "body": "Make sure the backend is running."
+    }
+  },
+  "marketplace": {
+    "title": "Marketplace",
+    "subtitle": "Premium notes and study packs from top students.",
+    "loading": "Loading Marketplace...",
+    "empty": {
+      "title": "No packs available yet",
+      "body": "Be the first to publish your notes."
+    },
+    "card": {
+      "new": "New",
+      "price": "PKR {price}",
+      "free": "Free"
+    },
+    "actions": {
+      "create": "Create Study Pack",
+      "view": "View Details"
+    }
+  },
+  "career": {
+    "title": "Career Intelligence",
+    "subtitle": "AI-driven strategy to bridge your degree with industry needs.",
+    "form": {
+      "label": "Target Role (Optional override)",
+      "placeholder": "e.g. Full Stack Developer, Data Scientist..."
+    },
+    "actions": {
+      "loading": "Analyzing Syllabus...",
+      "generate": "Generate Roadmap"
+    },
+    "result": {
+      "title": "Personalized Strategy",
+      "time": "Est. Time: {time}"
+    },
+    "errors": {
+      "failed": "Failed to generate roadmap."
+    }
+  },
+  "onboarding": {
+    "fallbackName": "Scholar",
+    "title": "Welcome to Ilmora",
+    "subtitle": "Let's tailor the experience to your academic needs.",
+    "intro": {
+      "eyebrow": "Before you step in",
+      "body": "{name}, we are about to build a studio around your goals: a memory graph that grows with each session, practice rituals tuned to your pace, and a dashboard that captures every win."
+    },
+    "fields": {
+      "fullName": "Full Name",
+      "curriculum": "Curriculum / Board",
+      "curriculumPlaceholder": "Select your curriculum...",
+      "curriculumHint": "This tailors your learning path and assessment style.",
+      "degree": "Degree Program",
+      "degreePlaceholder": "e.g. BS Computer Science",
+      "semester": "Current Semester",
+      "semesterPlaceholder": "Select Semester",
+      "semesterOption": "{n}th Semester",
+      "subjects": "Current Subjects",
+      "subjectsHint": "Comma separated",
+      "subjectsPlaceholder": "e.g. DSA, Linear Algebra, Psychology",
+      "language": "Preferred Language",
+      "languageOptions": {
+        "english": "English",
+        "urdu": "Urdu"
+      },
+      "learningStyle": "Learning Style",
+      "learningOptions": {
+        "visual": "Visual (Diagrams, Graphs)",
+        "socratic": "Socratic (Ask me questions)",
+        "eli5": "ELI5 (Simple Analogies)"
+      },
+      "careerGoals": "Dream Career (Comma separated)",
+      "careerGoalsPlaceholder": "e.g. AI Architect, Civil Engineer, Product Manager"
+    },
+    "actions": {
+      "saving": "Saving Profile...",
+      "start": "Start Learning"
+    },
+    "errors": {
+      "sessionExpired": "Session expired",
+      "updateFailed": "Failed to update profile",
+      "generic": "Something went wrong. Please try again."
+    }
+  },
+  "noteDetail": {
+    "empty": "Note not found.",
+    "aiComingSoon": "AI Structuring coming in next build phase.",
+    "actions": {
+      "ai": "AI Structure",
+      "edit": "Edit",
+      "save": "Save"
+    },
+    "errors": {
+      "fetchFailed": "API Error",
+      "networkCache": "Network failed, checking offline cache..."
+    }
+  },
+  "security": {
+    "eyebrow": "Settings",
+    "title": "Security & Passkeys",
+    "demoNotice": "Demo mode: passkeys and providers are preview-only.",
+    "passkeys": {
+      "title": "Passkeys",
+      "body": "Use a passkey for instant sign-in on this device. Passkeys never leave your device and replace passwords."
+    },
+    "providers": {
+      "title": "Linked providers",
+      "body": "You can use these providers on the login screen when enabled in your identity provider.",
+      "available": "Available on sign in"
+    },
+    "actions": {
+      "back": "Back to dashboard",
+      "working": "Working...",
+      "createPasskey": "Create passkey"
+    },
+    "errors": {
+      "unsupported": "Passkeys are not supported here.",
+      "sessionExpired": "Session expired. Please sign in again.",
+      "startFailed": "Unable to start passkey registration.",
+      "canceled": "Passkey request canceled.",
+      "verifyFailed": "Passkey verification failed.",
+      "failed": "Passkey registration failed."
+    },
+    "toast": {
+      "success": "Passkey added successfully."
+    }
+  },
+  "history": {
+    "eyebrow": "History",
+    "title": "Session timeline",
+    "subtitle": "Every studio session, upload, and ritual is captured here.",
+    "stats": {
+      "sessions": {
+        "label": "Sessions",
+        "value": "12 this week"
+      },
+      "uploads": {
+        "label": "Uploads",
+        "value": "4 packs synced"
+      },
+      "momentum": {
+        "label": "Momentum",
+        "value": "84 consistency"
+      }
+    },
+    "filters": {
+      "label": "Filters",
+      "all": "All",
+      "studio": "Studio",
+      "upload": "Uploads",
+      "practice": "Practice"
+    },
+    "types": {
+      "studio": "Studio",
+      "upload": "Upload",
+      "practice": "Practice"
+    },
+    "items": {
+      "graphRecall": {
+        "title": "Graph recall session",
+        "detail": "18 min deep dive"
+      },
+      "lecture": {
+        "title": "Lecture_05.pdf",
+        "detail": "Knowledge nodes generated"
+      },
+      "recursion": {
+        "title": "Recursion drills",
+        "detail": "14 prompts completed"
+      },
+      "socratic": {
+        "title": "Socratic review",
+        "detail": "12 prompts • confidence boost"
+      }
+    },
+    "times": {
+      "twoHours": "2 hours ago",
+      "yesterday": "Yesterday",
+      "twoDays": "2 days ago",
+      "threeDays": "3 days ago"
+    }
+  },
+  "chat": {
+    "header": {
+      "phaseTag": "PHASE 1 PROTO",
+      "demoBadge": "Demo drafts",
+      "status": {
+        "online": "Online",
+        "offline": "Offline Mode"
+      }
+    },
+    "empty": {
+      "title": "Welcome to Ilmora",
+      "body": "I am your AI learning companion. I can help you understand concepts, review topics, and track your progress."
+    },
+    "input": {
+      "placeholder": "Ask Ilmora anything...",
+      "helper": "Ilmora is an AI tutor designed for learning, not cheating."
+    }
+  },
+  "bottomNav": {
+    "home": "Home",
+    "graph": "Graph",
+    "chat": "Chat",
+    "history": "History",
+    "store": "Store",
+    "profile": "Profile"
+  },
+  "errorPage": {
+    "eyebrow": "Something went wrong",
+    "title": "Ilmora hit a snag",
+    "body": "Try reloading, or head back to the studio.",
+    "actions": {
+      "retry": "Retry",
+      "home": "Go home"
+    },
+    "code": "Code: {code}"
+  },
+  "globalError": {
+    "title": "System Malfunction",
+    "body": "A critical error interrupted the simulation. The state has been captured.",
+    "cta": "Reboot Interface"
+  },
+  "notFound": {
+    "body": "The concept you're looking for seems to be missing from the graph.",
+    "actions": {
+      "home": "Return Home",
+      "back": "Go Back"
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading System Admin...",
+    "title": "Ilmora Global Command Center",
+    "subtitle": "System Status & Multitenant Oversight",
+    "search": {
+      "title": "Global admin search",
+      "placeholder": "Search incidents, audit events, or roles",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "submit": "Search"
+    },
+    "stats": {
+      "totalUsers": {
+        "title": "Total Users",
+        "delta": "+6% WoW"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "delta": "+1 this month"
+      },
+      "interactions": {
+        "title": "Total Interactions",
+        "sub": "AI messages processed",
+        "delta": "+12% WoW"
+      },
+      "flagged": {
+        "title": "Flagged Issues",
+        "sub": "Requires attention",
+        "delta": "-2 since yesterday"
+      }
+    },
+    "kpis": {
+      "openIncidents": {
+        "title": "Open Incidents",
+        "delta": "+1 this week"
+      },
+      "auditEvents": {
+        "title": "Audit Events",
+        "delta": "+14% WoW"
+      },
+      "accessRequests": {
+        "title": "Access Requests",
+        "delta": "2 pending"
+      },
+      "dbJobs": {
+        "title": "DB Jobs",
+        "delta": "1 running"
+      }
+    },
+    "quickLinks": {
+      "databaseTitle": "Database Console",
+      "database": "Replicas, performance, jobs",
+      "auditTitle": "Audit Logs",
+      "audit": "Security, data access, changes",
+      "incidentTitle": "Incident Log",
+      "incidents": "Incidents, mitigations, status",
+      "rolesTitle": "Roles & Access",
+      "roles": "Permissions and approvals",
+      "healthTitle": "System Health",
+      "health": "Runtime, queues, uptime"
+    },
+    "priority": {
+      "title": "Priority Review Queue",
+      "empty": "No pending issues. System healthy.",
+      "context": "Context:",
+      "by": "by {email}",
+      "resolve": "Resolve"
+    },
+    "actions": {
+      "title": "System Actions",
+      "provision": "+ Provision New Institution",
+      "manageCurricula": "Manage Curricula",
+      "viewLogs": "View Server Logs"
+    },
+    "databaseOverview": {
+      "primary": "Primary DB",
+      "healthy": "Healthy",
+      "replicaLag": "Replica Lag",
+      "storage": "Storage Used",
+      "latency": "P95 Latency"
+    },
+    "databaseActivity": {
+      "title": "Database Activity",
+      "subtitle": "Live queries, maintenance jobs, and service health.",
+      "inspect": "Inspect",
+      "status": {
+        "ok": "OK",
+        "running": "Running"
+      },
+      "times": {
+        "one": "18s ago",
+        "two": "2 min ago",
+        "three": "7 min ago"
+      }
+    },
+    "databaseHealth": {
+      "title": "Database Health",
+      "subtitle": "Replication, storage, latency, and backup status.",
+      "cta": "Open database console"
+    }
+  },
+  "adminIntegrations": {
+    "title": "System Integrations",
+    "subtitle": "Connect Ilmora to external LMS and event listeners.",
+    "tabs": {
+      "integrations": "LMS & Tools",
+      "webhooks": "Webhooks"
+    },
+    "form": {
+      "title": "Add New {kind}",
+      "integration": "Integration",
+      "webhook": "Webhook",
+      "type": "Type",
+      "integrationTypeAria": "Integration type",
+      "webhookTypeAria": "Webhook event type",
+      "integrationTypes": {
+        "lms": "Learning Management System",
+        "payment": "Payment Gateway",
+        "sso": "Single Sign-On"
+      },
+      "name": "Name",
+      "targetUrl": "Target URL",
+      "namePlaceholder": "e.g. Canvas NUST",
+      "urlPlaceholder": "https://api.mysite.com/webhook",
+      "create": "Create"
+    },
+    "list": {
+      "deleteIntegration": "Delete integration",
+      "deleteWebhook": "Delete webhook",
+      "empty": "No {tab} configured yet."
+    },
+    "toast": {
+      "demoFallback": "Integrations are using demo data.",
+      "nameRequired": "Enter an integration name.",
+      "urlRequired": "Enter a webhook URL.",
+      "createdDemo": "Created in demo mode.",
+      "created": "Created successfully.",
+      "createFailed": "Creation failed.",
+      "removedDemo": "Removed in demo mode.",
+      "removed": "Removed successfully.",
+      "removeFailed": "Removal failed."
+    }
+  },
+  "adminAudit": {
+    "loading": "Loading logs...",
+    "eyebrow": "Audit Logs",
+    "title": "Security trail",
+    "subtitle": "Track access, configuration changes, and data exports.",
+    "lastUpdated": "Last updated {time}",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing",
+    "autoRefresh": "Auto refresh {state}",
+    "on": "On",
+    "off": "Off",
+    "exportCsv": "Export CSV",
+    "ackAll": "Acknowledge all",
+    "ackConfirm": {
+      "title": "Acknowledge all events",
+      "body": "This will clear the current audit queue. Continue?"
+    },
+    "summary": {
+      "total": "Total",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "filters": {
+      "title": "Filters",
+      "search": "Search activity",
+      "levels": {
+        "all": "All",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    },
+    "events": {
+      "title": "Recent events",
+      "emptyTitle": "No events match this filter.",
+      "emptyBody": "Try clearing filters or jump to incident activity.",
+      "clearFilters": "Clear filters",
+      "viewIncidents": "View incidents"
+    },
+    "retention": "Audit retention: 400 days • Export compliance enabled.",
+    "toast": {
+      "demoFallback": "Audit logs are using demo data.",
+      "exportQueuedDemo": "Audit export queued (demo).",
+      "exportQueued": "Audit export queued.",
+      "exportFailed": "Audit export failed.",
+      "ackDemo": "Audit queue acknowledged (demo).",
+      "ack": "Audit queue acknowledged.",
+      "ackFailed": "Audit acknowledge failed."
+    }
+  },
+  "adminIncidents": {
+    "loading": "Loading incidents...",
+    "eyebrow": "Incident Log",
+    "title": "Operational incidents",
+    "subtitle": "Track investigations, mitigations, and resolution windows.",
+    "lastUpdated": "Last updated {time}",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing",
+    "autoRefresh": "Auto refresh {state}",
+    "on": "On",
+    "off": "Off",
+    "exportCsv": "Export CSV",
+    "exportJson": "Export JSON",
+    "summary": {
+      "total": "Total",
+      "investigating": "Investigating",
+      "monitoring": "Monitoring",
+      "resolved": "Resolved"
+    },
+    "filters": {
+      "title": "Filters",
+      "search": "Search incidents",
+      "status": {
+        "all": "All",
+        "investigating": "Investigating",
+        "monitoring": "Monitoring",
+        "resolved": "Resolved"
+      },
+      "severity": {
+        "all": "All",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      }
+    },
+    "feedTitle": "Incident feed",
+    "empty": {
+      "title": "No incidents match your filters.",
+      "body": "Adjust the filters or create a new incident.",
+      "clearFilters": "Clear filters",
+      "createIncident": "Create incident"
+    },
+    "servicesLabel": "Services:",
+    "actions": {
+      "viewDetails": "View details",
+      "ack": "Acknowledge",
+      "resolve": "Resolve"
+    },
+    "confirm": {
+      "ack": {
+        "title": "Acknowledge incident",
+        "body": "Record acknowledgement for this incident."
+      },
+      "resolve": {
+        "title": "Resolve incident",
+        "body": "Mark this incident as resolved and archive it."
+      }
+    },
+    "pagination": "Page {page} of {total}",
+    "prev": "Prev",
+    "next": "Next",
+    "detail": {
+      "eyebrow": "Incident detail",
+      "close": "Close",
+      "severity": "Severity",
+      "owner": "Owner",
+      "region": "Region",
+      "timeline": "Timeline",
+      "notes": "Notes",
+      "notesEmpty": "No notes yet.",
+      "notePlaceholder": "Add note",
+      "addNote": "Add note",
+      "confirmAck": {
+        "title": "Acknowledge incident",
+        "body": "Record an acknowledgement for this incident."
+      },
+      "acknowledge": "Acknowledge",
+      "followUp": "Create follow-up"
+    },
+    "timeline": {
+      "reported": "Incident reported",
+      "mitigation": "Mitigation deployed",
+      "resolved": "Incident resolved"
+    },
+    "toast": {
+      "demoFallback": "Incident log is using demo data.",
+      "detailsFailed": "Incident details failed to load.",
+      "noteFailed": "Failed to save note.",
+      "updatedDemo": "Incident updated (demo).",
+      "updated": "Incident updated.",
+      "updateFailed": "Incident update failed.",
+      "exported": "Incident log exported.",
+      "acknowledged": "Incident acknowledged.",
+      "followUp": "Follow-up task created."
+    }
+  },
+  "adminHealth": {
+    "eyebrow": "System Health",
+    "title": "Uptime and resilience",
+    "subtitle": "Track service status, incidents, and operational readiness.",
+    "lastUpdated": "Last updated {time}",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing",
+    "autoRefresh": "Auto refresh {state}",
+    "on": "On",
+    "off": "Off",
+    "cards": {
+      "uptime": {
+        "title": "Global uptime",
+        "body": "99.95% across regions this month."
+      },
+      "queue": {
+        "title": "Queue health",
+        "body": "3 workers online • avg delay 320ms."
+      },
+      "alerts": {
+        "title": "Active alerts",
+        "body": "2 warnings • 0 critical."
+      }
+    },
+    "create": {
+      "title": "Create incident",
+      "placeholder": "Incident summary",
+      "statusAria": "Incident status",
+      "statusOptions": {
+        "investigating": "Investigating",
+        "identified": "Identified",
+        "monitoring": "Monitoring"
+      },
+      "submit": "Create"
+    },
+    "services": {
+      "title": "Service status",
+      "uptime": "Uptime {value}"
+    },
+    "timeline": {
+      "title": "Incident timeline",
+      "resolve": "Resolve",
+      "viewDetails": "View details",
+      "viewAll": "View full incident log",
+      "confirmResolve": {
+        "title": "Resolve incident",
+        "body": "Mark this incident as resolved and archive it."
+      }
+    },
+    "detail": {
+      "eyebrow": "Incident detail",
+      "close": "Close",
+      "severity": "Severity",
+      "owner": "Owner",
+      "services": "Services",
+      "impactPending": "Impact details pending.",
+      "timeline": "Timeline",
+      "confirmAck": {
+        "title": "Acknowledge incident",
+        "body": "Record an acknowledgement for this incident."
+      },
+      "acknowledge": "Acknowledge",
+      "followUp": "Create follow-up",
+      "toast": {
+        "acknowledged": "Incident acknowledged.",
+        "followUp": "Follow-up task created."
+      }
+    },
+    "toast": {
+      "demoFallback": "System health is using demo data.",
+      "titleRequired": "Enter an incident title.",
+      "createdDemo": "Incident created (demo).",
+      "created": "Incident created.",
+      "createFailed": "Incident creation failed.",
+      "resolvedDemo": "Incident resolved (demo).",
+      "resolved": "Incident resolved.",
+      "resolveFailed": "Incident resolve failed."
+    }
+  },
+  "adminDatabase": {
+    "eyebrow": "Database Console",
+    "title": "Data control center",
+    "subtitle": "Monitor replication, query health, and maintenance operations.",
+    "lastUpdated": "Last updated {time}",
+    "refresh": "Refresh",
+    "refreshing": "Refreshing",
+    "autoRefresh": "Auto refresh {state}",
+    "on": "On",
+    "off": "Off",
+    "cluster": {
+      "live": "Live",
+      "promoteTitle": "Promote replica",
+      "promoteBody": "This will promote the replica to primary. Continue?",
+      "promote": "Promote replica",
+      "failoverTitle": "Run failover drill",
+      "failoverBody": "This runs a failover simulation. Confirm to proceed.",
+      "failover": "Run failover drill",
+      "latencyTrend": "Latency trend",
+      "latency": "Latency",
+      "storage": "Storage",
+      "backups": "Backups",
+      "backupTime": "4 hr ago"
+    },
+    "slowQueries": {
+      "title": "Slow queries",
+      "time": "Time {time}",
+      "impact": "Impact {impact}",
+      "inspect": "Inspect",
+      "terminateTitle": "Terminate query",
+      "terminateBody": "This will terminate a live query immediately.",
+      "terminate": "Terminate"
+    },
+    "maintenance": {
+      "title": "Maintenance queue",
+      "runTitle": "Run maintenance job",
+      "runBody": "This will start the maintenance job now.",
+      "runNow": "Run now",
+      "backupTitle": "Run backup snapshot",
+      "backupBody": "Trigger a snapshot backup for the primary cluster.",
+      "backup": "Run backup snapshot"
+    },
+    "charts": {
+      "latency": {
+        "title": "Latency histogram",
+        "body": "Distribution of query latency over the last hour."
+      },
+      "replica": {
+        "title": "Replica lag trend",
+        "body": "Lag in seconds (last 7 samples)."
+      },
+      "error": {
+        "title": "Error rate trend",
+        "body": "API error rate (%) across services."
+      }
+    },
+    "restorePoints": {
+      "title": "Restore points",
+      "age": "Age {age} • {region}",
+      "restoreTitle": "Restore from point",
+      "restoreBody": "This will restore the database to this snapshot.",
+      "restore": "Restore"
+    },
+    "rollback": {
+      "title": "Rollback history"
+    },
+    "runbook": {
+      "title": "Restore runbook",
+      "subtitle": "Guided steps for safe restore execution.",
+      "open": "Open runbook",
+      "completeNext": "Complete next step",
+      "reset": "Reset runbook"
+    },
+    "guardrails": {
+      "replication": {
+        "title": "Replication guardrails",
+        "body": "Auto-failover armed. Replica lag triggers alerts at 2.5s."
+      },
+      "security": {
+        "title": "Security posture",
+        "body": "Encrypted at rest. Row-level access enforced on sensitive tables."
+      },
+      "performance": {
+        "title": "Performance budget",
+        "body": "P95 latency target 120ms. Current error rate 0.2%."
+      }
+    },
+    "protections": {
+      "title": "Database protections",
+      "subtitle": "Verify backups, audits, and emergency access paths.",
+      "items": {
+        "backups": { "label": "Backups", "value": "Verified" },
+        "keys": { "label": "Access Keys", "value": "Rotated 5d" },
+        "audit": { "label": "Audit Trail", "value": "Enabled" }
+      },
+      "pitrTitle": "Initiate point-in-time restore",
+      "pitrBody": "This will restore the database to a previous snapshot.",
+      "pitr": "Point-in-time restore",
+      "rollbackTitle": "Rollback last migration",
+      "rollbackBody": "This will rollback the most recent migration step.",
+      "rollback": "Rollback migration"
+    },
+    "toast": {
+      "demoFallback": "Database console is using demo data.",
+      "backupQueuedDemo": "Backup snapshot queued (demo).",
+      "backupQueued": "Backup snapshot queued.",
+      "backupFailed": "Backup request failed.",
+      "jobStartedDemo": "Job started (demo).",
+      "jobStarted": "Job started.",
+      "jobFailed": "Job start failed.",
+      "queryTerminatedDemo": "Query terminated (demo).",
+      "queryTerminated": "Query terminated.",
+      "queryFailed": "Query termination failed.",
+      "rollbackQueuedDemo": "Rollback queued (demo).",
+      "rollbackQueued": "Rollback queued.",
+      "rollbackFailed": "Rollback failed.",
+      "pitrDemo": "PITR initiated (demo).",
+      "pitr": "PITR initiated.",
+      "pitrFailed": "PITR failed.",
+      "runbookStepDemo": "Runbook step completed (demo).",
+      "runbookStep": "Runbook step completed.",
+      "runbookFailed": "Runbook update failed.",
+      "runbookResetDemo": "Runbook reset (demo).",
+      "runbookReset": "Runbook reset.",
+      "runbookResetFailed": "Runbook reset failed.",
+      "restoreDemo": "Restore queued (demo).",
+      "restore": "Restore queued.",
+      "restoreFailed": "Restore failed.",
+      "inspect": "Query inspection opened.",
+      "runbookEmpty": "No runbook steps available."
+    }
+  },
+  "adminRoles": {
+    "eyebrow": "Roles & Access",
+    "title": "Permission architecture",
+    "subtitle": "Configure roles, approvals, and access boundaries.",
+    "loading": "Loading roles...",
+    "confirm": {
+      "proceed": "Proceed"
+    },
+    "create": {
+      "placeholder": "Role name",
+      "scopeAria": "Role scope",
+      "scopes": {
+        "global": "Global",
+        "institution": "Institution",
+        "department": "Department"
+      },
+      "submit": "Create role"
+    },
+    "activeRoles": "Active roles",
+    "roleMeta": "{count} members • {scope}",
+    "manage": "Manage",
+    "permissions": {
+      "title": "Permission matrix",
+      "subtitle": "Configure access for {name}.",
+      "subtitleFallback": "role",
+      "selectRole": "Select role",
+      "export": "Export matrix",
+      "cloneTitle": "Clone selected role",
+      "cloneBody": "This will create a copy of the selected role and permissions.",
+      "clone": "Clone role",
+      "groups": {
+        "data": "Data",
+        "security": "Security",
+        "aiContent": "AI & Content",
+        "operations": "Operations"
+      },
+      "labels": {
+        "db": {
+          "read": "Read database",
+          "write": "Write data",
+          "export": "Export records"
+        },
+        "audit": {
+          "view": "View audit logs",
+          "export": "Export audit logs"
+        },
+        "incident": {
+          "manage": "Manage incidents"
+        },
+        "content": {
+          "review": "Review content"
+        },
+        "model": {
+          "configure": "Configure models"
+        },
+        "studio": {
+          "manage": "Manage studio"
+        },
+        "integrations": {
+          "manage": "Manage integrations"
+        },
+        "roles": {
+          "manage": "Manage roles"
+        },
+        "system": {
+          "health": "View system health"
+        }
+      },
+      "state": {
+        "on": "On",
+        "off": "Off"
+      }
+    },
+    "insights": {
+      "title": "Role audit insights",
+      "subtitle": "Severity distribution and intensity (loaded entries).",
+      "mix": "Severity mix",
+      "trend": "Severity trend"
+    },
+    "actors": {
+      "title": "Actor leaderboard",
+      "subtitle": "Most active admins in the current view.",
+      "empty": "No audit activity loaded yet.",
+      "events": "{count} events"
+    },
+    "audit": {
+      "title": "Role audit history",
+      "levels": {
+        "all": "All",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
+      },
+      "export": "Export CSV",
+      "search": "Search role audit",
+      "empty": {
+        "title": "No role audit entries match your filters.",
+        "body": "Adjust the filters or clear the search.",
+        "clear": "Clear filters"
+      },
+      "pagination": "Page {page} of {total}",
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "footer": {
+      "notice": "Access policies are enforced per institution and synced hourly."
+    },
+    "access": {
+      "title": "Access requests",
+      "approveAllTitle": "Approve all requests",
+      "approveAllBody": "This will approve all pending access requests.",
+      "approveAll": "Approve all",
+      "denyAllTitle": "Deny all requests",
+      "denyAllBody": "This will deny all pending access requests.",
+      "denyAll": "Deny all",
+      "approve": "Approve",
+      "deny": "Deny",
+      "notice": "Approvals are logged to the audit trail automatically."
+    },
+    "templates": {
+      "confirmTitle": "Apply {name} template",
+      "confirmBody": "This will overwrite the current permission set for the selected role.",
+      "labels": {
+        "administrator": "Administrator",
+        "operator": "Operator",
+        "readOnly": "Read Only"
+      }
+    },
+    "toast": {
+      "matrixExported": "Permission matrix exported.",
+      "auditExported": "Role audit exported.",
+      "cloneSelect": "Select a role to clone.",
+      "cloneDemo": "Role cloned (demo).",
+      "clone": "Role cloned.",
+      "cloneFailed": "Role clone failed.",
+      "auditDemo": "Role audit is using demo data.",
+      "rolesDemo": "Roles data is using demo data.",
+      "permissionDemo": "Permission updated (demo).",
+      "permissionUpdated": "Permission updated.",
+      "permissionFailed": "Permission update failed.",
+      "noAccessRequests": "No access requests to update.",
+      "accessUpdatedDemo": "Access requests updated (demo).",
+      "accessUpdated": "Access requests updated.",
+      "bulkFailed": "Bulk update failed.",
+      "templateDemo": "Template applied (demo).",
+      "templateApplied": "Template applied.",
+      "templateFailed": "Template apply failed.",
+      "roleNameRequired": "Enter a role name.",
+      "roleCreatedDemo": "Role created in demo mode.",
+      "roleCreated": "Role created.",
+      "roleCreateFailed": "Role creation failed.",
+      "accessDecisionDemo": "Access request updated (demo).",
+      "accessDecision": "Access request updated.",
+      "accessDecisionFailed": "Access request update failed."
+    }
   }
 }

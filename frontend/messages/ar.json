@@ -162,7 +162,7 @@
           "time": "منذ ساعتين"
         },
         "upload": {
-          "title": "تم رفع \"Lecture_05.pdf\"",
+          "title": "تم رفع \"محاضرة_05.pdf\"",
           "time": "أمس"
         }
       }
@@ -255,7 +255,7 @@
         "ctaPrimary": "ابدأ التجربة",
         "ctaSecondary": "ادخل الاستوديو",
         "tagline": {
-          "one": "Offline-first",
+          "one": "اولا دون اتصال",
           "two": "متمركز حول الإنسان",
           "three": "واعٍ بالنظام"
         }
@@ -327,7 +327,7 @@
           "body": "تدريبات وتأملات ومهام غامرة تتزامن عبر الأجهزة."
         },
         "offline": {
-          "title": "Offline-first",
+          "title": "اولا دون اتصال",
           "body": "واصل الدراسة دون اتصال. تزامن أنيق عند العودة."
         }
       },
@@ -369,10 +369,995 @@
         "stack": "Next.js, FastAPI, Firebase, Postgres + pgvector, Framer Motion والكثير من موسيقى الجاز الليلية.",
         "byline": "Ilmora Studio بواسطة Arsalan — بناء أنظمة تعلم أخلاقية لمسار الإتقان الطويل. تابع العمل على",
         "link": "GitHub",
-        "robots": "Robots",
-        "sitemap": "Sitemap",
-        "manifest": "Manifest"
+        "robots": "روبوتات",
+        "sitemap": "خريطة الموقع",
+        "manifest": "البيان"
       }
+    }
+  },
+  "upload": {
+    "title": "اضافة مواد",
+    "demoNotice": "وضع العرض: يتم حفظ الرفع كمسودات فقط. بدون معالجة او مزامنة.",
+    "card": {
+      "title": "رفع المحاضرات او الملاحظات",
+      "subtitle": "الصيغ المدعومة: PDF, TXT (Max 10MB)"
+    },
+    "actions": {
+      "select": "اختر مستندا",
+      "remove": "ازالة",
+      "savingDraft": "جار حفظ المسودة...",
+      "analyzing": "جار التحليل...",
+      "saveDraft": "حفظ المسودة",
+      "startExtraction": "بدء الاستخراج",
+      "viewNotes": "عرض الملاحظات",
+      "startQuiz": "بدء الاختبار",
+      "uploadAnother": "رفع ملف اخر"
+    },
+    "status": {
+      "draftSaved": "تم حفظ المسودة!",
+      "processed": "تمت معالجة المستند!"
+    },
+    "why": {
+      "title": "لماذا الرفع؟",
+      "items": {
+        "notes": "انشئ ملاحظات مراجعة فورا.",
+        "chat": "تحاور مع مستنداتك (RAG).",
+        "quizzes": "انشئ اختبارات تدريب تلقائيا."
+      }
+    },
+    "drafts": {
+      "title": "مسودات الرفع",
+      "today": "اليوم",
+      "yesterday": "امس",
+      "justNow": "الان"
+    },
+    "toast": {
+      "draftSaved": "تم حفظ المسودة محليا (عرض).",
+      "mustLogin": "يجب تسجيل الدخول للرفع.",
+      "sessionExpired": "انتهت الجلسة. يرجى تسجيل الدخول مجددا.",
+      "processed": "تمت معالجة المستند بنجاح!",
+      "failed": "فشل الرفع. تحقق من الملف وحاول مرة اخرى."
+    },
+    "errors": {
+      "uploadFailed": "فشل الرفع"
+    }
+  },
+  "practice": {
+    "title": "وضع التدريب",
+    "subtitle": "اختبر اتقانك دون ضغط.",
+    "setup": {
+      "label": "ما الذي تريد التدرب عليه؟",
+      "placeholder": "مثال: التكرار، الديناميكا الحرارية، الكيمياء العضوية",
+      "loading": "جار التفكير...",
+      "cta": "ابدأ"
+    },
+    "question": {
+      "title": "سؤال"
+    },
+    "answer": {
+      "label": "اجابتك",
+      "placeholder": "اكتب شرحك هنا...",
+      "loading": "جار التقييم...",
+      "cta": "ارسال الاجابة"
+    },
+    "result": {
+      "question": "سؤال",
+      "feedback": "ملاحظات",
+      "cta": "تدرب على موضوع اخر"
+    },
+    "demoQuestions": {
+      "one": "اشرح التكرار وحدد حالة اساس في عملية واقعية.",
+      "two": "ما الحدس خلف المتجهات الذاتية، وكيف تبسط نظاما؟",
+      "three": "صف كيف يحسن التكرار المتباعد الاستدعاء بمرور الوقت."
+    },
+    "demoFeedback": {
+      "one": "ملاحظات مسودة: حدس جيد. اضف مثالا ملموسا ووضح حالة الاساس.",
+      "two": "ملاحظات مسودة: صياغة جيدة. اذكر ان المتجهات الذاتية تحافظ على الاتجاه تحت التحويل.",
+      "three": "ملاحظات مسودة: ملخص قوي. اربطه بمنحنيات النسيان لمزيد من العمق."
+    },
+    "prompts": {
+      "generate": "انشئ سؤال تدريب مفاهيمي حول \"{topic}\". يجب ان يقيس فهما عميقا لا مجرد الذاكرة. لا تقدم الاجابة.",
+      "submit": "اجابتي هي: {answer}. قيّم هذه الاجابة. ان كانت خاطئة فاشرح لماذا مفاهيميا. ان كانت صحيحة فاكّد ووسع قليلا."
+    }
+  },
+  "graph": {
+    "title": "مستكشف خريطة المعرفة",
+    "errors": {
+      "fetchFailed": "فشل جلب الخريطة"
+    },
+    "empty": {
+      "title": "تعذر تحميل خريطة المعرفة.",
+      "body": "تأكد من تشغيل الخادم الخلفي."
+    }
+  },
+  "marketplace": {
+    "title": "السوق",
+    "subtitle": "ملاحظات مدفوعة وحزم دراسة من افضل الطلاب.",
+    "loading": "جار تحميل السوق...",
+    "empty": {
+      "title": "لا توجد حزم بعد",
+      "body": "كن اول من ينشر ملاحظاته."
+    },
+    "card": {
+      "new": "جديد",
+      "price": "PKR {price}",
+      "free": "مجاني"
+    },
+    "actions": {
+      "create": "انشئ حزمة دراسة",
+      "view": "عرض التفاصيل"
+    }
+  },
+  "career": {
+    "title": "ذكاء المسار المهني",
+    "subtitle": "استراتيجية مدعومة بالذكاء الاصطناعي لربط دراستك باحتياجات السوق.",
+    "form": {
+      "label": "الدور المستهدف (اختياري)",
+      "placeholder": "مثال: مطور فل ستاك، عالم بيانات..."
+    },
+    "actions": {
+      "loading": "جار تحليل المنهج...",
+      "generate": "انشئ خارطة الطريق"
+    },
+    "result": {
+      "title": "استراتيجية مخصصة",
+      "time": "الوقت المقدر: {time}"
+    },
+    "errors": {
+      "failed": "فشل توليد خارطة الطريق."
+    }
+  },
+  "onboarding": {
+    "fallbackName": "طالب",
+    "title": "اهلا بك في Ilmora",
+    "subtitle": "دعنا نخصص التجربة حسب احتياجاتك الاكاديمية.",
+    "intro": {
+      "eyebrow": "قبل الدخول",
+      "body": "{name}، سنبني استوديو حول اهدافك: خريطة ذاكرة تنمو مع كل جلسة، وطقوس تدريب مضبوطة على ايقاعك، ولوحة تلتقط كل انتصار."
+    },
+    "fields": {
+      "fullName": "الاسم الكامل",
+      "curriculum": "المنهج / المجلس",
+      "curriculumPlaceholder": "اختر منهجك...",
+      "curriculumHint": "هذا يخصص مسار التعلم واسلوب التقييم.",
+      "degree": "برنامج الدرجة",
+      "degreePlaceholder": "مثال: بكالوريوس علوم الحاسوب",
+      "semester": "الفصل الحالي",
+      "semesterPlaceholder": "اختر الفصل",
+      "semesterOption": "الفصل {n}",
+      "subjects": "المواد الحالية",
+      "subjectsHint": "مفصولة بفواصل",
+      "subjectsPlaceholder": "مثال: DSA، الجبر الخطي، علم النفس",
+      "language": "اللغة المفضلة",
+      "languageOptions": {
+        "english": "الانجليزية",
+        "urdu": "الاردية"
+      },
+      "learningStyle": "اسلوب التعلم",
+      "learningOptions": {
+        "visual": "مرئي (مخططات، رسوم بيانية)",
+        "socratic": "سقراطي (اسالني اسئلة)",
+        "eli5": "ELI5 (تشبيهات بسيطة)"
+      },
+      "careerGoals": "مسار مهني احلام (مفصول بفواصل)",
+      "careerGoalsPlaceholder": "مثال: معماري ذكاء اصطناعي، مهندس مدني، مدير منتج"
+    },
+    "actions": {
+      "saving": "جار حفظ الملف الشخصي...",
+      "start": "ابدأ التعلم"
+    },
+    "errors": {
+      "sessionExpired": "انتهت الجلسة",
+      "updateFailed": "فشل تحديث الملف الشخصي",
+      "generic": "حدث خطا ما. حاول مرة اخرى."
+    }
+  },
+  "noteDetail": {
+    "empty": "لم يتم العثور على الملاحظة.",
+    "aiComingSoon": "هيكلة الذكاء الاصطناعي قادمة في المرحلة القادمة.",
+    "actions": {
+      "ai": "هيكلة AI",
+      "edit": "تحرير",
+      "save": "حفظ"
+    },
+    "errors": {
+      "fetchFailed": "خطا في API",
+      "networkCache": "فشل الشبكة، جار التحقق من التخزين دون اتصال..."
+    }
+  },
+  "security": {
+    "eyebrow": "الاعدادات",
+    "title": "الامان ومفاتيح المرور",
+    "demoNotice": "وضع العرض: مفاتيح المرور والموفرون للمعاينة فقط.",
+    "passkeys": {
+      "title": "مفاتيح المرور",
+      "body": "استخدم مفتاح مرور لتسجيل دخول فوري على هذا الجهاز. مفاتيح المرور لا تغادر جهازك وتستبدل كلمات المرور."
+    },
+    "providers": {
+      "title": "الموفرون المرتبطون",
+      "body": "يمكنك استخدام هؤلاء الموفرين على شاشة تسجيل الدخول عند تفعيلهم في موفر الهوية.",
+      "available": "متاح عند تسجيل الدخول"
+    },
+    "actions": {
+      "back": "العودة الى لوحة التحكم",
+      "working": "جار العمل...",
+      "createPasskey": "انشئ مفتاح مرور"
+    },
+    "errors": {
+      "unsupported": "مفاتيح المرور غير مدعومة هنا.",
+      "sessionExpired": "انتهت الجلسة. يرجى تسجيل الدخول مجددا.",
+      "startFailed": "تعذر بدء تسجيل مفتاح المرور.",
+      "canceled": "تم الغاء طلب مفتاح المرور.",
+      "verifyFailed": "فشل التحقق من مفتاح المرور.",
+      "failed": "فشل تسجيل مفتاح المرور."
+    },
+    "toast": {
+      "success": "تمت اضافة مفتاح المرور بنجاح."
+    }
+  },
+  "history": {
+    "eyebrow": "السجل",
+    "title": "الخط الزمني للجلسات",
+    "subtitle": "كل جلسة استوديو ورفع وطقس يتم تسجيلها هنا.",
+    "stats": {
+      "sessions": {
+        "label": "الجلسات",
+        "value": "12 هذا الاسبوع"
+      },
+      "uploads": {
+        "label": "الرفوعات",
+        "value": "4 حزم تمت مزامنتها"
+      },
+      "momentum": {
+        "label": "الزخم",
+        "value": "84 ثبات"
+      }
+    },
+    "filters": {
+      "label": "الفلاتر",
+      "all": "الكل",
+      "studio": "الاستوديو",
+      "upload": "الرفوعات",
+      "practice": "التدريب"
+    },
+    "types": {
+      "studio": "الاستوديو",
+      "upload": "رفع",
+      "practice": "تدريب"
+    },
+    "items": {
+      "graphRecall": {
+        "title": "جلسة استرجاع الرسم",
+        "detail": "غوص عميق 18 دقيقة"
+      },
+      "lecture": {
+        "title": "محاضرة_05.pdf",
+        "detail": "تم توليد عقد المعرفة"
+      },
+      "recursion": {
+        "title": "تمارين التكرار",
+        "detail": "اكتملت 14 اشارة"
+      },
+      "socratic": {
+        "title": "مراجعة سقراطية",
+        "detail": "12 اشارة • تعزيز الثقة"
+      }
+    },
+    "times": {
+      "twoHours": "قبل ساعتين",
+      "yesterday": "امس",
+      "twoDays": "قبل يومين",
+      "threeDays": "قبل 3 ايام"
+    }
+  },
+  "chat": {
+    "header": {
+      "phaseTag": "PROTO المرحلة 1",
+      "demoBadge": "مسودات العرض",
+      "status": {
+        "online": "متصل",
+        "offline": "وضع عدم الاتصال"
+      }
+    },
+    "empty": {
+      "title": "اهلا بك في Ilmora",
+      "body": "انا رفيقك في التعلم بالذكاء الاصطناعي. يمكنني مساعدتك على فهم المفاهيم، مراجعة المواضيع، وتتبع تقدمك."
+    },
+    "input": {
+      "placeholder": "اسأل Ilmora اي شيء...",
+      "helper": "Ilmora مدرس ذكاء اصطناعي للتعلم، ليس للغش."
+    }
+  },
+  "bottomNav": {
+    "home": "الرئيسية",
+    "graph": "الرسم",
+    "chat": "الدردشة",
+    "history": "السجل",
+    "store": "المتجر",
+    "profile": "الملف الشخصي"
+  },
+  "errorPage": {
+    "eyebrow": "حدث خطا ما",
+    "title": "تعثر Ilmora",
+    "body": "حاول اعادة التحميل او العودة الى الاستوديو.",
+    "actions": {
+      "retry": "اعادة المحاولة",
+      "home": "العودة للرئيسية"
+    },
+    "code": "الرمز: {code}"
+  },
+  "globalError": {
+    "title": "عطل في النظام",
+    "body": "خطا حرج اوقف المحاكاة. تم حفظ الحالة.",
+    "cta": "اعادة تشغيل الواجهة"
+  },
+  "notFound": {
+    "body": "المفهوم الذي تبحث عنه يبدو مفقودا من الرسم.",
+    "actions": {
+      "home": "العودة للرئيسية",
+      "back": "الرجوع"
+    }
+  },
+  "adminDashboard": {
+    "loading": "Loading System Admin...",
+    "title": "Ilmora Global Command Center",
+    "subtitle": "System Status & Multitenant Oversight",
+    "search": {
+      "title": "Global admin search",
+      "placeholder": "Search incidents, audit events, or roles",
+      "counts": "{incidents} incidents • {audit} audit • {roles} roles",
+      "targetLabel": "Admin search target",
+      "targets": {
+        "incidents": "Incidents",
+        "audit": "Audit logs",
+        "roles": "Role audit"
+      },
+      "submit": "Search"
+    },
+    "stats": {
+      "totalUsers": {
+        "title": "Total Users",
+        "delta": "+6% WoW"
+      },
+      "institutions": {
+        "title": "Institutions",
+        "delta": "+1 this month"
+      },
+      "interactions": {
+        "title": "Total Interactions",
+        "sub": "AI messages processed",
+        "delta": "+12% WoW"
+      },
+      "flagged": {
+        "title": "Flagged Issues",
+        "sub": "Requires attention",
+        "delta": "-2 since yesterday"
+      }
+    },
+    "kpis": {
+      "openIncidents": {
+        "title": "Open Incidents",
+        "delta": "+1 this week"
+      },
+      "auditEvents": {
+        "title": "Audit Events",
+        "delta": "+14% WoW"
+      },
+      "accessRequests": {
+        "title": "Access Requests",
+        "delta": "2 pending"
+      },
+      "dbJobs": {
+        "title": "DB Jobs",
+        "delta": "1 running"
+      }
+    },
+    "quickLinks": {
+      "databaseTitle": "Database Console",
+      "database": "Replicas, performance, jobs",
+      "auditTitle": "Audit Logs",
+      "audit": "Security, data access, changes",
+      "incidentTitle": "Incident Log",
+      "incidents": "Incidents, mitigations, status",
+      "rolesTitle": "Roles & Access",
+      "roles": "Permissions and approvals",
+      "healthTitle": "System Health",
+      "health": "Runtime, queues, uptime"
+    },
+    "priority": {
+      "title": "Priority Review Queue",
+      "empty": "No pending issues. System healthy.",
+      "context": "Context:",
+      "by": "by {email}",
+      "resolve": "Resolve"
+    },
+    "actions": {
+      "title": "System Actions",
+      "provision": "+ Provision New Institution",
+      "manageCurricula": "Manage Curricula",
+      "viewLogs": "View Server Logs"
+    },
+    "databaseOverview": {
+      "primary": "Primary DB",
+      "healthy": "Healthy",
+      "replicaLag": "Replica Lag",
+      "storage": "Storage Used",
+      "latency": "P95 Latency"
+    },
+    "databaseActivity": {
+      "title": "Database Activity",
+      "subtitle": "Live queries, maintenance jobs, and service health.",
+      "inspect": "Inspect",
+      "status": {
+        "ok": "OK",
+        "running": "Running"
+      },
+      "times": {
+        "one": "18s ago",
+        "two": "2 min ago",
+        "three": "7 min ago"
+      }
+    },
+    "databaseHealth": {
+      "title": "Database Health",
+      "subtitle": "Replication, storage, latency, and backup status.",
+      "cta": "Open database console"
+    }
+  },
+  "adminIntegrations": {
+    "title": "System Integrations",
+    "subtitle": "Connect Ilmora to external LMS and event listeners.",
+    "tabs": {
+      "integrations": "LMS & Tools",
+      "webhooks": "Webhooks"
+    },
+    "form": {
+      "title": "Add New {kind}",
+      "integration": "Integration",
+      "webhook": "Webhook",
+      "type": "Type",
+      "integrationTypeAria": "Integration type",
+      "webhookTypeAria": "Webhook event type",
+      "integrationTypes": {
+        "lms": "Learning Management System",
+        "payment": "Payment Gateway",
+        "sso": "Single Sign-On"
+      },
+      "name": "Name",
+      "targetUrl": "Target URL",
+      "namePlaceholder": "e.g. Canvas NUST",
+      "urlPlaceholder": "https://api.mysite.com/webhook",
+      "create": "Create"
+    },
+    "list": {
+      "deleteIntegration": "Delete integration",
+      "deleteWebhook": "Delete webhook",
+      "empty": "No {tab} configured yet."
+    },
+    "toast": {
+      "demoFallback": "Integrations are using demo data.",
+      "nameRequired": "Enter an integration name.",
+      "urlRequired": "Enter a webhook URL.",
+      "createdDemo": "Created in demo mode.",
+      "created": "Created successfully.",
+      "createFailed": "Creation failed.",
+      "removedDemo": "Removed in demo mode.",
+      "removed": "Removed successfully.",
+      "removeFailed": "Removal failed."
+    }
+  },
+  "adminAudit": {
+    "loading": "جاري تحميل السجلات...",
+    "eyebrow": "سجلات التدقيق",
+    "title": "مسار الامان",
+    "subtitle": "تتبع الوصول وتغييرات الاعدادات وتصدير البيانات.",
+    "lastUpdated": "اخر تحديث {time}",
+    "refresh": "تحديث",
+    "refreshing": "جار التحديث",
+    "autoRefresh": "تحديث تلقائي {state}",
+    "on": "تشغيل",
+    "off": "ايقاف",
+    "exportCsv": "تصدير CSV",
+    "ackAll": "اقرار الكل",
+    "ackConfirm": {
+      "title": "اقرار كل الاحداث",
+      "body": "سيتم مسح قائمة التدقيق الحالية. المتابعة؟"
+    },
+    "summary": {
+      "total": "الاجمالي",
+      "high": "مرتفع",
+      "medium": "متوسط",
+      "low": "منخفض"
+    },
+    "filters": {
+      "title": "عوامل التصفية",
+      "search": "ابحث في النشاط",
+      "levels": {
+        "all": "الكل",
+        "high": "مرتفع",
+        "medium": "متوسط",
+        "low": "منخفض"
+      }
+    },
+    "events": {
+      "title": "احداث حديثة",
+      "emptyTitle": "لا توجد احداث تطابق هذا الفلتر.",
+      "emptyBody": "جرّب مسح الفلاتر او الانتقال لنشاط الحوادث.",
+      "clearFilters": "مسح الفلاتر",
+      "viewIncidents": "عرض الحوادث"
+    },
+    "retention": "احتفاظ التدقيق: 400 يوم • تم تفعيل امتثال التصدير.",
+    "toast": {
+      "demoFallback": "سجلات التدقيق تستخدم بيانات تجريبية.",
+      "exportQueuedDemo": "تمت جدولة تصدير التدقيق (تجريبي).",
+      "exportQueued": "تمت جدولة تصدير التدقيق.",
+      "exportFailed": "فشل تصدير التدقيق.",
+      "ackDemo": "تم اقرار قائمة التدقيق (تجريبي).",
+      "ack": "تم اقرار قائمة التدقيق.",
+      "ackFailed": "فشل اقرار التدقيق."
+    }
+  },
+  "adminIncidents": {
+    "loading": "جاري تحميل الحوادث...",
+    "eyebrow": "سجل الحوادث",
+    "title": "حوادث تشغيلية",
+    "subtitle": "تتبع التحقيقات وعمليات التخفيف ونوافذ الحل.",
+    "lastUpdated": "اخر تحديث {time}",
+    "refresh": "تحديث",
+    "refreshing": "جار التحديث",
+    "autoRefresh": "تحديث تلقائي {state}",
+    "on": "تشغيل",
+    "off": "ايقاف",
+    "exportCsv": "تصدير CSV",
+    "exportJson": "تصدير JSON",
+    "summary": {
+      "total": "الاجمالي",
+      "investigating": "قيد التحقيق",
+      "monitoring": "قيد المراقبة",
+      "resolved": "تم الحل"
+    },
+    "filters": {
+      "title": "عوامل التصفية",
+      "search": "ابحث عن الحوادث",
+      "status": {
+        "all": "الكل",
+        "investigating": "قيد التحقيق",
+        "monitoring": "قيد المراقبة",
+        "resolved": "تم الحل"
+      },
+      "severity": {
+        "all": "الكل",
+        "high": "مرتفع",
+        "medium": "متوسط",
+        "low": "منخفض"
+      }
+    },
+    "feedTitle": "تغذية الحوادث",
+    "empty": {
+      "title": "لا توجد حوادث تطابق عوامل التصفية.",
+      "body": "عدّل عوامل التصفية او انشئ حادثا جديدا.",
+      "clearFilters": "مسح الفلاتر",
+      "createIncident": "انشاء حادث"
+    },
+    "servicesLabel": "الخدمات:",
+    "actions": {
+      "viewDetails": "عرض التفاصيل",
+      "ack": "اقرار",
+      "resolve": "حل"
+    },
+    "confirm": {
+      "ack": {
+        "title": "اقرار الحادث",
+        "body": "تسجيل اقرار لهذا الحادث."
+      },
+      "resolve": {
+        "title": "حل الحادث",
+        "body": "ضع علامة تم الحل لهذا الحادث وارشفه."
+      }
+    },
+    "pagination": "الصفحة {page} من {total}",
+    "prev": "السابق",
+    "next": "التالي",
+    "detail": {
+      "eyebrow": "تفاصيل الحادث",
+      "close": "اغلاق",
+      "severity": "الخطورة",
+      "owner": "المالك",
+      "region": "المنطقة",
+      "timeline": "الخط الزمني",
+      "notes": "ملاحظات",
+      "notesEmpty": "لا توجد ملاحظات بعد.",
+      "notePlaceholder": "اضف ملاحظة",
+      "addNote": "اضف ملاحظة",
+      "confirmAck": {
+        "title": "اقرار الحادث",
+        "body": "تسجيل اقرار لهذا الحادث."
+      },
+      "acknowledge": "اقرار",
+      "followUp": "انشاء متابعة"
+    },
+    "timeline": {
+      "reported": "تم الابلاغ عن الحادث",
+      "mitigation": "تم نشر التخفيف",
+      "resolved": "تم حل الحادث"
+    },
+    "toast": {
+      "demoFallback": "سجل الحوادث يستخدم بيانات تجريبية.",
+      "detailsFailed": "فشل تحميل تفاصيل الحادث.",
+      "noteFailed": "فشل حفظ الملاحظة.",
+      "updatedDemo": "تم تحديث الحادث (تجريبي).",
+      "updated": "تم تحديث الحادث.",
+      "updateFailed": "فشل تحديث الحادث.",
+      "exported": "تم تصدير سجل الحوادث.",
+      "acknowledged": "تم اقرار الحادث.",
+      "followUp": "تم انشاء مهمة متابعة."
+    }
+  },
+  "adminHealth": {
+    "eyebrow": "صحة النظام",
+    "title": "التوافر والمرونة",
+    "subtitle": "تتبع حالة الخدمات والحوادث والاستعداد التشغيلي.",
+    "lastUpdated": "اخر تحديث {time}",
+    "refresh": "تحديث",
+    "refreshing": "جار التحديث",
+    "autoRefresh": "تحديث تلقائي {state}",
+    "on": "تشغيل",
+    "off": "ايقاف",
+    "cards": {
+      "uptime": {
+        "title": "التوافر العالمي",
+        "body": "99.95% عبر المناطق هذا الشهر."
+      },
+      "queue": {
+        "title": "صحة الصف",
+        "body": "3 عمال متصلون • متوسط تاخير 320ms."
+      },
+      "alerts": {
+        "title": "تنبيهات نشطة",
+        "body": "2 تحذير • 0 حرجة."
+      }
+    },
+    "create": {
+      "title": "انشاء حادث",
+      "placeholder": "ملخص الحادث",
+      "statusAria": "حالة الحادث",
+      "statusOptions": {
+        "investigating": "قيد التحقيق",
+        "identified": "تم تحديده",
+        "monitoring": "قيد المراقبة"
+      },
+      "submit": "انشاء"
+    },
+    "services": {
+      "title": "حالة الخدمة",
+      "uptime": "التوافر {value}"
+    },
+    "timeline": {
+      "title": "الخط الزمني للحوادث",
+      "resolve": "حل",
+      "viewDetails": "عرض التفاصيل",
+      "viewAll": "عرض سجل الحوادث بالكامل",
+      "confirmResolve": {
+        "title": "حل الحادث",
+        "body": "ضع علامة تم الحل لهذا الحادث وارشفه."
+      }
+    },
+    "detail": {
+      "eyebrow": "تفاصيل الحادث",
+      "close": "اغلاق",
+      "severity": "الخطورة",
+      "owner": "المالك",
+      "services": "الخدمات",
+      "impactPending": "تفاصيل الاثر قيد الانتظار.",
+      "timeline": "الخط الزمني",
+      "confirmAck": {
+        "title": "اقرار الحادث",
+        "body": "تسجيل اقرار لهذا الحادث."
+      },
+      "acknowledge": "اقرار",
+      "followUp": "انشاء متابعة",
+      "toast": {
+        "acknowledged": "تم اقرار الحادث.",
+        "followUp": "تم انشاء مهمة متابعة."
+      }
+    },
+    "toast": {
+      "demoFallback": "صحة النظام تستخدم بيانات تجريبية.",
+      "titleRequired": "ادخل عنوان الحادث.",
+      "createdDemo": "تم انشاء الحادث (تجريبي).",
+      "created": "تم انشاء الحادث.",
+      "createFailed": "فشل انشاء الحادث.",
+      "resolvedDemo": "تم حل الحادث (تجريبي).",
+      "resolved": "تم حل الحادث.",
+      "resolveFailed": "فشل حل الحادث."
+    }
+  },
+  "adminDatabase": {
+    "eyebrow": "وحدة تحكم قاعدة البيانات",
+    "title": "مركز التحكم بالبيانات",
+    "subtitle": "راقب النسخ المتماثل وصحة الاستعلامات وعمليات الصيانة.",
+    "lastUpdated": "اخر تحديث {time}",
+    "refresh": "تحديث",
+    "refreshing": "جار التحديث",
+    "autoRefresh": "تحديث تلقائي {state}",
+    "on": "تشغيل",
+    "off": "ايقاف",
+    "cluster": {
+      "live": "حي",
+      "promoteTitle": "ترقية النسخة",
+      "promoteBody": "سيتم ترقية النسخة الى الاساسية. متابعة؟",
+      "promote": "ترقية النسخة",
+      "failoverTitle": "تشغيل تمرين التحويل",
+      "failoverBody": "يشغل هذا محاكاة تحويل. اكد للمتابعة.",
+      "failover": "تشغيل تمرين التحويل",
+      "latencyTrend": "اتجاه الكمون",
+      "latency": "الكمون",
+      "storage": "التخزين",
+      "backups": "النسخ الاحتياطية",
+      "backupTime": "قبل 4 ساعات"
+    },
+    "slowQueries": {
+      "title": "استعلامات بطيئة",
+      "time": "الوقت {time}",
+      "impact": "التأثير {impact}",
+      "inspect": "فحص",
+      "terminateTitle": "انهاء الاستعلام",
+      "terminateBody": "سيتم انهاء استعلام جار فورا.",
+      "terminate": "انهاء"
+    },
+    "maintenance": {
+      "title": "قائمة الصيانة",
+      "runTitle": "تشغيل مهمة صيانة",
+      "runBody": "سيبدأ مهمة الصيانة الآن.",
+      "runNow": "تشغيل الآن",
+      "backupTitle": "تشغيل لقطة احتياطية",
+      "backupBody": "يشغل لقطة احتياطية للعنقود الاساسي.",
+      "backup": "تشغيل لقطة احتياطية"
+    },
+    "charts": {
+      "latency": {
+        "title": "مخطط الكمون",
+        "body": "توزيع كمون الاستعلام خلال الساعة الماضية."
+      },
+      "replica": {
+        "title": "اتجاه تاخر النسخة",
+        "body": "التاخر بالثواني (اخر 7 عينات)."
+      },
+      "error": {
+        "title": "اتجاه معدل الاخطاء",
+        "body": "معدل اخطاء API (%) عبر الخدمات."
+      }
+    },
+    "restorePoints": {
+      "title": "نقاط الاستعادة",
+      "age": "العمر {age} • {region}",
+      "restoreTitle": "استعادة من نقطة",
+      "restoreBody": "سيستعيد قاعدة البيانات الى هذه اللقطة.",
+      "restore": "استعادة"
+    },
+    "rollback": {
+      "title": "سجل التراجع"
+    },
+    "runbook": {
+      "title": "دليل الاستعادة",
+      "subtitle": "خطوات موجهة لاستعادة امنة.",
+      "open": "فتح الدليل",
+      "completeNext": "اكمال الخطوة التالية",
+      "reset": "اعادة تعيين الدليل"
+    },
+    "guardrails": {
+      "replication": {
+        "title": "حواجز النسخ المتماثل",
+        "body": "التحويل التلقائي مفعل. تاخر النسخة يطلق تنبيهات عند 2.5s."
+      },
+      "security": {
+        "title": "وضع الامان",
+        "body": "مشفر عند التخزين. تطبيق وصول بمستوى الصف للجداول الحساسة."
+      },
+      "performance": {
+        "title": "ميزانية الاداء",
+        "body": "هدف كمون P95 هو 120ms. معدل الاخطاء الحالي 0.2%."
+      }
+    },
+    "protections": {
+      "title": "حمايات قاعدة البيانات",
+      "subtitle": "تحقق من النسخ الاحتياطية والتدقيق ومسارات الوصول الطارئة.",
+      "items": {
+        "backups": { "label": "النسخ الاحتياطية", "value": "تم التحقق" },
+        "keys": { "label": "مفاتيح الوصول", "value": "تم تدويرها قبل 5 ايام" },
+        "audit": { "label": "مسار التدقيق", "value": "مفعل" }
+      },
+      "pitrTitle": "بدء استعادة بنقطة زمنية",
+      "pitrBody": "سيستعيد قاعدة البيانات الى لقطة سابقة.",
+      "pitr": "استعادة بنقطة زمنية",
+      "rollbackTitle": "تراجع عن اخر ترحيل",
+      "rollbackBody": "سيتم التراجع عن اخر خطوة ترحيل.",
+      "rollback": "تراجع عن الترحيل"
+    },
+    "toast": {
+      "demoFallback": "وحدة تحكم قاعدة البيانات تستخدم بيانات تجريبية.",
+      "backupQueuedDemo": "تمت جدولة لقطة احتياطية (تجريبي).",
+      "backupQueued": "تمت جدولة لقطة احتياطية.",
+      "backupFailed": "فشل طلب النسخ الاحتياطي.",
+      "jobStartedDemo": "تم بدء المهمة (تجريبي).",
+      "jobStarted": "تم بدء المهمة.",
+      "jobFailed": "فشل بدء المهمة.",
+      "queryTerminatedDemo": "تم انهاء الاستعلام (تجريبي).",
+      "queryTerminated": "تم انهاء الاستعلام.",
+      "queryFailed": "فشل انهاء الاستعلام.",
+      "rollbackQueuedDemo": "تمت جدولة التراجع (تجريبي).",
+      "rollbackQueued": "تمت جدولة التراجع.",
+      "rollbackFailed": "فشل التراجع.",
+      "pitrDemo": "تم بدء PITR (تجريبي).",
+      "pitr": "تم بدء PITR.",
+      "pitrFailed": "فشل PITR.",
+      "runbookStepDemo": "تم اكمال خطوة الدليل (تجريبي).",
+      "runbookStep": "تم اكمال خطوة الدليل.",
+      "runbookFailed": "فشل تحديث الدليل.",
+      "runbookResetDemo": "تمت اعادة تعيين الدليل (تجريبي).",
+      "runbookReset": "تمت اعادة تعيين الدليل.",
+      "runbookResetFailed": "فشل اعادة تعيين الدليل.",
+      "restoreDemo": "تمت جدولة الاستعادة (تجريبي).",
+      "restore": "تمت جدولة الاستعادة.",
+      "restoreFailed": "فشلت الاستعادة.",
+      "inspect": "تم فتح فحص الاستعلام.",
+      "runbookEmpty": "لا توجد خطوات للدليل."
+    }
+  },
+  "adminRoles": {
+    "eyebrow": "الادوار والوصول",
+    "title": "بنية الاذونات",
+    "subtitle": "اضبط الادوار والموافقات وحدود الوصول.",
+    "loading": "جاري تحميل الادوار...",
+    "confirm": {
+      "proceed": "متابعة"
+    },
+    "create": {
+      "placeholder": "اسم الدور",
+      "scopeAria": "نطاق الدور",
+      "scopes": {
+        "global": "عام",
+        "institution": "مؤسسة",
+        "department": "قسم"
+      },
+      "submit": "انشاء دور"
+    },
+    "activeRoles": "الادوار النشطة",
+    "roleMeta": "{count} اعضـاء • {scope}",
+    "manage": "ادارة",
+    "permissions": {
+      "title": "مصفوفة الاذونات",
+      "subtitle": "اضبط الوصول لـ {name}.",
+      "subtitleFallback": "دور",
+      "selectRole": "اختر دورا",
+      "export": "تصدير المصفوفة",
+      "cloneTitle": "استنساخ الدور المحدد",
+      "cloneBody": "سينشئ نسخة من الدور المحدد واذوناته.",
+      "clone": "استنساخ الدور",
+      "groups": {
+        "data": "البيانات",
+        "security": "الامان",
+        "aiContent": "الذكاء الاصطناعي والمحتوى",
+        "operations": "العمليات"
+      },
+      "labels": {
+        "db": {
+          "read": "قراءة قاعدة البيانات",
+          "write": "كتابة البيانات",
+          "export": "تصدير السجلات"
+        },
+        "audit": {
+          "view": "عرض سجلات التدقيق",
+          "export": "تصدير سجلات التدقيق"
+        },
+        "incident": {
+          "manage": "ادارة الحوادث"
+        },
+        "content": {
+          "review": "مراجعة المحتوى"
+        },
+        "model": {
+          "configure": "تهيئة النماذج"
+        },
+        "studio": {
+          "manage": "ادارة الاستوديو"
+        },
+        "integrations": {
+          "manage": "ادارة التكاملات"
+        },
+        "roles": {
+          "manage": "ادارة الادوار"
+        },
+        "system": {
+          "health": "عرض صحة النظام"
+        }
+      },
+      "state": {
+        "on": "تشغيل",
+        "off": "ايقاف"
+      }
+    },
+    "insights": {
+      "title": "رؤى تدقيق الادوار",
+      "subtitle": "توزيع الخطورة والشدة (المدخلات المحملة).",
+      "mix": "مزيج الخطورة",
+      "trend": "اتجاه الخطورة"
+    },
+    "actors": {
+      "title": "لوحة المتصدرين",
+      "subtitle": "اكثر المدراء نشاطا في العرض الحالي.",
+      "empty": "لا يوجد نشاط تدقيق محمل بعد.",
+      "events": "{count} احداث"
+    },
+    "audit": {
+      "title": "سجل تدقيق الادوار",
+      "levels": {
+        "all": "الكل",
+        "high": "مرتفع",
+        "medium": "متوسط",
+        "low": "منخفض"
+      },
+      "export": "تصدير CSV",
+      "search": "بحث في تدقيق الادوار",
+      "empty": {
+        "title": "لا توجد سجلات تدقيق تطابق عوامل التصفية.",
+        "body": "عدّل عوامل التصفية او امسح البحث.",
+        "clear": "مسح الفلاتر"
+      },
+      "pagination": "الصفحة {page} من {total}",
+      "prev": "السابق",
+      "next": "التالي"
+    },
+    "footer": {
+      "notice": "سياسات الوصول تطبق لكل مؤسسة وتتم مزامنتها كل ساعة."
+    },
+    "access": {
+      "title": "طلبات الوصول",
+      "approveAllTitle": "الموافقة على كل الطلبات",
+      "approveAllBody": "سيتم الموافقة على جميع طلبات الوصول المعلقة.",
+      "approveAll": "الموافقة على الكل",
+      "denyAllTitle": "رفض كل الطلبات",
+      "denyAllBody": "سيتم رفض جميع طلبات الوصول المعلقة.",
+      "denyAll": "رفض الكل",
+      "approve": "موافقة",
+      "deny": "رفض",
+      "notice": "يتم تسجيل الموافقات تلقائيا في مسار التدقيق."
+    },
+    "templates": {
+      "confirmTitle": "تطبيق قالب {name}",
+      "confirmBody": "سيتم استبدال مجموعة الاذونات الحالية للدور المحدد.",
+      "labels": {
+        "administrator": "مسؤول",
+        "operator": "مشغل",
+        "readOnly": "قراءة فقط"
+      }
+    },
+    "toast": {
+      "matrixExported": "تم تصدير مصفوفة الاذونات.",
+      "auditExported": "تم تصدير تدقيق الادوار.",
+      "cloneSelect": "اختر دورا للاستنساخ.",
+      "cloneDemo": "تم استنساخ الدور (تجريبي).",
+      "clone": "تم استنساخ الدور.",
+      "cloneFailed": "فشل استنساخ الدور.",
+      "auditDemo": "تدقيق الادوار يستخدم بيانات تجريبية.",
+      "rolesDemo": "بيانات الادوار تستخدم بيانات تجريبية.",
+      "permissionDemo": "تم تحديث الاذونات (تجريبي).",
+      "permissionUpdated": "تم تحديث الاذونات.",
+      "permissionFailed": "فشل تحديث الاذونات.",
+      "noAccessRequests": "لا توجد طلبات وصول للتحديث.",
+      "accessUpdatedDemo": "تم تحديث طلبات الوصول (تجريبي).",
+      "accessUpdated": "تم تحديث طلبات الوصول.",
+      "bulkFailed": "فشل التحديث الجماعي.",
+      "templateDemo": "تم تطبيق القالب (تجريبي).",
+      "templateApplied": "تم تطبيق القالب.",
+      "templateFailed": "فشل تطبيق القالب.",
+      "roleNameRequired": "ادخل اسم دور.",
+      "roleCreatedDemo": "تم انشاء الدور في وضع تجريبي.",
+      "roleCreated": "تم انشاء الدور.",
+      "roleCreateFailed": "فشل انشاء الدور.",
+      "accessDecisionDemo": "تم تحديث طلب الوصول (تجريبي).",
+      "accessDecision": "تم تحديث طلب الوصول.",
+      "accessDecisionFailed": "فشل تحديث طلب الوصول."
     }
   }
 }

@@ -4,6 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { Lock, Star, BookOpen, ShoppingBag } from "lucide-react";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 interface StudyPack {
   id: string;
@@ -15,6 +16,7 @@ interface StudyPack {
 }
 
 export default function MarketplacePage() {
+  const t = useTranslations("marketplace");
   const { user, token } = useAuth();
   const [packs, setPacks] = useState<StudyPack[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,13 +50,13 @@ export default function MarketplacePage() {
           <header className="border-b border-slate-200 bg-white/70 backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-6 sm:px-6 lg:px-8">
               <div>
-                <h1 className="text-3xl font-display">Marketplace</h1>
+                <h1 className="text-3xl font-display">{t("title")}</h1>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Premium notes and study packs from top students.
+                  {t("subtitle")}
                 </p>
               </div>
               <button className="rounded-full border border-slate-200 bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 dark:border-white/10 dark:bg-white dark:text-black dark:hover:bg-white/90">
-                Create Study Pack
+                {t("actions.create")}
               </button>
             </div>
           </header>
@@ -62,16 +64,16 @@ export default function MarketplacePage() {
           <main className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
             {loading ? (
               <div className="py-20 text-center text-slate-500 dark:text-white/60">
-                Loading Marketplace...
+                {t("loading")}
               </div>
             ) : packs.length === 0 ? (
               <div className="rounded-3xl border border-slate-200 bg-white/70 px-8 py-20 text-center backdrop-blur dark:border-white/10 dark:bg-white/5">
                 <ShoppingBag className="mx-auto h-12 w-12 text-slate-400 dark:text-white/40" />
                 <h3 className="mt-4 text-sm font-semibold text-slate-900 dark:text-white">
-                  No packs available yet
+                  {t("empty.title")}
                 </h3>
                 <p className="mt-2 text-sm text-slate-500 dark:text-white/60">
-                  Be the first to publish your notes.
+                  {t("empty.body")}
                 </p>
               </div>
             ) : (
@@ -108,15 +110,17 @@ export default function MarketplacePage() {
                         <div className="flex items-center text-amber-500">
                           <Star className="h-4 w-4 fill-current" />
                           <span className="ml-1 text-sm font-medium text-slate-600 dark:text-white/60">
-                            {pack.rating > 0 ? pack.rating : "New"}
+                            {pack.rating > 0 ? pack.rating : t("card.new")}
                           </span>
                         </div>
                         <div className="text-sm font-semibold text-slate-900 dark:text-white">
-                          {pack.price > 0 ? `PKR ${pack.price}` : "Free"}
+                          {pack.price > 0
+                            ? t("card.price", { price: pack.price })
+                            : t("card.free")}
                         </div>
                       </div>
                       <button className="mt-4 w-full rounded-full border border-slate-200 bg-slate-900 py-2 text-sm font-semibold text-white transition-colors duration-300 hover:bg-slate-800 dark:border-white/10 dark:bg-white dark:text-black dark:hover:bg-white/90">
-                        View Details
+                        {t("actions.view")}
                       </button>
                     </div>
                   </div>

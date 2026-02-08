@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/context/ToastContext";
 import { adminDelete, adminGet, adminPost } from "@/lib/admin-api";
+import { useTranslations } from "next-intl";
 
 interface Integration {
   id: string;
@@ -31,6 +32,7 @@ interface Webhook {
 export default function IntegrationsPage() {
   const { user, demoMode, token } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminIntegrations");
   const [activeTab, setActiveTab] = useState<"integrations" | "webhooks">(
     "integrations",
   );
@@ -82,7 +84,7 @@ export default function IntegrationsPage() {
         setWebhooks(hookRes);
       } catch (e) {
         console.error(e);
-        showToast("Integrations are using demo data.", "warning");
+        showToast(t("toast.demoFallback"), "warning");
       } finally {
         setLoading(false);
       }
@@ -92,11 +94,11 @@ export default function IntegrationsPage() {
 
   const handleCreate = async () => {
     if (activeTab === "integrations" && !newItemName.trim()) {
-      showToast("Enter an integration name.", "info");
+      showToast(t("toast.nameRequired"), "info");
       return;
     }
     if (activeTab === "webhooks" && !newItemUrl.trim()) {
-      showToast("Enter a webhook URL.", "info");
+      showToast(t("toast.urlRequired"), "info");
       return;
     }
 
@@ -125,7 +127,7 @@ export default function IntegrationsPage() {
         ]);
         setNewItemUrl("");
       }
-      showToast("Created in demo mode.", "success");
+      showToast(t("toast.createdDemo"), "success");
       return;
     }
 
@@ -147,10 +149,10 @@ export default function IntegrationsPage() {
         setWebhooks((prev) => [...prev, created]);
         setNewItemUrl("");
       }
-      showToast("Created successfully.", "success");
+      showToast(t("toast.created"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Creation failed.", "error");
+      showToast(t("toast.createFailed"), "error");
     }
   };
 
@@ -161,7 +163,7 @@ export default function IntegrationsPage() {
       } else {
         setWebhooks((prev) => prev.filter((item) => item.id !== id));
       }
-      showToast("Removed in demo mode.", "success");
+      showToast(t("toast.removedDemo"), "success");
       return;
     }
     try {
@@ -175,10 +177,10 @@ export default function IntegrationsPage() {
       } else {
         setWebhooks((prev) => prev.filter((item) => item.id !== id));
       }
-      showToast("Removed successfully.", "success");
+      showToast(t("toast.removed"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Removal failed.", "error");
+      showToast(t("toast.removeFailed"), "error");
     }
   };
 
@@ -189,9 +191,9 @@ export default function IntegrationsPage() {
         <div className="relative z-10 p-6">
           <header className="mb-8 flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-semibold">System Integrations</h1>
+              <h1 className="text-3xl font-semibold">{t("title")}</h1>
               <p className="text-slate-500 dark:text-white/60">
-                Connect Ilmora to external LMS and event listeners.
+                {t("subtitle")}
               </p>
             </div>
           </header>
@@ -203,43 +205,47 @@ export default function IntegrationsPage() {
                 onClick={() => setActiveTab("integrations")}
                 className={`${activeTab === "integrations" ? "border-slate-900 text-slate-900 dark:border-white dark:text-white" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-white/60 dark:hover:text-white"} whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
               >
-                LMS & Tools
+                {t("tabs.integrations")}
               </button>
               <button
                 onClick={() => setActiveTab("webhooks")}
                 className={`${activeTab === "webhooks" ? "border-slate-900 text-slate-900 dark:border-white dark:text-white" : "border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300 dark:text-white/60 dark:hover:text-white"} whitespace-nowrap border-b-2 px-1 pb-4 text-sm font-medium`}
               >
-                Webhooks
+                {t("tabs.webhooks")}
               </button>
             </nav>
           </div>
 
           <div className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <h3 className="mb-4 text-lg font-medium">
-              Add New {activeTab === "integrations" ? "Integration" : "Webhook"}
+              {t("form.title", {
+                kind: activeTab === "integrations"
+                  ? t("form.integration")
+                  : t("form.webhook"),
+              })}
             </h3>
             <div className="grid grid-cols-1 items-end gap-4 md:grid-cols-4">
               <div className="md:col-span-1">
                 <label className="block text-sm font-medium text-slate-700 dark:text-white/70">
-                  Type
+                  {t("form.type")}
                 </label>
                 {activeTab === "integrations" ? (
                   <select
                     className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 py-2 pl-3 pr-10 text-base focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                     value={newItemType}
                     onChange={(e) => setNewItemType(e.target.value)}
-                    aria-label="Integration type"
+                    aria-label={t("form.integrationTypeAria")}
                   >
-                    <option value="LMS">Learning Management System</option>
-                    <option value="PAYMENT">Payment Gateway</option>
-                    <option value="SSO">Single Sign-On</option>
+                    <option value="LMS">{t("form.integrationTypes.lms")}</option>
+                    <option value="PAYMENT">{t("form.integrationTypes.payment")}</option>
+                    <option value="SSO">{t("form.integrationTypes.sso")}</option>
                   </select>
                 ) : (
                   <select
                     className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 py-2 pl-3 pr-10 text-base focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                     value={newItemType}
                     onChange={(e) => setNewItemType(e.target.value)}
-                    aria-label="Webhook event type"
+                    aria-label={t("form.webhookTypeAria")}
                   >
                     <option value="pack.published">pack.published</option>
                     <option value="alert.raised">alert.raised</option>
@@ -248,15 +254,17 @@ export default function IntegrationsPage() {
               </div>
               <div className="md:col-span-2">
                 <label className="block text-sm font-medium text-slate-700 dark:text-white/70">
-                  {activeTab === "integrations" ? "Name" : "Target URL"}
+                  {activeTab === "integrations"
+                    ? t("form.name")
+                    : t("form.targetUrl")}
                 </label>
                 <input
                   type="text"
                   className="mt-1 block w-full rounded-md border border-slate-200 bg-white/90 px-3 py-2 shadow-sm focus:border-amber-300 focus:outline-none focus:ring-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white sm:text-sm"
                   placeholder={
                     activeTab === "integrations"
-                      ? "e.g. Canvas NUST"
-                      : "https://api.mysite.com/webhook"
+                      ? t("form.namePlaceholder")
+                      : t("form.urlPlaceholder")
                   }
                   value={
                     activeTab === "integrations" ? newItemName : newItemUrl
@@ -274,7 +282,7 @@ export default function IntegrationsPage() {
                   className="inline-flex w-full justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-slate-800 focus:outline-none dark:bg-white dark:text-black dark:hover:bg-white/90"
                 >
                   <Plus className="h-5 w-5 mr-2" />
-                  Create
+                  {t("form.create")}
                 </button>
               </div>
             </div>
@@ -308,7 +316,7 @@ export default function IntegrationsPage() {
                       <button
                         onClick={() => handleDelete(item.id)}
                         className="text-rose-600 hover:text-rose-700"
-                        aria-label="Delete integration"
+                        aria-label={t("list.deleteIntegration")}
                       >
                         <Trash2 className="h-5 w-5" />
                       </button>
@@ -341,7 +349,7 @@ export default function IntegrationsPage() {
                       <button
                         onClick={() => handleDelete(item.id)}
                         className="text-rose-600 hover:text-rose-700"
-                        aria-label="Delete webhook"
+                        aria-label={t("list.deleteWebhook")}
                       >
                         <Trash2 className="h-5 w-5" />
                       </button>
@@ -351,7 +359,7 @@ export default function IntegrationsPage() {
               {((activeTab === "integrations" && integrations.length === 0) ||
                 (activeTab === "webhooks" && webhooks.length === 0)) && (
                 <li className="px-6 py-8 text-center text-slate-500 dark:text-white/60">
-                  No {activeTab} configured yet.
+                  {t("list.empty", { tab: activeTab })}
                 </li>
               )}
             </ul>

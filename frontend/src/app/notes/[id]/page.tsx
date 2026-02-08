@@ -7,8 +7,10 @@ import { useParams, useRouter } from "next/navigation";
 import { Loader2, ArrowLeft, Wand2, Save } from "lucide-react";
 import Link from "next/link";
 import { buildApiUrl } from "@/lib/api";
+import { useTranslations } from "next-intl";
 
 export default function NoteDetailPage() {
+  const t = useTranslations("noteDetail");
   const { id } = useParams();
   const { user, token } = useAuth();
   const [note, setNote] = useState<{ title: string; content: string } | null>(
@@ -35,10 +37,10 @@ export default function NoteDetailPage() {
           // Update Cache
           localStorage.setItem(cacheKey, JSON.stringify(data));
         } else {
-          throw new Error("API Error");
+          throw new Error(t("errors.fetchFailed"));
         }
       } catch (e) {
-        console.warn("Network failed, checking offline cache...", e);
+        console.warn(t("errors.networkCache"), e);
         const cached = localStorage.getItem(cacheKey);
         if (cached) {
           const data = JSON.parse(cached);
@@ -54,7 +56,7 @@ export default function NoteDetailPage() {
 
   const handleAISummarize = async () => {
     // Future Phase: Call AI to restructure 'content' locally or via API
-    alert("AI Structuring coming in next build phase.");
+    alert(t("aiComingSoon"));
   };
 
   if (loading)
@@ -66,7 +68,7 @@ export default function NoteDetailPage() {
   if (!note)
     return (
       <div className="flex min-h-screen items-center justify-center bg-slate-50 text-slate-600 dark:bg-slate-950 dark:text-white/70">
-        Note not found.
+        {t("empty")}
       </div>
     );
 
@@ -93,14 +95,14 @@ export default function NoteDetailPage() {
                     className="flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                   >
                     <Wand2 className="h-4 w-4" />
-                    <span className="hidden sm:inline">AI Structure</span>
+                    <span className="hidden sm:inline">{t("actions.ai")}</span>
                   </button>
                   <button
                     onClick={() => setIsEditing(!isEditing)}
                     className="flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-sm font-medium text-white hover:bg-slate-800 dark:bg-white dark:text-black dark:hover:bg-white/90"
                   >
-                    {isEditing ? <Save className="h-4 w-4" /> : "Edit"}
-                    {isEditing ? "Save" : ""}
+                    {isEditing ? <Save className="h-4 w-4" /> : t("actions.edit")}
+                    {isEditing ? t("actions.save") : ""}
                   </button>
                 </div>
               </div>

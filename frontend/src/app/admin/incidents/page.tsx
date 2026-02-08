@@ -10,6 +10,7 @@ import { adminGet, adminPost } from "@/lib/admin-api";
 import useAutoRefresh from "@/hooks/use-auto-refresh";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import { Suspense } from "react";
+import { useTranslations } from "next-intl";
 
 type IncidentLog = {
   id: string;
@@ -88,6 +89,7 @@ function IncidentContent() {
   const searchParams = useSearchParams();
   const { token, demoMode } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminIncidents");
   const [incidents, setIncidents] = useState<IncidentLog[]>(demoIncidentLog);
   const [statusFilter, setStatusFilter] = useState("All");
   const [severityFilter, setSeverityFilter] = useState("All");
@@ -192,7 +194,7 @@ function IncidentContent() {
       setLastUpdated(new Date());
     } catch (error) {
       console.error(error);
-      showToast("Incident log is using demo data.", "warning");
+      showToast(t("toast.demoFallback"), "warning");
     } finally {
       setIsRefreshing(false);
     }
@@ -237,12 +239,14 @@ function IncidentContent() {
   const getTimelineEntries = (incident: IncidentLog) => {
     const persisted = incidentTimeline[incident.id];
     if (persisted && persisted.length > 0) return persisted;
-    const entries = [{ time: incident.time, note: "Incident reported" }];
+    const entries = [
+      { time: incident.time, note: t("timeline.reported") },
+    ];
     if (incident.status === "Monitoring") {
-      entries.push({ time: "+12m", note: "Mitigation deployed" });
+      entries.push({ time: "+12m", note: t("timeline.mitigation") });
     }
     if (incident.status === "Resolved") {
-      entries.push({ time: "+40m", note: "Incident resolved" });
+      entries.push({ time: "+40m", note: t("timeline.resolved") });
     }
     return entries;
   };
@@ -271,7 +275,7 @@ function IncidentContent() {
         }));
       } catch (error) {
         console.error(error);
-        showToast("Incident details failed to load.", "warning");
+        showToast(t("toast.detailsFailed"), "warning");
       }
     },
     [demoMode, showToast, token],
@@ -312,7 +316,7 @@ function IncidentContent() {
       })
       .catch((error) => {
         console.error(error);
-        showToast("Failed to save note.", "error");
+        showToast(t("toast.noteFailed"), "error");
       });
   };
 
@@ -329,7 +333,7 @@ function IncidentContent() {
           incident.id === id ? { ...incident, status } : incident,
         ),
       );
-      showToast("Incident updated (demo).", "success");
+      showToast(t("toast.updatedDemo"), "success");
       return;
     }
     try {
@@ -337,10 +341,10 @@ function IncidentContent() {
         status,
       });
       await load();
-      showToast("Incident updated.", "success");
+      showToast(t("toast.updated"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Incident update failed.", "error");
+      showToast(t("toast.updateFailed"), "error");
     }
   };
 
@@ -395,7 +399,7 @@ function IncidentContent() {
       ),
     ];
     downloadFile("incident-log.csv", rows.join("\n"), "text/csv");
-    showToast("Incident log exported.", "success");
+    showToast(t("toast.exported"), "success");
   };
 
   const handleExportJson = async () => {
@@ -425,7 +429,7 @@ function IncidentContent() {
       JSON.stringify(exportItems, null, 2),
       "application/json",
     );
-    showToast("Incident log exported.", "success");
+    showToast(t("toast.exported"), "success");
   };
 
   const lastUpdatedLabel = lastUpdated
@@ -451,24 +455,24 @@ function IncidentContent() {
         <div className="relative z-10 p-6">
           <header className="mb-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <AlertCircle size={14} /> Incident Log
+              <AlertCircle size={14} /> {t("eyebrow")}
             </p>
             <h1 className="mt-4 text-3xl font-semibold">
-              Operational incidents
+              {t("title")}
             </h1>
             <p className="text-slate-500 dark:text-white/60">
-              Track investigations, mitigations, and resolution windows.
+              {t("subtitle")}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
-                Last updated {lastUpdatedLabel}
+                {t("lastUpdated", { time: lastUpdatedLabel })}
               </span>
               <button
                 type="button"
                 onClick={load}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                {isRefreshing ? "Refreshing" : "Refresh"}
+                {isRefreshing ? t("refreshing") : t("refresh")}
               </button>
               <button
                 type="button"
@@ -479,21 +483,21 @@ function IncidentContent() {
                     : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                Auto refresh {autoRefresh ? "On" : "Off"}
+                {t("autoRefresh", { state: autoRefresh ? t("on") : t("off") })}
               </button>
               <button
                 type="button"
                 onClick={handleExportCsv}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                Export CSV
+                {t("exportCsv")}
               </button>
               <button
                 type="button"
                 onClick={handleExportJson}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                Export JSON
+                {t("exportJson")}
               </button>
             </div>
           </header>
@@ -501,13 +505,13 @@ function IncidentContent() {
           <div className="mb-6 grid gap-4 rounded-3xl border border-slate-200 bg-white/70 p-4 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5 sm:grid-cols-4">
             <div className="rounded-2xl border border-slate-200 bg-white/80 p-3 text-sm dark:border-white/10 dark:bg-white/10">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Total
+                {t("summary.total")}
               </p>
               <p className="mt-2 text-lg font-semibold">{summary.total}</p>
             </div>
             <div className="rounded-2xl border border-amber-200 bg-amber-50/70 p-3 text-sm dark:border-amber-200/40 dark:bg-amber-200/10">
               <p className="text-xs uppercase tracking-[0.2em] text-amber-600 dark:text-amber-200">
-                Investigating
+                {t("summary.investigating")}
               </p>
               <p className="mt-2 text-lg font-semibold text-amber-700 dark:text-amber-100">
                 {summary.investigating}
@@ -515,7 +519,7 @@ function IncidentContent() {
             </div>
             <div className="rounded-2xl border border-sky-200 bg-sky-50/70 p-3 text-sm dark:border-sky-200/40 dark:bg-sky-200/10">
               <p className="text-xs uppercase tracking-[0.2em] text-sky-600 dark:text-sky-200">
-                Monitoring
+                {t("summary.monitoring")}
               </p>
               <p className="mt-2 text-lg font-semibold text-sky-700 dark:text-sky-100">
                 {summary.monitoring}
@@ -523,7 +527,7 @@ function IncidentContent() {
             </div>
             <div className="rounded-2xl border border-emerald-200 bg-emerald-50/70 p-3 text-sm dark:border-emerald-200/40 dark:bg-emerald-200/10">
               <p className="text-xs uppercase tracking-[0.2em] text-emerald-600 dark:text-emerald-200">
-                Resolved
+                {t("summary.resolved")}
               </p>
               <p className="mt-2 text-lg font-semibold text-emerald-700 dark:text-emerald-100">
                 {summary.resolved}
@@ -533,11 +537,10 @@ function IncidentContent() {
 
           <div className="mb-6 flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <Filter size={12} /> Filters
+              <Filter size={12} /> {t("filters.title")}
             </span>
-            {"All Investigating Monitoring Resolved"
-              .split(" ")
-              .map((status) => (
+            {["All", "Investigating", "Monitoring", "Resolved"].map(
+              (status) => (
                 <button
                   key={status}
                   type="button"
@@ -548,10 +551,11 @@ function IncidentContent() {
                       : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                   }`}
                 >
-                  {status}
+                  {t(`filters.status.${status.toLowerCase()}`)}
                 </button>
-              ))}
-            {"All High Medium Low".split(" ").map((level) => (
+              ),
+            )}
+            {["All", "High", "Medium", "Low"].map((level) => (
               <button
                 key={level}
                 type="button"
@@ -562,13 +566,13 @@ function IncidentContent() {
                     : "border-slate-200 bg-white/70 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                {level}
+                {t(`filters.severity.${level.toLowerCase()}`)}
               </button>
             ))}
             <input
               value={search}
               onChange={(event) => setSearch(event.target.value)}
-              placeholder="Search incidents"
+              placeholder={t("filters.search")}
               className="min-w-[200px] flex-1 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
             />
           </div>
@@ -576,7 +580,7 @@ function IncidentContent() {
           <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
             <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
               <div className="flex items-center justify-between">
-                <h3 className="text-lg font-medium">Incident feed</h3>
+                <h3 className="text-lg font-medium">{t("feedTitle")}</h3>
                 <ShieldCheck className="h-5 w-5 text-emerald-500" />
               </div>
             </div>
@@ -588,10 +592,10 @@ function IncidentContent() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-slate-900 dark:text-white">
-                      No incidents match your filters.
+                      {t("empty.title")}
                     </p>
                     <p className="text-xs text-slate-500 dark:text-white/60">
-                      Adjust the filters or create a new incident.
+                      {t("empty.body")}
                     </p>
                   </div>
                   <div className="flex flex-wrap justify-center gap-2">
@@ -600,13 +604,13 @@ function IncidentContent() {
                       onClick={handleClearFilters}
                       className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                     >
-                      Clear filters
+                      {t("empty.clearFilters")}
                     </button>
                     <Link
                       href="/admin/health"
                       className="rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                     >
-                      Create incident
+                      {t("empty.createIncident")}
                     </Link>
                   </div>
                 </div>
@@ -625,7 +629,7 @@ function IncidentContent() {
                           {incident.impact}
                         </p>
                         <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                          Services: {incident.services.join(", ")}
+                          {t("servicesLabel")} {incident.services.join(", ")}
                         </p>
                       </div>
                       <div className="flex flex-col items-end gap-2 text-xs uppercase tracking-[0.2em]">
@@ -643,32 +647,30 @@ function IncidentContent() {
                         onClick={() => setSelectedIncidentId(incident.id)}
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                        View details
+                        {t("actions.viewDetails")}
                       </button>
                       <button
                         type="button"
                         onClick={() =>
                           setConfirm({
                             open: true,
-                            title: "Acknowledge incident",
-                            description:
-                              "Record acknowledgement for this incident.",
+                            title: t("confirm.ack.title"),
+                            description: t("confirm.ack.body"),
                             onConfirm: () =>
                               updateIncidentStatus(incident.id, "Monitoring"),
                           })
                         }
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                        Acknowledge
+                        {t("actions.ack")}
                       </button>
                       <button
                         type="button"
                         onClick={() =>
                           setConfirm({
                             open: true,
-                            title: "Resolve incident",
-                            description:
-                              "Mark this incident as resolved and archive it.",
+                            title: t("confirm.resolve.title"),
+                            description: t("confirm.resolve.body"),
                             tone: "danger",
                             onConfirm: () =>
                               updateIncidentStatus(incident.id, "Resolved"),
@@ -676,7 +678,7 @@ function IncidentContent() {
                         }
                         className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                       >
-                        Resolve
+                        {t("actions.resolve")}
                       </button>
                     </div>
                   </div>
@@ -685,7 +687,7 @@ function IncidentContent() {
             </div>
             <div className="flex items-center justify-between border-t border-slate-200 px-6 py-4 text-xs uppercase tracking-[0.2em] text-slate-500 dark:border-white/10 dark:text-white/60">
               <span>
-                Page {page} of {totalPages}
+                {t("pagination", { page, total: totalPages })}
               </span>
               <div className="flex gap-2">
                 <button
@@ -694,7 +696,7 @@ function IncidentContent() {
                   disabled={page <= 1}
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Prev
+                  {t("prev")}
                 </button>
                 <button
                   type="button"
@@ -704,7 +706,7 @@ function IncidentContent() {
                   disabled={page >= totalPages}
                   className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white disabled:cursor-not-allowed disabled:opacity-60 dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Next
+                  {t("next")}
                 </button>
               </div>
             </div>
@@ -717,7 +719,7 @@ function IncidentContent() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
-                  Incident detail
+                  {t("detail.eyebrow")}
                 </p>
                 <h3 className="mt-2 text-xl font-semibold">
                   {selectedIncident.title}
@@ -731,13 +733,13 @@ function IncidentContent() {
                 onClick={() => setSelectedIncidentId(null)}
                 className="rounded-full border border-slate-200 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10"
               >
-                Close
+                  {t("detail.close")}
               </button>
             </div>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Severity
+                  {t("detail.severity")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.severity}
@@ -745,7 +747,7 @@ function IncidentContent() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Owner
+                  {t("detail.owner")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.owner}
@@ -753,7 +755,7 @@ function IncidentContent() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Region
+                  {t("detail.region")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.region}
@@ -765,7 +767,7 @@ function IncidentContent() {
             </div>
             <div className="mt-4">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Timeline
+                {t("detail.timeline")}
               </p>
               <div className="mt-3 space-y-2">
                 {getTimelineEntries(selectedIncident).map((entry) => (
@@ -785,12 +787,12 @@ function IncidentContent() {
             </div>
             <div className="mt-4">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Notes
+                {t("detail.notes")}
               </p>
               <div className="mt-3 space-y-2">
                 {(incidentNotes[selectedIncident.id] ?? []).length === 0 ? (
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    No notes yet.
+                    {t("detail.notesEmpty")}
                   </p>
                 ) : (
                   (incidentNotes[selectedIncident.id] ?? []).map((note) => (
@@ -813,7 +815,7 @@ function IncidentContent() {
                 <input
                   value={noteDraft}
                   onChange={(event) => setNoteDraft(event.target.value)}
-                  placeholder="Add note"
+                  placeholder={t("detail.notePlaceholder")}
                   className="min-w-[220px] flex-1 rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
                 />
                 <button
@@ -821,7 +823,7 @@ function IncidentContent() {
                   onClick={handleAddNote}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 >
-                  Add note
+                  {t("detail.addNote")}
                 </button>
               </div>
             </div>
@@ -833,8 +835,9 @@ function IncidentContent() {
 }
 
 export default function IncidentLogPage() {
+  const t = useTranslations("adminIncidents");
   return (
-    <Suspense fallback={<div className="p-6">Loading incidents...</div>}>
+    <Suspense fallback={<div className="p-6">{t("loading")}</div>}>
       <IncidentContent />
     </Suspense>
   );

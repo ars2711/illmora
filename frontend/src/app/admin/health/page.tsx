@@ -10,6 +10,7 @@ import MiniBarChart from "@/components/common/MiniBarChart";
 import ConfirmDialog from "@/components/common/ConfirmDialog";
 import useAutoRefresh from "@/hooks/use-auto-refresh";
 import LineChart from "@/components/common/LineChart";
+import { useTranslations } from "next-intl";
 
 const demoServices = [
   { id: "s1", name: "API Gateway", status: "Operational", uptime: "99.98%" },
@@ -79,6 +80,7 @@ const demoQueueHistogram = [
 export default function SystemHealthPage() {
   const { token, demoMode } = useAuth();
   const { showToast } = useToast();
+  const t = useTranslations("adminHealth");
   const [services, setServices] = useState(demoServices);
   const [incidents, setIncidents] = useState<Incident[]>(demoIncidents);
   const [uptimeTrend, setUptimeTrend] = useState(demoUptimeTrend);
@@ -125,7 +127,7 @@ export default function SystemHealthPage() {
       setLastUpdated(new Date());
     } catch (error) {
       console.error(error);
-      showToast("System health is using demo data.", "warning");
+      showToast(t("toast.demoFallback"), "warning");
     } finally {
       setIsRefreshing(false);
     }
@@ -139,7 +141,7 @@ export default function SystemHealthPage() {
 
   const handleIncidentCreate = async () => {
     if (!incidentTitle.trim()) {
-      showToast("Enter an incident title.", "info");
+      showToast(t("toast.titleRequired"), "info");
       return;
     }
     if (demoMode) {
@@ -153,7 +155,7 @@ export default function SystemHealthPage() {
         ...prev,
       ]);
       setIncidentTitle("");
-      showToast("Incident created (demo).", "success");
+      showToast(t("toast.createdDemo"), "success");
       return;
     }
     try {
@@ -164,10 +166,10 @@ export default function SystemHealthPage() {
       );
       setIncidents((prev) => [created, ...prev]);
       setIncidentTitle("");
-      showToast("Incident created.", "success");
+      showToast(t("toast.created"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Incident creation failed.", "error");
+      showToast(t("toast.createFailed"), "error");
     }
   };
 
@@ -180,7 +182,7 @@ export default function SystemHealthPage() {
             : incident,
         ),
       );
-      showToast("Incident resolved (demo).", "success");
+      showToast(t("toast.resolvedDemo"), "success");
       return;
     }
     try {
@@ -195,10 +197,10 @@ export default function SystemHealthPage() {
             : incident,
         ),
       );
-      showToast("Incident resolved.", "success");
+      showToast(t("toast.resolved"), "success");
     } catch (error) {
       console.error(error);
-      showToast("Incident resolve failed.", "error");
+      showToast(t("toast.resolveFailed"), "error");
     }
   };
 
@@ -238,24 +240,24 @@ export default function SystemHealthPage() {
         <div className="relative z-10 p-6">
           <header className="mb-8">
             <p className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/70 px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-600 dark:border-white/10 dark:bg-white/10 dark:text-white/70">
-              <ShieldCheck size={14} /> System Health
+              <ShieldCheck size={14} /> {t("eyebrow")}
             </p>
             <h1 className="mt-4 text-3xl font-semibold">
-              Uptime and resilience
+              {t("title")}
             </h1>
             <p className="text-slate-500 dark:text-white/60">
-              Track service status, incidents, and operational readiness.
+              {t("subtitle")}
             </p>
             <div className="mt-4 flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
               <span className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 dark:border-white/10 dark:bg-white/10">
-                Last updated {lastUpdatedLabel}
+                {t("lastUpdated", { time: lastUpdatedLabel })}
               </span>
               <button
                 type="button"
                 onClick={load}
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                {isRefreshing ? "Refreshing" : "Refresh"}
+                {isRefreshing ? t("refreshing") : t("refresh")}
               </button>
               <button
                 type="button"
@@ -266,7 +268,7 @@ export default function SystemHealthPage() {
                     : "border-slate-200 bg-white/80 text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                 }`}
               >
-                Auto refresh {autoRefresh ? "On" : "Off"}
+                {t("autoRefresh", { state: autoRefresh ? t("on") : t("off") })}
               </button>
             </div>
           </header>
@@ -274,9 +276,11 @@ export default function SystemHealthPage() {
           <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <Activity className="h-5 w-5 text-emerald-500" />
-              <h2 className="mt-4 text-lg font-semibold">Global uptime</h2>
+              <h2 className="mt-4 text-lg font-semibold">
+                {t("cards.uptime.title")}
+              </h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                99.95% across regions this month.
+                {t("cards.uptime.body")}
               </p>
               <div className="mt-4">
                 <LineChart data={toSeries(uptimeTrend)} unit="%" />
@@ -284,9 +288,11 @@ export default function SystemHealthPage() {
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <Server className="h-5 w-5 text-slate-600 dark:text-white/70" />
-              <h2 className="mt-4 text-lg font-semibold">Queue health</h2>
+              <h2 className="mt-4 text-lg font-semibold">
+                {t("cards.queue.title")}
+              </h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                3 workers online • avg delay 320ms.
+                {t("cards.queue.body")}
               </p>
               <div className="mt-4 text-slate-700 dark:text-white/70">
                 <MiniBarChart data={queueHistogram} />
@@ -294,9 +300,11 @@ export default function SystemHealthPage() {
             </div>
             <div className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <AlertCircle className="h-5 w-5 text-amber-500" />
-              <h2 className="mt-4 text-lg font-semibold">Active alerts</h2>
+              <h2 className="mt-4 text-lg font-semibold">
+                {t("cards.alerts.title")}
+              </h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
-                2 warnings • 0 critical.
+                {t("cards.alerts.body")}
               </p>
               <div className="mt-4">
                 <LineChart data={toSeries(errorRateTrend)} unit="%" />
@@ -305,30 +313,30 @@ export default function SystemHealthPage() {
           </div>
 
           <div className="mt-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
-            <h3 className="text-lg font-medium">Create incident</h3>
+            <h3 className="text-lg font-medium">{t("create.title")}</h3>
             <div className="mt-4 grid gap-3 sm:grid-cols-[1.6fr_0.8fr_auto]">
               <input
                 value={incidentTitle}
                 onChange={(event) => setIncidentTitle(event.target.value)}
-                placeholder="Incident summary"
+                placeholder={t("create.placeholder")}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               />
               <select
                 value={incidentStatus}
                 onChange={(event) => setIncidentStatus(event.target.value)}
-                aria-label="Incident status"
+                aria-label={t("create.statusAria")}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
               >
-                <option>Investigating</option>
-                <option>Identified</option>
-                <option>Monitoring</option>
+                <option>{t("create.statusOptions.investigating")}</option>
+                <option>{t("create.statusOptions.identified")}</option>
+                <option>{t("create.statusOptions.monitoring")}</option>
               </select>
               <button
                 type="button"
                 onClick={handleIncidentCreate}
                 className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
               >
-                Create
+                {t("create.submit")}
               </button>
             </div>
           </div>
@@ -336,7 +344,9 @@ export default function SystemHealthPage() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Service status</h3>
+                <h3 className="text-lg font-medium">
+                  {t("services.title")}
+                </h3>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
                 {services.map((service) => (
@@ -349,7 +359,7 @@ export default function SystemHealthPage() {
                         {service.name}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-white/60">
-                        Uptime {service.uptime}
+                        {t("services.uptime", { value: service.uptime })}
                       </p>
                     </div>
                     <span className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
@@ -362,7 +372,9 @@ export default function SystemHealthPage() {
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Incident timeline</h3>
+                <h3 className="text-lg font-medium">
+                  {t("timeline.title")}
+                </h3>
               </div>
               <div className="space-y-4 p-6">
                 {incidents.map((incident) => (
@@ -381,22 +393,21 @@ export default function SystemHealthPage() {
                         type="button"
                         onClick={() =>
                           openConfirm({
-                            title: "Resolve incident",
-                            description:
-                              "Mark this incident as resolved and archive it.",
+                                  title: t("timeline.confirmResolve.title"),
+                                  description: t("timeline.confirmResolve.body"),
                             onConfirm: () => handleIncidentResolve(incident.id),
                           })
                         }
                         className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
                       >
-                        Resolve
+                              {t("timeline.resolve")}
                       </button>
                       <button
                         type="button"
                         onClick={() => setSelectedIncidentId(incident.id)}
                         className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
                       >
-                        View details
+                              {t("timeline.viewDetails")}
                       </button>
                     </div>
                   </div>
@@ -405,7 +416,7 @@ export default function SystemHealthPage() {
                   href="/admin/incidents"
                   className="mt-2 inline-flex w-full items-center justify-center rounded-2xl border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                 >
-                  View full incident log
+                  {t("timeline.viewAll")}
                 </Link>
               </div>
             </div>
@@ -418,7 +429,7 @@ export default function SystemHealthPage() {
             <div className="flex items-start justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.3em] text-slate-500 dark:text-white/60">
-                  Incident detail
+                  {t("detail.eyebrow")}
                 </p>
                 <h3 className="mt-2 text-xl font-semibold">
                   {selectedIncident.title}
@@ -432,13 +443,13 @@ export default function SystemHealthPage() {
                 onClick={() => setSelectedIncidentId(null)}
                 className="rounded-full border border-slate-200 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-slate-100 dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10"
               >
-                Close
+                {t("detail.close")}
               </button>
             </div>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Severity
+                  {t("detail.severity")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.severity ?? "--"}
@@ -446,7 +457,7 @@ export default function SystemHealthPage() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Owner
+                  {t("detail.owner")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.owner ?? "--"}
@@ -454,7 +465,7 @@ export default function SystemHealthPage() {
               </div>
               <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3 text-xs dark:border-white/10 dark:bg-white/5">
                 <p className="uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Services
+                  {t("detail.services")}
                 </p>
                 <p className="mt-2 text-sm font-semibold">
                   {selectedIncident.services?.join(", ") ?? "--"}
@@ -462,11 +473,11 @@ export default function SystemHealthPage() {
               </div>
             </div>
             <div className="mt-4 rounded-2xl border border-slate-200 bg-white/80 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70">
-              {selectedIncident.impact ?? "Impact details pending."}
+              {selectedIncident.impact ?? t("detail.impactPending")}
             </div>
             <div className="mt-4">
               <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                Timeline
+                {t("detail.timeline")}
               </p>
               <div className="mt-3 space-y-2">
                 {(selectedIncident.timeline ?? []).map((entry) => (
@@ -489,22 +500,22 @@ export default function SystemHealthPage() {
                 type="button"
                 onClick={() =>
                   openConfirm({
-                    title: "Acknowledge incident",
-                    description: "Record an acknowledgement for this incident.",
+                    title: t("detail.confirmAck.title"),
+                    description: t("detail.confirmAck.body"),
                     onConfirm: () =>
-                      showToast("Incident acknowledged.", "success"),
+                      showToast(t("detail.toast.acknowledged"), "success"),
                   })
                 }
                 className="rounded-full border border-slate-200 bg-white/80 px-3 py-1 text-xs uppercase tracking-[0.2em] text-slate-600 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white/70 dark:hover:bg-white/20"
               >
-                Acknowledge
+                {t("detail.acknowledge")}
               </button>
               <button
                 type="button"
-                onClick={() => showToast("Follow-up task created.", "success")}
+                onClick={() => showToast(t("detail.toast.followUp"), "success")}
                 className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs uppercase tracking-[0.2em] text-emerald-700 hover:bg-emerald-100 dark:border-emerald-200/30 dark:bg-emerald-200/10 dark:text-emerald-200 dark:hover:bg-emerald-200/20"
               >
-                Create follow-up
+                {t("detail.followUp")}
               </button>
             </div>
           </div>

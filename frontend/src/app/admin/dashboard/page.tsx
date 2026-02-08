@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface Stats {
   total_users: number;
@@ -46,61 +47,71 @@ export default function AdminDashboard() {
     audit: number;
     roles: number;
   } | null>(demoMode ? { incidents: 3, audit: 12, roles: 4 } : null);
+  const t = useTranslations("adminDashboard");
 
   const databaseOverview = [
-    { label: "Primary DB", value: "Healthy", tone: "text-emerald-500" },
-    { label: "Replica Lag", value: "1.8s", tone: "text-amber-500" },
-    { label: "Storage Used", value: "62%", tone: "text-slate-600" },
-    { label: "P95 Latency", value: "92ms", tone: "text-slate-600" },
+    {
+      label: t("databaseOverview.primary"),
+      value: t("databaseOverview.healthy"),
+      tone: "text-emerald-500",
+    },
+    {
+      label: t("databaseOverview.replicaLag"),
+      value: "1.8s",
+      tone: "text-amber-500",
+    },
+    { label: t("databaseOverview.storage"), value: "62%", tone: "text-slate-600" },
+    { label: t("databaseOverview.latency"), value: "92ms", tone: "text-slate-600" },
   ];
 
   const databaseActivity = [
     {
       id: "db-1",
       query: "SELECT * FROM memory_nodes WHERE updated_at > ...",
-      time: "18s ago",
-      status: "OK",
+      time: t("databaseActivity.times.one"),
+      status: t("databaseActivity.status.ok"),
     },
     {
       id: "db-2",
       query: "INSERT INTO study_sessions (user_id, duration) VALUES ...",
-      time: "2 min ago",
-      status: "OK",
+      time: t("databaseActivity.times.two"),
+      status: t("databaseActivity.status.ok"),
     },
     {
       id: "db-3",
       query: "VACUUM ANALYZE knowledge_edges",
-      time: "7 min ago",
-      status: "Running",
+      time: t("databaseActivity.times.three"),
+      status: t("databaseActivity.status.running"),
     },
   ];
 
   const kpiCards = [
     {
-      title: "Open Incidents",
+      title: t("kpis.openIncidents.title"),
       value: demoMode ? 3 : 0,
-      delta: "+1 this week",
+      delta: t("kpis.openIncidents.delta"),
       icon: <AlertCircle className="w-6 h-6 text-amber-500" />,
     },
     {
-      title: "Audit Events",
+      title: t("kpis.auditEvents.title"),
       value: demoMode ? 128 : 0,
-      delta: "+14% WoW",
+      delta: t("kpis.auditEvents.delta"),
       icon: <FileText className="w-6 h-6 text-slate-600" />,
     },
     {
-      title: "Access Requests",
+      title: t("kpis.accessRequests.title"),
       value: demoMode ? 5 : 0,
-      delta: "2 pending",
+      delta: t("kpis.accessRequests.delta"),
       icon: <Users className="w-6 h-6 text-slate-600" />,
     },
     {
-      title: "DB Jobs",
+      title: t("kpis.dbJobs.title"),
       value: demoMode ? 4 : 0,
-      delta: "1 running",
+      delta: t("kpis.dbJobs.delta"),
       icon: <Database className="w-6 h-6 text-slate-600" />,
     },
   ];
+
 
   const handleAdminSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -197,7 +208,7 @@ export default function AdminDashboard() {
   if (loading)
     return (
       <div className="min-h-screen bg-slate-50 p-8 text-slate-600 dark:bg-slate-950 dark:text-white/70">
-        Loading System Admin...
+        {t("loading")}
       </div>
     );
 
@@ -208,10 +219,10 @@ export default function AdminDashboard() {
         <div className="relative z-10 p-6">
           <header className="mb-8">
             <h1 className="text-3xl font-semibold">
-              Ilmora Global Command Center
+              {t("title")}
             </h1>
             <p className="text-slate-500 dark:text-white/60">
-              System Status & Multitenant Oversight
+              {t("subtitle")}
             </p>
           </header>
 
@@ -222,19 +233,21 @@ export default function AdminDashboard() {
             >
               <div className="flex-1">
                 <p className="text-xs uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                  Global admin search
+                  {t("search.title")}
                 </p>
                 <input
                   value={adminSearchQuery}
                   onChange={(event) => setAdminSearchQuery(event.target.value)}
-                  placeholder="Search incidents, audit events, or roles"
+                  placeholder={t("search.placeholder")}
                   className="mt-2 w-full rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white"
                 />
                 {adminSearchCounts && (
                   <div className="mt-2 text-[10px] uppercase tracking-[0.2em] text-slate-500 dark:text-white/60">
-                    {adminSearchCounts.incidents} incidents •{" "}
-                    {adminSearchCounts.audit} audit • {adminSearchCounts.roles}{" "}
-                    roles
+                    {t("search.counts", {
+                      incidents: adminSearchCounts.incidents,
+                      audit: adminSearchCounts.audit,
+                      roles: adminSearchCounts.roles,
+                    })}
                   </div>
                 )}
               </div>
@@ -242,18 +255,18 @@ export default function AdminDashboard() {
                 <select
                   value={adminSearchTarget}
                   onChange={(event) => setAdminSearchTarget(event.target.value)}
-                  aria-label="Admin search target"
+                  aria-label={t("search.targetLabel")}
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-600 outline-none focus:border-amber-300 dark:border-white/10 dark:bg-white/10 dark:text-white/70"
                 >
-                  <option value="incidents">Incidents</option>
-                  <option value="audit">Audit logs</option>
-                  <option value="roles">Role audit</option>
+                  <option value="incidents">{t("search.targets.incidents")}</option>
+                  <option value="audit">{t("search.targets.audit")}</option>
+                  <option value="roles">{t("search.targets.roles")}</option>
                 </select>
                 <button
                   type="submit"
                   className="rounded-full border border-slate-200 bg-white/80 px-4 py-2 text-xs uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
                 >
-                  Search
+                  {t("search.submit")}
                 </button>
               </div>
             </form>
@@ -262,30 +275,30 @@ export default function AdminDashboard() {
           {/* Stats Grid */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
             <StatCard
-              title="Total Users"
+              title={t("stats.totalUsers.title")}
               value={stats?.total_users}
               icon={<Users className="w-6 h-6 text-blue-600" />}
-              delta="+6% WoW"
+              delta={t("stats.totalUsers.delta")}
             />
             <StatCard
-              title="Institutions"
+              title={t("stats.institutions.title")}
               value={stats?.total_institutions}
               icon={<School className="w-6 h-6 text-purple-600" />}
-              delta="+1 this month"
+              delta={t("stats.institutions.delta")}
             />
             <StatCard
-              title="Total Interactions"
+              title={t("stats.interactions.title")}
               value={stats?.total_interactions}
-              sub="AI messages processed"
+              sub={t("stats.interactions.sub")}
               icon={<FileText className="w-6 h-6 text-green-600" />}
-              delta="+12% WoW"
+              delta={t("stats.interactions.delta")}
             />
             <StatCard
-              title="Flagged Issues"
+              title={t("stats.flagged.title")}
               value={stats?.flagged_feedback}
-              sub="Requires attention"
+              sub={t("stats.flagged.sub")}
               icon={<AlertCircle className="w-6 h-6 text-red-600" />}
-              delta="-2 since yesterday"
+              delta={t("stats.flagged.delta")}
             />
           </div>
 
@@ -309,9 +322,11 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <Database className="h-5 w-5 text-slate-600 dark:text-white/70" />
                 <div>
-                  <p className="text-sm font-medium">Database Console</p>
+                  <p className="text-sm font-medium">
+                    {t("quickLinks.databaseTitle")}
+                  </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Replicas, performance, jobs
+                    {t("quickLinks.database")}
                   </p>
                 </div>
               </div>
@@ -323,9 +338,11 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <FileText className="h-5 w-5 text-slate-600 dark:text-white/70" />
                 <div>
-                  <p className="text-sm font-medium">Audit Logs</p>
+                  <p className="text-sm font-medium">
+                    {t("quickLinks.auditTitle")}
+                  </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Security, data access, changes
+                    {t("quickLinks.audit")}
                   </p>
                 </div>
               </div>
@@ -337,9 +354,11 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <AlertCircleIcon className="h-5 w-5 text-slate-600 dark:text-white/70" />
                 <div>
-                  <p className="text-sm font-medium">Incident Log</p>
+                  <p className="text-sm font-medium">
+                    {t("quickLinks.incidentTitle")}
+                  </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Incidents, mitigations, status
+                    {t("quickLinks.incidents")}
                   </p>
                 </div>
               </div>
@@ -351,9 +370,11 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <Users className="h-5 w-5 text-slate-600 dark:text-white/70" />
                 <div>
-                  <p className="text-sm font-medium">Roles & Access</p>
+                  <p className="text-sm font-medium">
+                    {t("quickLinks.rolesTitle")}
+                  </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Permissions and approvals
+                    {t("quickLinks.roles")}
                   </p>
                 </div>
               </div>
@@ -365,9 +386,11 @@ export default function AdminDashboard() {
               <div className="flex items-center gap-3">
                 <ShieldCheck className="h-5 w-5 text-slate-600 dark:text-white/70" />
                 <div>
-                  <p className="text-sm font-medium">System Health</p>
+                  <p className="text-sm font-medium">
+                    {t("quickLinks.healthTitle")}
+                  </p>
                   <p className="text-xs text-slate-500 dark:text-white/60">
-                    Runtime, queues, uptime
+                    {t("quickLinks.health")}
                   </p>
                 </div>
               </div>
@@ -379,12 +402,14 @@ export default function AdminDashboard() {
             {/* Main Feed: Flagged Content */}
             <div className="lg:col-span-2 rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Priority Review Queue</h3>
+                <h3 className="text-lg font-medium">
+                  {t("priority.title")}
+                </h3>
               </div>
               <ul className="divide-y divide-slate-200 dark:divide-white/10">
                 {feedback.length === 0 ? (
                   <li className="p-6 text-center text-slate-500 dark:text-white/60">
-                    No pending issues. System healthy.
+                    {t("priority.empty")}
                   </li>
                 ) : (
                   feedback.map((item) => (
@@ -399,13 +424,13 @@ export default function AdminDashboard() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-slate-900 dark:text-white">
-                            Context:{" "}
+                            {t("priority.context")} {" "}
                             <span className="rounded bg-slate-100 px-1 font-mono dark:bg-white/10">
                               {item.feature}
                             </span>
                           </p>
                           <p className="mb-1 truncate text-sm text-slate-500 dark:text-white/60">
-                            by {item.user_email}
+                            {t("priority.by", { email: item.user_email })}
                           </p>
                           <p className="rounded bg-slate-50 p-3 text-sm text-slate-700 dark:bg-white/10 dark:text-white/80">
                             {item.content}
@@ -413,7 +438,7 @@ export default function AdminDashboard() {
                         </div>
                         <div>
                           <button className="text-sm font-medium text-slate-700 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
-                            Resolve
+                            {t("priority.resolve")}
                           </button>
                         </div>
                       </div>
@@ -426,17 +451,19 @@ export default function AdminDashboard() {
             {/* Quick Actions / Tenants */}
             <div className="h-fit rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">System Actions</h3>
+                <h3 className="text-lg font-medium">
+                  {t("actions.title")}
+                </h3>
               </div>
               <div className="p-6 flex flex-col gap-3">
                 <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-                  + Provision New Institution
+                  {t("actions.provision")}
                 </button>
                 <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-                  Manage Curricula
+                  {t("actions.manageCurricula")}
                 </button>
                 <button className="w-full rounded-md border border-slate-200 px-4 py-2 text-left text-sm font-medium text-slate-700 hover:bg-white dark:border-white/10 dark:text-white/70 dark:hover:bg-white/10">
-                  View Server Logs
+                  {t("actions.viewLogs")}
                 </button>
               </div>
             </div>
@@ -445,9 +472,11 @@ export default function AdminDashboard() {
           <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[1.2fr_0.8fr]">
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Database Activity</h3>
+                <h3 className="text-lg font-medium">
+                  {t("databaseActivity.title")}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Live queries, maintenance jobs, and service health.
+                  {t("databaseActivity.subtitle")}
                 </p>
               </div>
               <div className="divide-y divide-slate-200 dark:divide-white/10">
@@ -465,7 +494,7 @@ export default function AdminDashboard() {
                       </p>
                     </div>
                     <button className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white">
-                      Inspect
+                      {t("databaseActivity.inspect")}
                     </button>
                   </div>
                 ))}
@@ -474,9 +503,11 @@ export default function AdminDashboard() {
 
             <div className="rounded-3xl border border-slate-200 bg-white/70 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
               <div className="border-b border-slate-200 px-6 py-4 dark:border-white/10">
-                <h3 className="text-lg font-medium">Database Health</h3>
+                <h3 className="text-lg font-medium">
+                  {t("databaseHealth.title")}
+                </h3>
                 <p className="text-sm text-slate-500 dark:text-white/60">
-                  Replication, storage, latency, and backup status.
+                  {t("databaseHealth.subtitle")}
                 </p>
               </div>
               <div className="grid gap-4 p-6">
@@ -494,7 +525,7 @@ export default function AdminDashboard() {
                   </div>
                 ))}
                 <button className="mt-2 w-full rounded-2xl border border-slate-200 bg-white/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-700 hover:bg-white dark:border-white/10 dark:bg-white/10 dark:text-white dark:hover:bg-white/20">
-                  Open database console
+                  {t("databaseHealth.cta")}
                 </button>
               </div>
             </div>
