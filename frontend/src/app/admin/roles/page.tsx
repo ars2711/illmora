@@ -244,7 +244,7 @@ function RolesContent() {
       "role_id,role_name,scope,members,permission_id,enabled",
     ];
     const permissionIds = permissionGroups.flatMap((group) =>
-      group.permissions.map((permission) => permission.id),
+      group.permissions.map((permission) => permission),
     );
 
     roles.forEach((role) => {

@@ -9,11 +9,11 @@
     "top": "Ir arriba",
     "language": "Idioma",
     "languages": {
-      "en": "Inglés",
-      "es": "Español",
+      "en": "Ingles",
+      "es": "Espanol",
       "ur": "Urdu",
-      "ar": "Árabe",
-      "fr": "Francés",
+      "ar": "Arabe",
+      "fr": "Frances",
       "hi": "Hindi"
     }
   },
@@ -25,78 +25,78 @@
       "tutor": "Tutor IA",
       "upload": "Subir contenido",
       "marketplace": "Mercado",
-      "career": "Ruta profesional",
+      "career": "Ruta de carrera",
       "history": "Historial",
       "profile": "Perfil",
       "adminDashboard": "Panel admin",
       "database": "Consola de base de datos",
-      "audit": "Registros de auditoría",
+      "audit": "Registros de auditoria",
       "incidents": "Registro de incidentes",
       "roles": "Roles y acceso",
       "health": "Salud del sistema",
       "integrations": "Integraciones"
     },
     "adminSearch": {
-      "title": "Búsqueda global de admin",
-      "targetLabel": "Objetivo de búsqueda admin",
+      "title": "Busqueda admin global",
+      "targetLabel": "Objetivo de busqueda admin",
       "targets": {
         "incidents": "Incidentes",
-        "audit": "Registros de auditoría",
-        "roles": "Auditoría de roles"
+        "audit": "Registros de auditoria",
+        "roles": "Auditoria de roles"
       },
       "placeholder": "Buscar",
       "submit": "Buscar",
-      "counts": "{incidents} incidentes • {audit} auditoría • {roles} roles"
+      "counts": "{incidents} incidentes • {audit} auditoria • {roles} roles"
     },
     "demoWorkspace": "Espacio demo",
-    "exitDemo": "Salir de demo"
+    "exitDemo": "Salir de la demo"
   },
   "pwaInstall": {
     "install": "Instalar",
     "installApp": "Instalar app",
     "installLabel": "Instalar app",
     "unavailableLabel": "Instalar app (no disponible)",
-    "unavailableTitle": "Instalación no disponible"
+    "unavailableTitle": "Instalacion no disponible"
   },
   "feedback": {
-    "open": "Enviar comentarios",
+    "open": "Enviar comentario",
     "cta": "¿Feedback?",
-    "title": "Ayúdanos a mejorar Ilmora",
+    "title": "Ayudanos a mejorar Ilmora",
     "close": "Cerrar comentarios",
-    "sent": "¡Gracias! Tus comentarios ayudan a otros estudiantes.",
+    "sent": "Gracias! Tus comentarios ayudan a otros estudiantes.",
     "placeholders": {
-      "happy": "¿Qué funciona bien?",
-      "confused": "¿Qué te confunde?",
+      "happy": "¿Que funciona bien?",
+      "confused": "¿Que te confunde?",
       "bug": "Describe el error o problema..."
     },
     "submit": "Enviar",
     "sending": "Enviando...",
     "toast": {
       "success": "¡Comentarios enviados! Gracias.",
-      "failure": "No se pudieron enviar los comentarios. Inténtalo de nuevo.",
-      "network": "Error de red. Inténtalo más tarde."
+      "failure": "No se pudieron enviar los comentarios. Intentalo de nuevo.",
+      "network": "Error de red. Intentalo mas tarde."
     }
   },
   "login": {
     "badge": "Acceso",
     "title": {
       "login": "Bienvenido de nuevo",
-      "signup": "Únete a Ilmora"
+      "signup": "Unete a Ilmora"
     },
-    "subtitle": "Inicio de sesión seguro para tu grafo de memoria y sesiones de estudio.",
+    "subtitle": "Inicio de sesion seguro para tu grafo de memoria y sesiones de estudio.",
     "afterLogin": {
-      "title": "Lo que se abre después de iniciar sesión",
-      "body": "Estás a punto de entrar en un estudio guiado: un grafo de memoria vivo, rituales de repaso y sesiones de IA que se sienten más como una actuación que como un panel. Cada página está diseñada para recordar el contexto y mantener tu impulso."
+      "title": "Lo que se abre despues de iniciar sesion",
+      "body": "Estas a punto de entrar en un estudio guiado: un grafo de memoria vivo, rituales de repaso y sesiones de IA que se sienten mas como una actuacion que como un panel. Cada pagina esta disenada para recordar el contexto y mantener tu impulso."
     },
     "fields": {
       "email": "Correo",
-      "password": "Contraseña"
+      "password": "Contrasena"
     },
     "actions": {
-      "signIn": "Iniciar sesión",
+      "signIn": "Iniciar sesion",
       "createAccount": "Crear cuenta"
     },
-    "divider": "O continúa con",
+    "divider": "O continua con",
     "providers": {
       "google": "Continuar con Google",
       "github": "Continuar con GitHub",
@@ -104,8 +104,8 @@
       "passkey": "Usar una clave de acceso"
     },
     "switch": {
-      "signup": "¿No tienes cuenta? Regístrate",
-      "login": "¿Ya tienes cuenta? Inicia sesión"
+      "signup": "¿No tienes cuenta? Registrate",
+      "login": "¿Ya tienes cuenta? Inicia sesion"
     },
     "demo": {
       "cta": "Explorar demo",
@@ -116,9 +116,9 @@
       "unsupportedPasskey": "Las claves de acceso no son compatibles con este navegador.",
       "passkeyStart": "No se pudo iniciar el acceso con clave de acceso.",
       "passkeyCanceled": "Solicitud de clave de acceso cancelada.",
-      "passkeyVerify": "Falló la verificación de clave de acceso.",
-      "passkeyFailed": "Falló el inicio de sesión con clave de acceso.",
-      "providerFailed": "Falló el inicio con proveedor."
+      "passkeyVerify": "Fallo la verificacion de clave de acceso.",
+      "passkeyFailed": "Fallo el inicio de sesion con clave de acceso.",
+      "providerFailed": "Fallo el inicio con proveedor."
     }
   },
   "dashboard": {
@@ -927,11 +927,11 @@
       },
       "severity": {
         "all": "Todos",
-        "title": "Seguridad y claves de acceso",
-        "demoNotice": "Modo demo: las claves de acceso y proveedores son solo vista previa.",
+        "high": "Alta",
+        "medium": "Media",
         "low": "Baja"
       }
-          "body": "Usa una clave de acceso para iniciar sesion al instante en este dispositivo. Las claves de acceso nunca salen de tu dispositivo y reemplazan las contrasenas."
+    },
     "feedTitle": "Feed de incidentes",
     "empty": {
       "title": "Ningun incidente coincide con tus filtros.",
@@ -949,18 +949,18 @@
       "ack": {
         "title": "Reconocer incidente",
         "body": "Registrar reconocimiento para este incidente."
-        "createPasskey": "Crear clave de acceso"
+      },
       "resolve": {
         "title": "Resolver incidente",
-        "unsupported": "Las claves de acceso no son compatibles aqui.",
+        "body": "Marcar este incidente como resuelto y archivarlo."
       }
-        "startFailed": "No se pudo iniciar el registro de clave de acceso.",
-        "canceled": "Solicitud de clave de acceso cancelada.",
-        "verifyFailed": "La verificacion de clave de acceso fallo.",
-        "failed": "El registro de clave de acceso fallo."
+    },
+    "pagination": "Pagina {page} de {total}",
+    "prev": "Anterior",
+    "next": "Siguiente",
     "detail": {
       "eyebrow": "Detalle del incidente",
-        "success": "Clave de acceso agregada con exito."
+      "close": "Cerrar",
       "severity": "Severidad",
       "owner": "Responsable",
       "region": "Region",
