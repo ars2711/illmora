@@ -212,6 +212,20 @@ class Document(Base):
     
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
+    chunks: Mapped[List["DocumentChunk"]] = relationship(back_populates="document", cascade="all, delete-orphan")
+
+class DocumentChunk(Base):
+    __tablename__ = "document_chunks"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    document_id: Mapped[str] = mapped_column(String, ForeignKey("documents.id"))
+    content: Mapped[str] = mapped_column(Text)
+    embedding: Mapped[Vector] = mapped_column(Vector(1536)) # Assuming OpenAI embeddings
+    chunk_index: Mapped[int] = mapped_column(Integer)
+    meta_data: Mapped[dict] = mapped_column(JSON, default={}) # Page number, section, etc.
+
+    document: Mapped["Document"] = relationship(back_populates="chunks")
+
 # --- Core AI Pillars: Memory & Knowledge Graph ---
 
 class Memory(Base):
@@ -555,3 +569,139 @@ class WebhookSubscription(Base):
     
     is_active: Mapped[bool] = mapped_column(Boolean, default=True)
 
+
+# --- Competitive Advantage: Analytics, Practice, Gamification ---
+
+class QuestionDifficulty(str, enum.Enum):
+    EASY = "easy"
+    MEDIUM = "medium"
+    HARD = "hard"
+
+class ConceptTag(Base):
+    """
+    Concept-level tags for grouping questions (e.g. "Integration", "Vectors").
+    Enables mistake clustering and weakness retargeting — Illmora's core differentiator.
+    """
+    __tablename__ = "concept_tags"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    name: Mapped[str] = mapped_column(String, index=True)  # e.g. "Integration"
+    subject: Mapped[str] = mapped_column(String, index=True)  # e.g. "Mathematics"
+    chapter: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class Question(Base):
+    """
+    Question bank entry. Supports ISR caching on frontend.
+    """
+    __tablename__ = "questions"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    text: Mapped[str] = mapped_column(Text)
+    subject: Mapped[str] = mapped_column(String, index=True)
+    difficulty: Mapped[QuestionDifficulty] = mapped_column(String, default=QuestionDifficulty.MEDIUM)
+    
+    # JSON array of option objects: [{"label": "A", "text": "...", "isCorrect": true}]
+    options: Mapped[dict] = mapped_column(JSON, default=list)
+    explanation: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
+    image_url: Mapped[Optional[str]] = mapped_column(String, nullable=True)
+    
+    # Many-to-many tags stored as JSON array of tag IDs for simplicity
+    concept_tag_ids: Mapped[List[str]] = mapped_column(JSON, default=list)
+    
+    is_active: Mapped[bool] = mapped_column(Boolean, default=True)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+
+
+class PracticeSession(Base):
+    """
+    Groups question attempts into a single study session.
+    """
+    __tablename__ = "practice_sessions"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), index=True)
+    
+    session_type: Mapped[str] = mapped_column(String, default="daily_mix")  # daily_mix, custom, timed
+    total_questions: Mapped[int] = mapped_column(Integer, default=0)
+    correct_answers: Mapped[int] = mapped_column(Integer, default=0)
+    total_time_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    
+    started_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    completed_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True), nullable=True)
+    
+    user: Mapped["User"] = relationship("User")
+    attempts: Mapped[List["QuestionAttempt"]] = relationship(back_populates="session")
+
+
+class QuestionAttempt(Base):
+    """
+    Individual question attempt within a practice session.
+    Powers the analytics engine and weakness retargeting (SRS).
+    """
+    __tablename__ = "question_attempts"
+    __table_args__ = (
+        Index("ix_attempt_user_session", "user_id", "session_id"),
+        Index("ix_attempt_question", "question_id"),
+    )
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), index=True)
+    question_id: Mapped[str] = mapped_column(String, ForeignKey("questions.id"))
+    session_id: Mapped[str] = mapped_column(String, ForeignKey("practice_sessions.id"))
+    
+    selected_option: Mapped[str] = mapped_column(String)  # "A", "B", "C", "D"
+    is_correct: Mapped[bool] = mapped_column(Boolean)
+    time_taken_seconds: Mapped[int] = mapped_column(Integer, default=0)
+    
+    # Denormalized concept tags from the question for fast analytics queries
+    concept_tag_ids: Mapped[List[str]] = mapped_column(JSON, default=list)
+    
+    attempted_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    
+    user: Mapped["User"] = relationship("User")
+    question: Mapped["Question"] = relationship("Question")
+    session: Mapped["PracticeSession"] = relationship(back_populates="attempts")
+
+
+class UserStreak(Base):
+    """
+    Tracks daily practice streaks for gamification.
+    Includes streak freeze mechanic to reduce churn.
+    """
+    __tablename__ = "user_streaks"
+
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), primary_key=True)
+    current_streak: Mapped[int] = mapped_column(Integer, default=0)
+    longest_streak: Mapped[int] = mapped_column(Integer, default=0)
+    last_active_date: Mapped[Optional[str]] = mapped_column(String, nullable=True)  # YYYY-MM-DD
+    streak_freeze_count: Mapped[int] = mapped_column(Integer, default=1)  # Start with 1 free freeze
+    
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    
+    user: Mapped["User"] = relationship("User")
+
+
+class WeeklyLeaderboard(Base):
+    """
+    Materialized weekly leaderboard cache.
+    Rebuilt periodically for performance — ISR on frontend revalidates every 30s.
+    """
+    __tablename__ = "weekly_leaderboard"
+    __table_args__ = (
+        Index("ix_leaderboard_week_rank", "week_start", "rank"),
+    )
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), index=True)
+    week_start: Mapped[str] = mapped_column(String, index=True)  # YYYY-MM-DD (Monday)
+    
+    problems_solved: Mapped[int] = mapped_column(Integer, default=0)
+    accuracy: Mapped[float] = mapped_column(Float, default=0.0)
+    rank: Mapped[int] = mapped_column(Integer, default=0)
+    
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    
+    user: Mapped["User"] = relationship("User")

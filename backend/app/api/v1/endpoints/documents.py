@@ -12,6 +12,7 @@ class DocumentResponse(BaseModel):
     title: str
     type: str
     created_at: str
+    chunk_count: int = 0
 
 @router.post("/upload", response_model=DocumentResponse)
 async def upload_document(
@@ -21,19 +22,26 @@ async def upload_document(
 ):
     """
     Uploads a document for analysis (Notes/Practice).
-    Triggers text extraction and vectorization.
+    Triggers text extraction, chunking, and vectorization.
     """
     service = IngestionService(db)
     
-    # Validation: File size/type?
-    # Phase 1: Basic pdf/txt
+    # Phase 1: Basic pdf/txt/docx/doc
     
-    doc = await service.process_upload(file, current_user.id)
+    try:
+        doc = await service.process_upload(file, current_user.id)
+        # Convert to Pydantic model response
+        return DocumentResponse(
+            id=doc.id,
+            title=doc.title,
+            type=doc.type.value if hasattr(doc.type, 'value') else "text",
+            created_at=doc.created_at.isoformat() if doc.created_at else "",
+            chunk_count=len(doc.chunks) if doc.chunks else 0
+        )
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
     
-    # Update doc with user_id manually if not done in service init (Service took user_id in process_upload but model init logic?)
-    # Let's check ingestion.py code again.
-    # doc = Document(..., user_id=?) -- Wait, I didn't add user_id to Document init in ingestion.py!
-    # I need to fix ingestion.py
     
 from typing import List
 from app.models.sql_models import Document

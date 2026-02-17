@@ -5,6 +5,7 @@ import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import dynamic from "next/dynamic";
 import AmbientOrbs from "@/components/common/AmbientOrbs";
 import { motion } from "framer-motion";
 import {
@@ -29,6 +30,12 @@ import {
 } from "lucide-react";
 import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
+
+// Lazy-load heavy components
+const FeatureShowcase = dynamic(() => import("@/components/features/FeatureShowcase"), {
+  loading: () => <div className="mx-auto max-w-6xl px-6 pb-16 h-32 bg-slate-100 dark:bg-white/5 rounded-2xl animate-pulse" />,
+  ssr: true,
+});
 
 export default function Home() {
   const t = useTranslations("home");
@@ -626,6 +633,8 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <FeatureShowcase />
 
         <section className="mx-auto max-w-6xl px-6 pb-16">
           <div className="rounded-[32px] border border-slate-200 bg-white/70 p-8 text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-white/70">

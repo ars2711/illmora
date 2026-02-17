@@ -374,6 +374,72 @@
         "robots": "Robots",
         "sitemap": "Mapa del sitio",
         "manifest": "Manifiesto"
+      },
+      "features": {
+        "sectionBadge": "Why Ilmora is different",
+        "sectionTitlePrefix": "Built to",
+        "sectionTitleHighlight": "outperform",
+        "sectionTitleSuffix": "every alternative.",
+        "sectionLede": "While others give you static MCQs and PDF dumps, Ilmora tracks your learning patterns, retargets your weaknesses, and adapts in real time.",
+        "smartAnalytics": {
+          "title": "Smart Analytics Engine",
+          "description": "Every question is tagged to a concept. Your performance is tracked per-topic, with trend detection that spots declining areas before you fail an exam.",
+          "badge": "Core advantage",
+          "stats": {
+            "concepts": "Concepts",
+            "tracking": "Tracking",
+            "insights": "Insights"
+          }
+        },
+        "weaknessRetarget": {
+          "title": "Weakness Retargeting",
+          "description": "Your daily mix is 60% weak concepts, intelligently scheduled using spaced repetition intervals. Stop wasting time on what you already know.",
+          "badge": "SRS-powered",
+          "stats": {
+            "accuracy": "Weak focus",
+            "intervals": "Intervals",
+            "mix": "Daily mix"
+          }
+        },
+        "gamification": {
+          "title": "Streaks & Leaderboards",
+          "description": "Daily streak tracking with freeze protection, weekly peer leaderboards by role, and momentum badges that keep you coming back.",
+          "stats": {
+            "streaks": "Streaks",
+            "board": "Leaderboard",
+            "freeze": "Freeze"
+          }
+        },
+        "speed": {
+          "title": "Blazing Fast Pages",
+          "description": "ISR-powered question banks that load instantly, AVIF image optimization, and tree-shaken bundles. No loading spinners, no wasted bandwidth.",
+          "stats": {
+            "isr": "Revalidate",
+            "images": "Format",
+            "bundle": "Bundle"
+          }
+        },
+        "advantages": {
+          "conceptTagging": "Concept-level tagging",
+          "spacedRepetition": "Spaced repetition",
+          "leaderboards": "Weekly leaderboards",
+          "trendDetection": "Trend detection",
+          "ethicalAi": "Ethical AI tutor",
+          "offlineFirst": "Offline-first PWA",
+          "studyGroups": "Study groups",
+          "knowledgeGraph": "3D knowledge graph",
+          "adaptivePacing": "Adaptive pacing"
+        },
+        "comparison": {
+          "label": "The Ilmora difference",
+          "statement": "Other platforms give you a question bank and wish you luck. Ilmora remembers what you got wrong, schedules it back at the right time, and shows you exactly where to focus next.",
+          "tags": {
+            "smarter": "Smarter than Maqsad",
+            "adaptive": "More adaptive than Parhlai",
+            "ethical": "More ethical than ChatGPT wrappers",
+            "yours": "100% yours"
+          }
+        }
       }
     }
   },

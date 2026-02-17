@@ -106,7 +106,7 @@ export default function QuickActions() {
           key="back"
           type="button"
           onClick={() => window.history.back()}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/90 text-slate-700 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white dark:shadow-black/20 dark:hover:bg-white/20"
           aria-label={t("back")}
         >
           <Undo2 size={16} />
@@ -117,7 +117,7 @@ export default function QuickActions() {
           key="refresh"
           type="button"
           onClick={() => window.location.reload()}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/90 text-slate-700 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white dark:shadow-black/20 dark:hover:bg-white/20"
           aria-label={t("refresh")}
         >
           <RotateCcw size={16} />
@@ -128,7 +128,7 @@ export default function QuickActions() {
           key="top"
           type="button"
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/90 text-slate-700 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white dark:shadow-black/20 dark:hover:bg-white/20"
           aria-label={t("top")}
         >
           <ArrowUp size={16} />
@@ -137,7 +137,7 @@ export default function QuickActions() {
       language: (
         <div
           key="language"
-          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-700 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white"
+          className="relative inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/60 bg-white/90 text-slate-700 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white dark:shadow-black/20 dark:hover:bg-white/20"
         >
           <Globe size={14} />
           <select
@@ -193,12 +193,12 @@ export default function QuickActions() {
   return (
     <div
       ref={containerRef}
-      className={`fixed right-6 z-50 flex items-start gap-2 transition-all duration-500 ease-in-out transform ${
+      className={`fixed right-6 z-50 flex items-start gap-2 transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] transform ${
         dockPosition === "top" ? "top-6" : "bottom-6"
       } ${
         isVisible
           ? "translate-y-0 opacity-100"
-          : "translate-y-20 opacity-0 pointer-events-none"
+          : dockPosition === "top" ? "-translate-y-8 opacity-0 pointer-events-none" : "translate-y-8 opacity-0 pointer-events-none"
       }`}
       style={{ flexDirection: dockPosition === "top" ? "row-reverse" : "column", alignItems: dockPosition === "top" ? "center" : "flex-end" }}
     >
@@ -210,7 +210,7 @@ export default function QuickActions() {
           setIsAnimating(true);
           window.setTimeout(() => setIsAnimating(false), 700);
         }}
-        className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/80 text-slate-800 shadow-lg backdrop-blur transition hover:bg-white dark:bg-white/10 dark:text-white ${
+        className={`inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-slate-200/60 bg-white/90 text-slate-700 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-300 hover:bg-white hover:shadow-xl hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white dark:shadow-black/20 dark:hover:bg-white/20 ${
           isAnimating ? "animate-controls-orbit" : ""
         }`}
         aria-label={isExpanded ? t("collapse") : t("expand")}
@@ -241,7 +241,7 @@ export default function QuickActions() {
             }}
           >
             {node}
-            <span className="controls-tooltip pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-white/10 bg-white/90 px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-700 opacity-0 shadow-lg backdrop-blur transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 dark:bg-slate-900/90 dark:text-white">
+            <span className="controls-tooltip pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-slate-200/60 bg-white/95 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-slate-600 opacity-0 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 dark:border-white/15 dark:bg-slate-900/95 dark:text-white/90 dark:shadow-black/30">
               {key === "theme" && t("theme")}
               {key === "install" && t("install")}
               {key === "back" && t("back")}

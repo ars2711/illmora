@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZIPMiddleware
 from app.core.config import settings
 from app.api.v1 import router as v1_router
 from app.core.logging import logger
@@ -25,6 +26,9 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+# Add GZip compression for responses > 1KB
+app.add_middleware(GZIPMiddleware, minimum_size=1000)
 
 app.include_router(v1_router, prefix=settings.API_V1_STR)
 

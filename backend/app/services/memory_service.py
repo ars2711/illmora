@@ -1,13 +1,18 @@
 from typing import List, Optional
 from sqlalchemy.orm import Session
 from sqlalchemy import select, desc
-from app.models.sql_models import Memory, UserConceptMastery, MemoryType
+from app.models.sql_models import Memory, Document, DocumentChunk, UserConceptMastery, MemoryType
 from app.schemas.memory import MemoryCreate
 from app.services.ai.base import BaseLLMService
 from app.services.ai.factory import AIFactory
 
 class MemoryService:
     def __init__(self, db: Session):
+        self.db = db
+        # We use a factory to get the embedding service, defaulting to OpenAI for now
+        self.ai_service: BaseLLMService = AIFactory.get_service()
+
+    async def add_interaction_memory(
         self.db = db
         # We use a factory to get the embedding service, defaulting to OpenAI for now
         self.ai_service: BaseLLMService = AIFactory.get_service()
@@ -88,20 +93,39 @@ class MemoryService:
 
     async def search_relevant_context(self, user_id: str, query: str, limit: int = 5) -> List[Memory]:
         """
-        Retrieves relevant memories using vector similarity.
+        Retrieves relevant memories AND document chunks using vector similarity.
+        Returns a mixed list of Memory and DocumentChunk objects (both have .content).
         """
         query_embedding = await self.ai_service.get_embeddings(query)
         
-        # PGVector syntax: embedding <-> query_embedding (Cosine distance)
-        # We order by distance, so smallest distance = most similar
-        stmt = (
+        # 1. Fetch Memories (Episodic/Short Term)
+        stmt_mem = (
             select(Memory)
             .filter(Memory.user_id == user_id)
             .order_by(Memory.embedding.cosine_distance(query_embedding))
             .limit(limit)
         )
-        results = self.db.execute(stmt).scalars().all()
-        return results
+        memories = self.db.execute(stmt_mem).scalars().all()
+
+        # 2. Fetch Document Chunks (Semantic Knowledge)
+        # Join with Document to respect ownership
+        stmt_doc = (
+            select(DocumentChunk)
+            .join(Document)
+            .filter(Document.user_id == user_id)
+            .order_by(DocumentChunk.embedding.cosine_distance(query_embedding))
+            .limit(limit) 
+        )
+        chunks = self.db.execute(stmt_doc).scalars().all()
+        
+        # Combine results
+        # In a more advanced system, we'd rerank these.
+        combined = []
+        combined.extend(memories)
+        combined.extend(chunks)
+        
+        return combined
+
 
     async def get_concept_gaps(self, user_id: str, limit: int = 3):
         """

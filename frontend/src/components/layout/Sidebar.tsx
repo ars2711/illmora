@@ -21,6 +21,9 @@ import {
   Users,
   AlertCircle,
   Settings,
+  BarChart3,
+  Trophy,
+  Target,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { adminGet } from "@/lib/admin-api";
@@ -130,12 +133,17 @@ export function Sidebar() {
         { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
         { name: t("nav.graph"), href: "/graph", icon: BookOpen },
         { name: chatLabel, href: "/chat", icon: chatIcon },
+        { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+        { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
         { name: t("nav.history"), href: "/dashboard/history", icon: Clock },
       ]
     : [
         { name: t("nav.dashboard"), href: "/dashboard", icon: Home },
         { name: t("nav.graph"), href: "/graph", icon: BookOpen },
         { name: chatLabel, href: "/chat", icon: chatIcon },
+        { name: "Analytics", href: "/dashboard/analytics", icon: BarChart3 },
+        { name: "Daily Mix", href: "/practice", icon: Target },
+        { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
         { name: t("nav.upload"), href: "/upload", icon: Upload },
         { name: t("nav.marketplace"), href: "/marketplace", icon: ShoppingBag },
         { name: t("nav.career"), href: "/career", icon: Map },

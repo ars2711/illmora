@@ -19,3 +19,6 @@ webauthn
 twilio
 pyotp
 qrcode
+pypdf
+python-docx
+tiktoken
