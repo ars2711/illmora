@@ -143,7 +143,7 @@ def get_messages(
     return results
 
 @router.post("/{room_id}/messages", response_model=schemas.MessageResponse)
-def post_message(
+async def post_message(
     room_id: str,
     msg_in: schemas.MessageCreate,
     db: Session = Depends(deps.get_db),
@@ -162,14 +162,14 @@ def post_message(
     if not member:
          raise HTTPException(status_code=403, detail="Not a member of this room")
     
-    # 1. AI Moderation Check (Simplistic Keyword for now, can be upgraded to lightweight BERT)
-    # Reusing Ethics Service logic conceptually here
+    # 1. AI Moderation Check
     from app.services.ethics.ethics_service import get_ethics_service
-    # We assume synchronous check for the API (Phase 2 constraint: simple admin tools)
-    # Ideally should be async, but we can do a quick check.
+    # We await the async check
+    ethics_service = get_ethics_service()
+    is_safe, refusal_reason = await ethics_service.check_integrity(msg_in.content)
     
-    # For now, just a direct save. 
-    # TODO: In Phase 2.5, run this through the AI Moderator queue.
+    if not is_safe:
+         raise HTTPException(status_code=400, detail=f"Message flagged by AI Moderator: {refusal_reason}")
     
     new_msg = models.RoomMessage(
         room_id=room_id,

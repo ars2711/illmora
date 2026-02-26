@@ -35,7 +35,7 @@ const DEFAULT_CONFIG: DailyMixConfig = {
 export function generateDailyMix(
   attempts: QuestionAttempt[],
   allQuestionIds: string[],
-  config: Partial<DailyMixConfig> = {}
+  config: Partial<DailyMixConfig> = {},
 ): DailyMixQuestion[] {
   const cfg = { ...DEFAULT_CONFIG, ...config };
   const mix: DailyMixQuestion[] = [];
@@ -48,7 +48,7 @@ export function generateDailyMix(
   const weaknessQuestions = selectFromWeaknesses(
     weaknesses,
     weaknessSlots,
-    usedIds
+    usedIds,
   );
   mix.push(...weaknessQuestions);
 
@@ -58,18 +58,18 @@ export function generateDailyMix(
     attempts,
     cfg.spacedRepetitionDays,
     srSlots,
-    usedIds
+    usedIds,
   );
   mix.push(...srQuestions);
 
   // ---------- Phase 3: Reinforcement (questions they got right but should review) ----------
   const reinforcementSlots = Math.floor(
-    (cfg.totalQuestions - mix.length) * 0.5
+    (cfg.totalQuestions - mix.length) * 0.5,
   );
   const reinforcementQuestions = selectReinforcement(
     attempts,
     reinforcementSlots,
-    usedIds
+    usedIds,
   );
   mix.push(...reinforcementQuestions);
 
@@ -79,7 +79,7 @@ export function generateDailyMix(
     allQuestionIds,
     attempts,
     remainingSlots,
-    usedIds
+    usedIds,
   );
   mix.push(...newQuestions);
 
@@ -89,7 +89,7 @@ export function generateDailyMix(
 function selectFromWeaknesses(
   weaknesses: WeaknessCluster[],
   maxCount: number,
-  usedIds: Set<string>
+  usedIds: Set<string>,
 ): DailyMixQuestion[] {
   const result: DailyMixQuestion[] = [];
 
@@ -117,7 +117,7 @@ function selectSpacedRepetition(
   attempts: QuestionAttempt[],
   intervals: number[],
   maxCount: number,
-  usedIds: Set<string>
+  usedIds: Set<string>,
 ): DailyMixQuestion[] {
   const result: DailyMixQuestion[] = [];
   const now = new Date();
@@ -127,7 +127,7 @@ function selectSpacedRepetition(
     .filter((a) => !a.isCorrect)
     .sort(
       (a, b) =>
-        new Date(b.attemptedAt).getTime() - new Date(a.attemptedAt).getTime()
+        new Date(b.attemptedAt).getTime() - new Date(a.attemptedAt).getTime(),
     );
 
   for (const attempt of incorrectAttempts) {
@@ -136,7 +136,7 @@ function selectSpacedRepetition(
 
     const daysSinceAttempt = Math.floor(
       (now.getTime() - new Date(attempt.attemptedAt).getTime()) /
-        (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24),
     );
 
     // If the attempt falls on any SRS interval, include it
@@ -157,7 +157,7 @@ function selectSpacedRepetition(
 function selectReinforcement(
   attempts: QuestionAttempt[],
   maxCount: number,
-  usedIds: Set<string>
+  usedIds: Set<string>,
 ): DailyMixQuestion[] {
   const result: DailyMixQuestion[] = [];
 
@@ -194,7 +194,7 @@ function selectNewQuestions(
   allQuestionIds: string[],
   attempts: QuestionAttempt[],
   maxCount: number,
-  usedIds: Set<string>
+  usedIds: Set<string>,
 ): DailyMixQuestion[] {
   const attemptedIds = new Set(attempts.map((a) => a.questionId));
   const result: DailyMixQuestion[] = [];

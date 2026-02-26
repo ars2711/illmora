@@ -109,6 +109,22 @@ class IngestionService:
             try:
                 embedding = await self.ai_service.get_embeddings(chunk_text)
                 
+                chunk_doc = DocumentChunk(
+                    id=str(uuid4()),
+                    document_id=doc.id,
+                    content=chunk_text,
+                    embedding=embedding,
+                    chunk_index=i,
+                    meta_data={}
+                )
+                self.db.add(chunk_doc)
+            except Exception as e:
+                logging.error(f"Embedding failed for chunk {i}: {e}")
+                continue
+        
+        self.db.commit()
+        return doc
+                
                 chunk_record = DocumentChunk(
                     id=str(uuid4()),
                     document_id=file_id,

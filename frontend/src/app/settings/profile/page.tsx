@@ -32,6 +32,8 @@ export default function ProfileSettingsPage() {
   const [archetype, setArchetype] = useState("musician");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [whatsappNumber, setWhatsappNumber] = useState("");
+  const [careerGoals, setCareerGoals] = useState<string>("");
+  const [learningStyle, setLearningStyle] = useState<string>("visual");
 
   useEffect(() => {
     const loadProfile = async () => {
@@ -45,6 +47,8 @@ export default function ProfileSettingsPage() {
         if (data.archetype) setArchetype(data.archetype);
         if (data.phone_number) setPhoneNumber(data.phone_number);
         if (data.whatsapp_number) setWhatsappNumber(data.whatsapp_number);
+        if (data.career_goals) setCareerGoals(data.career_goals.join(", "));
+        if (data.learning_style) setLearningStyle(data.learning_style);
       } catch (err) {
         console.error(err);
       }
@@ -59,6 +63,12 @@ export default function ProfileSettingsPage() {
     }
     setLoading(true);
     try {
+      // Split goals by comma
+      const goalsList = careerGoals
+        .split(",")
+        .map((g) => g.trim())
+        .filter((g) => g.length > 0);
+
       const res = await fetch(buildApiUrl("/api/v1/users/me/profile"), {
         method: "PUT",
         headers: {
@@ -69,6 +79,8 @@ export default function ProfileSettingsPage() {
           archetype,
           phone_number: phoneNumber,
           whatsapp_number: whatsappNumber,
+          career_goals: goalsList,
+          learning_style: learningStyle,
         }),
       });
       if (!res.ok) {
@@ -154,6 +166,54 @@ export default function ProfileSettingsPage() {
             </section>
 
             <section className="rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              {" "}
+              <h2 className="text-lg font-semibold mb-4">
+                Mentor Configuration
+              </h2>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                    Career Goals (comma separated)
+                  </label>
+                  <input
+                    type="text"
+                    value={careerGoals}
+                    onChange={(e) => setCareerGoals(e.target.value)}
+                    placeholder="e.g. Data Scientist, Software Architect, Marine Biologist"
+                    className="w-full rounded-lg border border-slate-200 bg-white/50 px-4 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-white/10 dark:bg-black/20"
+                  />
+                  <p className="mt-1 text-xs text-slate-500">
+                    The AI Mentor will use these to tailor explanations to your
+                    future career.
+                  </p>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="learning-style"
+                    className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1"
+                  >
+                    Preferred Learning Style
+                  </label>
+                  <select
+                    id="learning-style"
+                    value={learningStyle}
+                    onChange={(e) => setLearningStyle(e.target.value)}
+                    className="w-full rounded-lg border border-slate-200 bg-white/50 px-4 py-2 text-sm focus:border-indigo-500 focus:ring-indigo-500 dark:border-white/10 dark:bg-black/20 dark:text-white"
+                  >
+                    <option value="visual">Visual (Diagrams & Charts)</option>
+                    <option value="textual">Textual (Detailed Readings)</option>
+                    <option value="socratic">
+                      Socratic (Guided Questions)
+                    </option>
+                    <option value="analogy">Analogy-based (Metaphors)</option>
+                  </select>
+                </div>
+              </div>
+            </section>
+
+            <section className="mb-8 rounded-3xl border border-slate-200 bg-white/70 p-6 shadow-sm backdrop-blur dark:border-white/10 dark:bg-white/5">
+              {" "}
               <h2 className="text-lg font-semibold">Recovery channels</h2>
               <p className="mt-2 text-sm text-slate-600 dark:text-white/70">
                 Add numbers so OTP and reset codes can be delivered by SMS or

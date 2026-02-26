@@ -8,6 +8,7 @@
 ## 📊 Frontend Bundle Analysis
 
 ### Current Sizes (Production Build)
+
 - **Homepage:** 156 kB first load JS
 - **Analytics Dashboard:** 213 kB first load JS (heavy due to Recharts)
 - **Graph Page:** 158 kB first load JS (3D scenes)
@@ -17,6 +18,7 @@
 ### Strategic Optimization Opportunities
 
 #### ✅ Completed
+
 1. **Package Import Optimization**
    - Added `experimental.optimizePackageImports` in next.config.mjs
    - Targets: recharts, date-fns, lucide-react
@@ -43,7 +45,9 @@
 ## 🚀 Next-Wave Optimizations (Recommended)
 
 ### Frontend (Priority: HIGH)
+
 1. **Recharts Lazy Loading**
+
    ```typescript
    // Delay analytics charts until needed
    const AnalyticsDashboard = dynamic(() => import('./AnalyticsDashboard'), {
@@ -62,6 +66,7 @@
    - Graph: 158 kB → 105 kB (lazy-load Three.js)
 
 ### Backend (Priority: MEDIUM)
+
 1. **Database Connection Pooling**
    - SQLAlchemy: Add `poolclass=NullPool` for serverless/FaaS
    - Pool size: 5 connections (development) → 20 (production)
@@ -88,43 +93,49 @@
 ## 📈 Performance Targets
 
 ### Frontend Metrics
-| Page | Current | Target | Method |
-|------|---------|--------|--------|
-| Homepage | 156 kB | 125 kB | Lazy components |
-| Analytics | 213 kB | 140 kB | Tab splitting |
-| Leaderboard | 85.8 kB | 65 kB | Virtualization |
-| Question Bank | 91.4 kB | 75 kB | ISR + compression |
+
+| Page          | Current | Target | Method            |
+| ------------- | ------- | ------ | ----------------- |
+| Homepage      | 156 kB  | 125 kB | Lazy components   |
+| Analytics     | 213 kB  | 140 kB | Tab splitting     |
+| Leaderboard   | 85.8 kB | 65 kB  | Virtualization    |
+| Question Bank | 91.4 kB | 75 kB  | ISR + compression |
 
 ### Backend Metrics
-| Endpoint | Current | Target | Method |
-|----------|---------|--------|--------|
-| `/analytics/{user_id}` | ~500ms | ~150ms | Query optimization + caching |
-| `/analytics/leaderboard/weekly` | ~800ms | ~100ms | Redis cache + async compute |
-| `/analytics/daily-mix/{user_id}` | ~600ms | ~200ms | In-memory concept cache |
+
+| Endpoint                         | Current | Target | Method                       |
+| -------------------------------- | ------- | ------ | ---------------------------- |
+| `/analytics/{user_id}`           | ~500ms  | ~150ms | Query optimization + caching |
+| `/analytics/leaderboard/weekly`  | ~800ms  | ~100ms | Redis cache + async compute  |
+| `/analytics/daily-mix/{user_id}` | ~600ms  | ~200ms | In-memory concept cache      |
 
 ---
 
 ## 🛠️ Implementation Checklist
 
 ### Phase 1: Frontend Quick Wins (1-2 hours)
+
 - [ ] Implement dynamic import for AnalyticsDashboard
 - [ ] Add Chart skeleton loader during hydration
 - [ ] Lazy-load FeatureShowcase on homepage (scroll trigger)
 - [ ] Enable Recharts tree-shaking (already configured)
 
 ### Phase 2: Backend Optimization (2-3 hours)
+
 - [ ] Add database connection pooling config
 - [ ] Implement query pagination on analytics
 - [ ] Add response compression middleware
 - [ ] Run Alembic migration for new tables
 
 ### Phase 3: Caching & CDN (3-4 hours)
+
 - [ ] Set up Redis for leaderboard
 - [ ] Implement async leaderboard refresh job
 - [ ] Add browser cache headers for static assets
 - [ ] Configure CloudFlare worker for API response caching
 
 ### Phase 4: Monitoring & Testing (ongoing)
+
 - [ ] Set up bundle size tracking (npm run analyze)
 - [ ] Monitor Core Web Vitals via Vercel Analytics
 - [ ] A/B test lazy-loaded components
@@ -135,15 +146,18 @@
 ## 🎯 Quick Wins Already Applied
 
 ✅ **ISR Configuration**
+
 - Question bank: `revalidate = 60s`
 - Leaderboard: `revalidate = 30s`
 - Saves server compute on every request
 
 ✅ **Package Optimization**
+
 - Recharts, date-fns, lucide-react tree-shaken
 - Unused code eliminated from build
 
 ✅ **TypeScript Strict Mode**
+
 - Catches type errors early
 - Prevents runtime bugs in analytics engine
 

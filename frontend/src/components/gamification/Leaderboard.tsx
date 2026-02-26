@@ -17,7 +17,7 @@ export default function Leaderboard({
   const [roleFilter, setRoleFilter] = useState<RoleFilter>("all");
 
   const filtered = entries.filter(
-    (e) => roleFilter === "all" || e.role === roleFilter
+    (e) => roleFilter === "all" || e.role === roleFilter,
   );
 
   const getRankBadge = (rank: number): string => {

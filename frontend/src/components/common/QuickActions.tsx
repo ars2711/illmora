@@ -193,14 +193,17 @@ export default function QuickActions() {
   return (
     <div
       ref={containerRef}
-      className={`fixed right-6 z-50 flex items-start gap-2 transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] transform ${
-        dockPosition === "top" ? "top-6" : "bottom-6"
+      className={`fixed right-6 z-50 flex gap-2 transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] transform ${
+        dockPosition === "top"
+          ? "top-6 flex-row-reverse items-center"
+          : "bottom-6 flex-col items-end"
       } ${
         isVisible
           ? "translate-y-0 opacity-100"
-          : dockPosition === "top" ? "-translate-y-8 opacity-0 pointer-events-none" : "translate-y-8 opacity-0 pointer-events-none"
+          : dockPosition === "top"
+            ? "-translate-y-8 opacity-0 pointer-events-none"
+            : "translate-y-8 opacity-0 pointer-events-none"
       }`}
-      style={{ flexDirection: dockPosition === "top" ? "row-reverse" : "column", alignItems: dockPosition === "top" ? "center" : "flex-end" }}
     >
       {/* Menu toggle - always rightmost in top dock */}
       <button
@@ -236,9 +239,11 @@ export default function QuickActions() {
             className={`controls-item group relative ${
               draggingId === key ? "opacity-70" : "opacity-100"
             }`}
-            style={{
-              transitionDelay: isExpanded ? `${idx * 40}ms` : `${(orderedActions.length - idx) * 25}ms`,
-            }}
+            style={
+              isExpanded
+                ? ({ transitionDelay: `${idx * 40}ms` } as React.CSSProperties)
+                : ({ transitionDelay: `${(orderedActions.length - idx) * 25}ms` } as React.CSSProperties)
+            }
           >
             {node}
             <span className="controls-tooltip pointer-events-none absolute left-1/2 -translate-x-1/2 top-full mt-2 whitespace-nowrap rounded-full border border-slate-200/60 bg-white/95 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.2em] text-slate-600 opacity-0 shadow-lg shadow-slate-900/5 backdrop-blur-xl transition-all duration-200 ease-out group-hover:opacity-100 group-hover:translate-y-0 dark:border-white/15 dark:bg-slate-900/95 dark:text-white/90 dark:shadow-black/30">

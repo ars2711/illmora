@@ -14,12 +14,16 @@ from app.api.v1.endpoints import (
     career,
     auth,
     teacher,
-    analytics
+    analytics,
+    revision,
+    lecture # Newly added
 )
 
 router = APIRouter()
 
 router.include_router(chat.router, prefix="/chat", tags=["chat"])
+router.include_router(revision.router, prefix="/revision", tags=["revision"])
+router.include_router(lecture.router, prefix="/lecture", tags=["lecture"])
 router.include_router(graph.router, prefix="/graph", tags=["graph"])
 router.include_router(users.router, prefix="/users", tags=["users"])
 router.include_router(documents.router, prefix="/documents", tags=["documents"])

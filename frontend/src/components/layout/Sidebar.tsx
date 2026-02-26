@@ -24,6 +24,8 @@ import {
   BarChart3,
   Trophy,
   Target,
+  BrainCircuit,
+  Timer,
 } from "lucide-react";
 import { useAuth } from "@/context/AuthContext";
 import { adminGet } from "@/lib/admin-api";
@@ -222,6 +224,15 @@ export function Sidebar() {
                 Latest signals
               </p>
               <div className="space-y-2">
+                <div className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2 dark:border-white/10 dark:bg-white/5">
+                  <div className="flex items-center gap-2 mb-1">
+                    <BrainCircuit size={12} className="text-indigo-500" />
+                    <span className="font-semibold text-indigo-600 dark:text-indigo-300">
+                      Review Due
+                    </span>
+                  </div>
+                  You have 5 cards due for review.
+                </div>
                 <div className="rounded-xl border border-slate-200 bg-white/80 px-3 py-2 dark:border-white/10 dark:bg-white/5">
                   New memory node synced to your graph.
                 </div>

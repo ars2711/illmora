@@ -6,7 +6,7 @@ class ChatMessageCreate(BaseModel):
     content: str
     tempId: Optional[str] = None
     role: str = "user"
-    mode: Optional[str] = "creative" # Added for Quiz/explain modes
+    mode: Optional[str] = "creative" # creative, fast, deep, socratic, exam, research, mentor
 
 class ChatMessageResponse(BaseModel):
     response: str

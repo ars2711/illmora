@@ -41,37 +41,28 @@ export function BottomNav() {
       ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 lg:hidden safe-area-bottom z-50">
-      <div className="flex justify-around items-center h-16">
-        {navItems.slice(0, 2).map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`flex flex-col items-center p-2 ${isActive(item.href) ? "text-indigo-600" : "text-gray-500"}`}
-          >
-            <item.icon className="w-6 h-6" />
-            <span className="text-xs mt-1">{item.label}</span>
-          </Link>
-        ))}
-
-        {!demoMode && !isEducator && (
-          <Link href="/upload" className="flex flex-col items-center p-2 -mt-6">
-            <div className="bg-indigo-600 rounded-full p-4 shadow-lg text-white">
-              <Upload className="w-6 h-6" />
-            </div>
-          </Link>
-        )}
-
-        {navItems.slice(2).map((item) => (
-          <Link
-            key={item.href}
-            href={item.href}
-            className={`flex flex-col items-center p-2 ${isActive(item.href) ? "text-indigo-600" : "text-gray-500"}`}
-          >
-            <item.icon className="w-6 h-6" />
-            <span className="text-xs mt-1">{item.label}</span>
-          </Link>
-        ))}
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-900/80 border-t border-slate-200 dark:border-white/10 lg:hidden safe-area-bottom z-50 backdrop-blur-md">
+      <div className="flex justify-around items-center h-16 px-2">
+        {navItems.map((item) => {
+          const active = isActive(item.href);
+          const Icon = item.icon;
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={`flex flex-col items-center justify-center w-full h-full gap-1 p-1 transition-colors ${
+                active
+                  ? "text-indigo-600 dark:text-indigo-400"
+                  : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
+              }`}
+            >
+              <Icon size={active ? 22 : 20} strokeWidth={active ? 2.5 : 2} />
+              <span className="text-[10px] font-medium tracking-wide">
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
       </div>
     </nav>
   );

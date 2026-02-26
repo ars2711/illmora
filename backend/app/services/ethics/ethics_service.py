@@ -1,10 +1,11 @@
 from typing import Tuple, Optional, List
 from app.services.ethics.base import BaseEthicsExamine
+from app.services.ai.factory import AIFactory
 
 class SimpleEthicsService(BaseEthicsExamine):
     """
-    Phase 0 Implementation: Keyword-based filtering.
-    Enforces the 'Student-First' ethical constitution using simple heuristics.
+    Phase 2 Implementation: Hybrid Filter (Heuristic + AI).
+    Enforces the 'Student-First' ethical constitution using keyword heuristics and LLM verification.
     """
     
     CHEATING_TRIGGERS = [
@@ -13,6 +14,19 @@ class SimpleEthicsService(BaseEthicsExamine):
         "give me the answer",
         "do my homework",
         "cheat on",
+        "write a paper on",
+        "complete this assignment",
+    ]
+
+    SUSPICIOUS_INDICATORS = [
+        "due in",
+        "worth 50%",
+        "final exam",
+        "quiz code",
+        "paste this code",
+        "fix my code",
+        "no explanation",
+        "just the code",
     ]
 
     async def check_integrity(self, prompt: str, user_id: str = None) -> Tuple[bool, Optional[str]]:
@@ -22,22 +36,66 @@ class SimpleEthicsService(BaseEthicsExamine):
         """
         prompt_lower = prompt.lower()
         
-        # Hardening: Detect Exam Contexts
+        # 1. Hardening: critical keywords - Instant Block
         exam_keywords = ["exam", "test", "final", "midterm", "quiz"]
-        urgent_keywords = ["right now", "hurry", "asap", "immediately"]
+        urgent_keywords = ["right now", "hurry", "asap", "immediately", "seconds left"]
         
         is_exam_context = any(k in prompt_lower for k in exam_keywords)
         is_urgent = any(k in prompt_lower for k in urgent_keywords)
         
         if is_exam_context and is_urgent:
-             # High probability of active cheating during an exam
-             return False, "I cannot assist with exams or tests while they are in progress. Good luck!"
+             return False, "I cannot assist with exams or tests while they are in progress. Good luck! Trust your preparation."
 
+        # 2. Heuristic Filter - Fast Block
         for trigger in self.CHEATING_TRIGGERS:
             if trigger in prompt_lower:
                 return False, "I cannot generate the answer directly as it violates Ilmora's academic integrity policy. I can, however, help you understand the underlying concepts or guide you through the solution step-by-step."
+
+        # 3. AI Verification - Smart Check for Ambiguity
+        # If indicators are present but not explicit triggers, use AI to classify intent.
+        suspicious_count = sum(1 for ind in self.SUSPICIOUS_INDICATORS if ind in prompt_lower)
+        
+        if suspicious_count > 0 or len(prompt) > 200: 
+            # Long prompts or suspicious ones get a second opinion
+            return await self._verify_with_ai(prompt)
                 
         return True, None
+
+    async def _verify_with_ai(self, prompt: str) -> Tuple[bool, Optional[str]]:
+        """
+        Uses a lightweight LLM call to classify the intent of the prompt.
+        """
+        ai_service = AIFactory.get_service()
+        system_prompt = """
+        You are an Academic Integrity Officer. Classify the following student prompt.
+        
+        Categories:
+        - CHEATING: Asking for direct answers to assignments/exams without effort. "Write this for me".
+        - LEARNING: Asking for explanation, guidance, or help understanding a concept. "How do I start?"
+        - BENIGN: Chatting, general knowledge, or low-stakes questions.
+        
+        If unsure, lean towards LEARNING.
+        
+        Output format: JSON
+        {"category": "CHEATING" | "LEARNING" | "BENIGN", "reason": "brief reason"}
+        """
+        
+        try:
+            # We use a fast/cheap model call here if possible, but standard for now
+            response = await ai_service.generate_response(
+                prompt=f"Prompt to analyze: \"{prompt}\"",
+                system_instruction=system_prompt
+            )
+            
+            # Simple parsing (using string check to avoid JSON parse overhead/errors for now)
+            if "CHEATING" in response.upper() and "\"CHEATING\"" in response.upper():
+                 return False, "This request appears to be an attempt to bypass learning. I can guide you, but I cannot do the work for you."
+            
+            return True, None
+        except Exception as e:
+            # Fail open (allow) if AI check fails, log error
+            print(f"Integrity Check Failed: {e}")
+            return True, None
 
     def construct_system_prompt(self, context_str: str, language: str = "English", curriculum: str = "General") -> str:
         """

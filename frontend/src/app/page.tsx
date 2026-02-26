@@ -32,10 +32,15 @@ import ThemeToggle from "@/components/common/ThemeToggle";
 import PwaInstallPrompt from "@/components/common/PwaInstallPrompt";
 
 // Lazy-load heavy components
-const FeatureShowcase = dynamic(() => import("@/components/features/FeatureShowcase"), {
-  loading: () => <div className="mx-auto max-w-6xl px-6 pb-16 h-32 bg-slate-100 dark:bg-white/5 rounded-2xl animate-pulse" />,
-  ssr: true,
-});
+const FeatureShowcase = dynamic(
+  () => import("@/components/features/FeatureShowcase"),
+  {
+    loading: () => (
+      <div className="mx-auto max-w-6xl px-6 pb-16 h-32 bg-slate-100 dark:bg-white/5 rounded-2xl animate-pulse" />
+    ),
+    ssr: true,
+  },
+);
 
 export default function Home() {
   const t = useTranslations("home");

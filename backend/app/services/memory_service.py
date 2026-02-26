@@ -13,11 +13,6 @@ class MemoryService:
         self.ai_service: BaseLLMService = AIFactory.get_service()
 
     async def add_interaction_memory(
-        self.db = db
-        # We use a factory to get the embedding service, defaulting to OpenAI for now
-        self.ai_service: BaseLLMService = AIFactory.get_service()
-
-    async def add_interaction_memory(
         self, 
         user_id: str, 
         user_input: str, 
@@ -94,9 +89,91 @@ class MemoryService:
     async def search_relevant_context(self, user_id: str, query: str, limit: int = 5) -> List[Memory]:
         """
         Retrieves relevant memories AND document chunks using vector similarity.
-        Returns a mixed list of Memory and DocumentChunk objects (both have .content).
+        Returns a mixed list of Memory objects.
         """
         query_embedding = await self.ai_service.get_embeddings(query)
+        
+        # 1. Search Core Memory (Interactions / Insights)
+        try:
+            memories = self.db.query(Memory).filter(
+                Memory.user_id == user_id
+            ).order_by(
+                Memory.embedding.l2_distance(query_embedding)
+            ).limit(limit).all()
+        except Exception as e:
+            print(f"Vector search (Memory) failed: {e}")
+            memories = []
+
+        # 2. Search Document Knowledge (RAG)
+        try:
+            # Join with Document to filter by user_id
+            # Note: We query distinct chunks.
+            query = self.db.query(DocumentChunk).join(Document, Document.id == DocumentChunk.document_id).filter(
+                Document.user_id == user_id
+            )
+            
+            # Add Vector op if available, otherwise just use simple filter for dev
+            try:
+                 query = query.order_by(DocumentChunk.embedding.l2_distance(query_embedding))
+            except:
+                 pass
+            
+            doc_chunks = query.limit(limit).all()
+
+            # Convert Chunks to Memory-like Objects for Router Consumption
+            for chunk in doc_chunks:
+                # Add source metadata from parent doc
+                source_title = chunk.document.title if chunk.document else "Unknown Document"
+                
+                simulated_memory = Memory(
+                    content=chunk.content,
+                    memory_type=MemoryType.KNOWLEDGE_GRAPH, # Use KG type for RAG
+                    metadata_={"filename": source_title, "chunk_id": chunk.id}
+                )
+                memories.append(simulated_memory)
+
+        except Exception as e:
+            print(f"Vector search (Documents) failed: {e}")
+
+        # 3. Sort Combined Results & Limit
+        # Since we don't have distance readily available in Python object here without extra query logic,
+        # we'll trust the DB sort for each group and just take the best of both.
+        # In a strict system, we'd select distance as a column.
+        # For MVP: Return top matches from both sources.
+        
+        return memories[:limit*2] 
+
+    async def ingest_document(self, user_id: str, content: str, metadata: dict) -> bool:
+        """
+        Chunks and embeds a document for RAG.
+        """
+        # 1. Chunking Strategy (Simple overlapping window)
+        chunk_size = 500 # chars
+        overlap = 50
+        
+        chunks = []
+        for i in range(0, len(content), chunk_size - overlap):
+            chunk_text = content[i:i + chunk_size]
+            chunks.append(chunk_text)
+            
+        # 2. Embedding & Storage
+        for chunk in chunks:
+            embedding = await self.ai_service.get_embeddings(chunk)
+            
+            # This would be `DocumentChunk` model in a real DB
+            # For now, we store it as a special type of Memory so it's searchable
+            doc_memory = Memory(
+                user_id=user_id,
+                content=f"[SOURCE: {metadata.get('filename', 'Doc')}] {chunk}",
+                embedding=embedding,
+                memory_type=MemoryType.KNOWLEDGE_GRAPH, # Using KG type for docs for now
+                importance_score=0.5,
+                metadata_=metadata # json field
+            )
+            self.db.add(doc_memory)
+            
+        self.db.commit()
+        return True
         
         # 1. Fetch Memories (Episodic/Short Term)
         stmt_mem = (

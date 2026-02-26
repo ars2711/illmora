@@ -3,10 +3,12 @@
 import { useAuth } from "@/context/AuthContext";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Book, Clock, AlertTriangle, Plus } from "lucide-react";
+import { Book, Clock, AlertTriangle, Plus, BarChart2, Zap } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { buildApiUrl } from "@/lib/api";
+import { CognitiveProfile } from "@/components/features/profile/CognitiveProfile";
+import StreakBadge from "@/components/gamification/StreakBadge";
 
 interface ProfileData {
   full_name: string;
@@ -69,13 +71,26 @@ export default function DashboardPage() {
       <div className="ilmora-noise relative">
         <div className="pointer-events-none absolute inset-0 ilmora-grid opacity-20" />
         <div className="relative z-10 mx-auto max-w-4xl p-6">
-          <header className="mb-8">
-            <h1 className="text-2xl font-semibold">
-              {t("welcome", {
-                name: profile?.full_name?.split(" ")[0] || t("fallbackName"),
-              })}
-            </h1>
-            <p className="text-slate-500 dark:text-white/60">{t("subtitle")}</p>
+          <header className="mb-8 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h1 className="text-2xl font-semibold">
+                {t("welcome", {
+                  name: profile?.full_name?.split(" ")[0] || t("fallbackName"),
+                })}
+              </h1>
+              <p className="text-slate-500 dark:text-white/60">
+                {t("subtitle")}
+              </p>
+            </div>
+            <StreakBadge
+              streak={{
+                currentStreak: 3,
+                longestStreak: 5,
+                streakFreezeAvailable: true,
+                lastActivityDate: new Date().toISOString(),
+              }}
+              compact
+            />
           </header>
 
           {demoMode && (
@@ -184,6 +199,20 @@ export default function DashboardPage() {
                 <span className="text-sm font-medium">{t("subjects.add")}</span>
               </Link>
             </div>
+          </section>
+
+          {/* Cognitive Profile Dashboard (Turbo Feature) */}
+          <section className="mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-bold flex items-center gap-2">
+                <BarChart2 className="w-5 h-5 text-indigo-500" />
+                Long-Term Growth & Cognitive Profile
+              </h2>
+              <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full uppercase font-bold tracking-wider dark:bg-indigo-900/30 dark:text-indigo-300">
+                Beta
+              </span>
+            </div>
+            <CognitiveProfile />
           </section>
 
           {/* Recent Activity */}

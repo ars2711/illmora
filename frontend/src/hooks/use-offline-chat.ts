@@ -31,12 +31,13 @@ export function useOfflineChat(sessionId: string, demoMode = false) {
     window.addEventListener("offline", () => setIsOnline(false));
   }, [sessionId]);
 
-  const sendMessage = async (content: string) => {
+  const sendMessage = async (content: string, mode: string = "creative") => {
     const tempId = crypto.randomUUID();
     const newMessage = {
       id: tempId,
       role: "user",
       content,
+      mode, // Optimistic UI can show mode if needed
       createdAt: Date.now(),
       pending: true,
     };
@@ -66,6 +67,7 @@ export function useOfflineChat(sessionId: string, demoMode = false) {
         sessionId,
         content,
         tempId,
+        mode,
       });
     } else {
       const response =

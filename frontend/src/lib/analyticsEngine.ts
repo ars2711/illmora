@@ -12,7 +12,7 @@ import type {
  * we don't just show a graph — we cluster mistakes by concept.
  */
 export function aggregateByConceptTag(
-  attempts: QuestionAttempt[]
+  attempts: QuestionAttempt[],
 ): ConceptPerformance[] {
   const tagMap = new Map<
     string,
@@ -67,13 +67,13 @@ export function aggregateByConceptTag(
  */
 function calculateTrend(
   attempts: QuestionAttempt[],
-  tagId: string
+  tagId: string,
 ): "improving" | "declining" | "stable" {
   const tagAttempts = attempts
     .filter((a) => a.conceptTags.some((t) => t.id === tagId))
     .sort(
       (a, b) =>
-        new Date(a.attemptedAt).getTime() - new Date(b.attemptedAt).getTime()
+        new Date(a.attemptedAt).getTime() - new Date(b.attemptedAt).getTime(),
     );
 
   if (tagAttempts.length < 4) return "stable";
@@ -99,7 +99,7 @@ function calculateTrend(
  */
 export function identifyWeaknesses(
   attempts: QuestionAttempt[],
-  recentSessionCount = 3
+  recentSessionCount = 3,
 ): WeaknessCluster[] {
   // Get the most recent N session IDs
   const sessionIds = [
@@ -108,14 +108,14 @@ export function identifyWeaknesses(
         .sort(
           (a, b) =>
             new Date(b.attemptedAt).getTime() -
-            new Date(a.attemptedAt).getTime()
+            new Date(a.attemptedAt).getTime(),
         )
-        .map((a) => a.sessionId)
+        .map((a) => a.sessionId),
     ),
   ].slice(0, recentSessionCount);
 
   const recentAttempts = attempts.filter((a) =>
-    sessionIds.includes(a.sessionId)
+    sessionIds.includes(a.sessionId),
   );
   const performances = aggregateByConceptTag(recentAttempts);
 
@@ -135,7 +135,7 @@ export function identifyWeaknesses(
       // Gather question IDs the user got wrong for this concept
       const wrongQuestionIds = recentAttempts
         .filter(
-          (a) => !a.isCorrect && a.conceptTags.some((t) => t.id === p.tag.id)
+          (a) => !a.isCorrect && a.conceptTags.some((t) => t.id === p.tag.id),
         )
         .map((a) => a.questionId);
 
@@ -154,7 +154,7 @@ export function identifyWeaknesses(
  * Generates session-level summaries for the analytics timeline.
  */
 export function buildSessionSummaries(
-  attempts: QuestionAttempt[]
+  attempts: QuestionAttempt[],
 ): SessionSummary[] {
   const sessionMap = new Map<string, QuestionAttempt[]>();
 
@@ -169,7 +169,7 @@ export function buildSessionSummaries(
       const correct = sessionAttempts.filter((a) => a.isCorrect).length;
       const totalTime = sessionAttempts.reduce(
         (sum, a) => sum + a.timeTakenSeconds,
-        0
+        0,
       );
 
       return {
@@ -185,7 +185,5 @@ export function buildSessionSummaries(
         conceptBreakdown: aggregateByConceptTag(sessionAttempts),
       };
     })
-    .sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }

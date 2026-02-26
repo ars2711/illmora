@@ -73,7 +73,7 @@ export default function AnalyticsDashboard({ data }: AnalyticsDashboardProps) {
   const filteredPerformances = useMemo(() => {
     if (selectedSubject === "all") return data.conceptPerformances;
     return data.conceptPerformances.filter(
-      (cp) => cp.tag.subject === selectedSubject
+      (cp) => cp.tag.subject === selectedSubject,
     );
   }, [data.conceptPerformances, selectedSubject]);
 
@@ -255,14 +255,8 @@ function OverviewTab({
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={activityData}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-            <XAxis
-              dataKey="date"
-              tick={{ fill: "#64748b", fontSize: 11 }}
-            />
-            <YAxis
-              yAxisId="left"
-              tick={{ fill: "#64748b", fontSize: 11 }}
-            />
+            <XAxis dataKey="date" tick={{ fill: "#64748b", fontSize: 11 }} />
+            <YAxis yAxisId="left" tick={{ fill: "#64748b", fontSize: 11 }} />
             <YAxis
               yAxisId="right"
               orientation="right"

@@ -3,18 +3,28 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { MessageBubble } from "./MessageBubble";
 import { ChatInput } from "./ChatInput";
-import { Upload, Wifi, WifiOff } from "lucide-react";
+import { Upload, Wifi, WifiOff, Volume2, VolumeX } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface ChatLayoutProps {
   messages: any[];
-  onSendMessage: (content: string) => void;
+  onSendMessage: (content: string, mode: string) => void;
   isOnline: boolean;
   isProcessing?: boolean;
   demoMode?: boolean;
   isGuest?: boolean;
   onImportClick?: () => void;
 }
+
+const MODES = [
+  { id: "creative", label: "Creative" },
+  { id: "fast", label: "Fast" },
+  { id: "deep", label: "Deep" },
+  { id: "socratic", label: "Socratic" },
+  { id: "exam", label: "Exam" },
+  { id: "research", label: "Research" },
+  { id: "mentor", label: "Mentor" },
+];
 
 export function ChatLayout({
   messages,
@@ -27,10 +37,45 @@ export function ChatLayout({
 }: ChatLayoutProps) {
   const t = useTranslations("chat");
   const bottomRef = React.useRef<HTMLDivElement>(null);
+  const [selectedMode, setSelectedMode] = React.useState("creative");
+  const [isTtsEnabled, setIsTtsEnabled] = React.useState(false);
 
   React.useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
+
+  // TTS Effect
+  React.useEffect(() => {
+    if (!isTtsEnabled) {
+      window.speechSynthesis.cancel();
+      return;
+    }
+
+    const lastMessage = messages[messages.length - 1];
+    if (
+      lastMessage &&
+      lastMessage.role === "assistant" &&
+      !lastMessage.isStreaming
+    ) {
+      // Simple browser TTS
+      const utterance = new SpeechSynthesisUtterance(lastMessage.content);
+      // Try to select a good voice
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice = voices.find(
+        (v) =>
+          v.name.includes("Google US English") || v.name.includes("Samantha"),
+      );
+      if (preferredVoice) utterance.voice = preferredVoice;
+
+      utterance.rate = 1.1;
+      window.speechSynthesis.speak(utterance);
+    }
+  }, [messages, isTtsEnabled]);
+
+  const handleSend = (content: string) => {
+    if (isTtsEnabled) window.speechSynthesis.cancel(); // Stop speaking when user sends new message
+    onSendMessage(content, selectedMode);
+  };
 
   return (
     <div className="ilmora-ambient flex h-screen flex-col bg-[radial-gradient(circle_at_top,_rgba(148,163,184,0.25),_transparent_45%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.18),_transparent_45%),linear-gradient(180deg,_rgba(248,250,252,0.98),_rgba(226,232,240,0.9),_rgba(248,250,252,0.98))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(56,189,248,0.22),_transparent_40%),radial-gradient(circle_at_20%_20%,_rgba(251,191,36,0.12),_transparent_45%),linear-gradient(180deg,_rgba(2,6,23,0.98),_rgba(8,47,73,0.85),_rgba(2,6,23,0.98))] dark:text-white">
@@ -52,6 +97,23 @@ export function ChatLayout({
                 studio session
               </p>
             </div>
+
+            <div className="hidden sm:block h-8 w-px bg-slate-200 dark:bg-white/10 mx-2" />
+
+            <label htmlFor="mode-selector" className="sr-only">Select Chat Mode</label>
+            <select
+              id="mode-selector"
+              title="Select Chat Mode"
+              value={selectedMode}
+              onChange={(e) => setSelectedMode(e.target.value)}
+              className="h-8 rounded-lg border border-slate-200 bg-transparent px-2 text-xs font-medium text-slate-600 focus:outline-none focus:ring-2 focus:ring-amber-500/20 dark:border-white/10 dark:text-slate-300 dark:bg-white/5"
+            >
+              {MODES.map((mode) => (
+                <option key={mode.id} value={mode.id}>
+                  {mode.label}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex items-center gap-2">
             {demoMode && (
@@ -86,6 +148,21 @@ export function ChatLayout({
                 ? t("header.status.online")
                 : t("header.status.offline")}
             </div>
+
+            <button
+              onClick={() => setIsTtsEnabled(!isTtsEnabled)}
+              className={cn(
+                "flex items-center justify-center w-8 h-8 rounded-full transition-all",
+                isTtsEnabled
+                  ? "bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-300"
+                  : "bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300",
+              )}
+              title={
+                isTtsEnabled ? "Mute Text-to-Speech" : "Enable Text-to-Speech"
+              }
+            >
+              {isTtsEnabled ? <Volume2 size={14} /> : <VolumeX size={14} />}
+            </button>
           </div>
         </header>
 
@@ -137,7 +214,7 @@ export function ChatLayout({
 
         {/* Input Area */}
         <div className="border-t border-slate-200 bg-white/70 backdrop-blur dark:border-white/10 dark:bg-white/5">
-          <ChatInput onSend={onSendMessage} disabled={isProcessing} />
+          <ChatInput onSend={handleSend} disabled={isProcessing} />
         </div>
       </div>
     </div>

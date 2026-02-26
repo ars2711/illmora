@@ -31,6 +31,7 @@ class MemoryType(str, enum.Enum):
     SHORT_TERM = "short_term" # Active session context
     LONG_TERM = "long_term"   # Crystallized knowledge/facts
     EPISODIC = "episodic"     # "Remember when we talked about X?"
+    KNOWLEDGE_GRAPH = "knowledge_graph" # RAG Documents
 
 class UserRole(str, enum.Enum):
     STUDENT = "student"
@@ -109,6 +110,10 @@ class User(Base):
     memories: Mapped[List["Memory"]] = relationship(back_populates="user")
     notes: Mapped[List["Note"]] = relationship(back_populates="user")
     passkeys: Mapped[List["PasskeyCredential"]] = relationship(back_populates="user")
+    
+    # Turbo Features
+    revision_cards: Mapped[List["RevisionCard"]] = relationship(back_populates="user")
+
     classes_owned: Mapped[List["ClassRoom"]] = relationship(back_populates="owner")
     class_memberships: Mapped[List["ClassMembership"]] = relationship(
         back_populates="user"
@@ -140,6 +145,20 @@ class LearningProfile(Base):
     strengths: Mapped[List[str]] = mapped_column(JSON, default=list) # e.g. ["Python", "Logic"]
     weaknesses: Mapped[List[str]] = mapped_column(JSON, default=list) # e.g. ["Calculus", "Memory Management"]
     
+    # Cognitive Profile (New Turbo Features)
+    cognitive_patterns_data: Mapped[dict] = mapped_column(JSON, default={}) 
+    # Structure:
+    # {
+    #   "patterns": ["skipping_algebra", "rushed_read"],
+    #   "logic_strength": 0.7, # 0-1
+    #   "abstraction_capability": 0.6,
+    #   "computational_accuracy": 0.9,
+    #   "confidence_bias": "overconfident" | "underconfident" | "balanced"
+    # }
+    
+    cognitive_discipline_score: Mapped[float] = mapped_column(Float, default=50.0) # 0-100
+    mastery_tracker: Mapped[dict] = mapped_column(JSON, default={}) # { "subject_id": <score> }
+
     # Metric tracking
     total_study_time_minutes: Mapped[int] = mapped_column(Integer, default=0)
     consistency_score: Mapped[float] = mapped_column(Float, default=0.0)
@@ -182,6 +201,32 @@ class Interaction(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     user: Mapped["User"] = relationship(back_populates="interactions")
+
+class RevisionCard(Base):
+    """
+    Deep Revision Engine - Flashcards / Concept Traps / Exam Variants
+    """
+    __tablename__ = "revision_cards"
+
+    id: Mapped[str] = mapped_column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
+    
+    # Content
+    concept: Mapped[str] = mapped_column(String, index=True) 
+    type: Mapped[str] = mapped_column(String, default="flashcard") # flashcard, concept_trap, exam_trick
+    front_content: Mapped[str] = mapped_column(Text)
+    back_content: Mapped[str] = mapped_column(Text)
+    
+    # Spaced Repetition State (SM-2 Algorithm)
+    next_review_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), index=True)
+    interval_days: Mapped[int] = mapped_column(Integer, default=0)
+    ease_factor: Mapped[float] = mapped_column(Float, default=2.5)
+    repetition_count: Mapped[int] = mapped_column(Integer, default=0)
+    
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    
+    user: Mapped["User"] = relationship(back_populates="revision_cards")
+
 
 class Note(Base):
     __tablename__ = "notes"
@@ -247,6 +292,7 @@ class Memory(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
     
     # Metadata
+    metadata_: Mapped[dict] = mapped_column(JSON, default={})
     source_interaction_id: Mapped[Optional[str]] = mapped_column(String, ForeignKey("interactions.id"), nullable=True)
     user: Mapped["User"] = relationship(back_populates="memories")
 

@@ -118,15 +118,51 @@ export default function FeatureShowcase() {
   ];
 
   const advantages: { icon: LucideIcon; text: string; color: string }[] = [
-    { icon: BarChart3, text: t("advantages.conceptTagging"), color: "text-violet-500 dark:text-violet-400" },
-    { icon: RefreshCw, text: t("advantages.spacedRepetition"), color: "text-rose-500 dark:text-rose-400" },
-    { icon: Trophy, text: t("advantages.leaderboards"), color: "text-amber-500 dark:text-amber-400" },
-    { icon: TrendingUp, text: t("advantages.trendDetection"), color: "text-sky-500 dark:text-sky-400" },
-    { icon: Shield, text: t("advantages.ethicalAi"), color: "text-emerald-500 dark:text-emerald-400" },
-    { icon: Wifi, text: t("advantages.offlineFirst"), color: "text-indigo-500 dark:text-indigo-400" },
-    { icon: Users, text: t("advantages.studyGroups"), color: "text-pink-500 dark:text-pink-400" },
-    { icon: BookOpen, text: t("advantages.knowledgeGraph"), color: "text-teal-500 dark:text-teal-400" },
-    { icon: Clock, text: t("advantages.adaptivePacing"), color: "text-orange-500 dark:text-orange-400" },
+    {
+      icon: BarChart3,
+      text: t("advantages.conceptTagging"),
+      color: "text-violet-500 dark:text-violet-400",
+    },
+    {
+      icon: RefreshCw,
+      text: t("advantages.spacedRepetition"),
+      color: "text-rose-500 dark:text-rose-400",
+    },
+    {
+      icon: Trophy,
+      text: t("advantages.leaderboards"),
+      color: "text-amber-500 dark:text-amber-400",
+    },
+    {
+      icon: TrendingUp,
+      text: t("advantages.trendDetection"),
+      color: "text-sky-500 dark:text-sky-400",
+    },
+    {
+      icon: Shield,
+      text: t("advantages.ethicalAi"),
+      color: "text-emerald-500 dark:text-emerald-400",
+    },
+    {
+      icon: Wifi,
+      text: t("advantages.offlineFirst"),
+      color: "text-indigo-500 dark:text-indigo-400",
+    },
+    {
+      icon: Users,
+      text: t("advantages.studyGroups"),
+      color: "text-pink-500 dark:text-pink-400",
+    },
+    {
+      icon: BookOpen,
+      text: t("advantages.knowledgeGraph"),
+      color: "text-teal-500 dark:text-teal-400",
+    },
+    {
+      icon: Clock,
+      text: t("advantages.adaptivePacing"),
+      color: "text-orange-500 dark:text-orange-400",
+    },
   ];
 
   return (
@@ -146,7 +182,8 @@ export default function FeatureShowcase() {
         <h2 className="mt-6 font-display text-4xl leading-tight sm:text-5xl">
           {t("sectionTitlePrefix")}
           <span className="text-transparent bg-clip-text bg-[linear-gradient(120deg,_#fbbf24,_#38bdf8,_#a855f7)]">
-            {" "}{t("sectionTitleHighlight")}{" "}
+            {" "}
+            {t("sectionTitleHighlight")}{" "}
           </span>
           {t("sectionTitleSuffix")}
         </h2>
@@ -191,7 +228,9 @@ export default function FeatureShowcase() {
                     )}
                   </div>
 
-                  <h3 className="mt-5 font-display text-2xl">{feature.title}</h3>
+                  <h3 className="mt-5 font-display text-2xl">
+                    {feature.title}
+                  </h3>
                   <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-white/70">
                     {feature.description}
                   </p>

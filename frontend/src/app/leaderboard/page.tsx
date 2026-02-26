@@ -11,8 +11,7 @@ export const metadata: Metadata = {
 export const revalidate = 30;
 
 async function getLeaderboardData(): Promise<LeaderboardEntry[]> {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
   try {
     const res = await fetch(`${apiUrl}/api/v1/analytics/leaderboard/weekly`, {
@@ -51,8 +50,7 @@ function getMockLeaderboard(): LeaderboardEntry[] {
     rank: i + 1,
     userId: i === 2 ? "current-user" : `user-${i}`,
     displayName: name,
-    problemsSolvedThisWeek:
-      150 - i * 12 + Math.floor(Math.random() * 10),
+    problemsSolvedThisWeek: 150 - i * 12 + Math.floor(Math.random() * 10),
     accuracy: 90 - i * 3 + Math.floor(Math.random() * 5),
     streak: 30 - i * 2,
     role: (["pre-engineering", "ics", "business"] as const)[i % 3],

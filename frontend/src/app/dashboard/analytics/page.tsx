@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 };
 
 async function getAnalyticsData(userId: string): Promise<AnalyticsSummary> {
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
   try {
     const res = await fetch(`${apiUrl}/api/v1/analytics/${userId}`, {

@@ -60,7 +60,9 @@ def update_user_profile(
         profile_completed=bool(profile.degree_program),
         archetype=profile.archetype,
         phone_number=profile.phone_number,
-        whatsapp_number=profile.whatsapp_number
+        whatsapp_number=profile.whatsapp_number,
+        career_goals=profile.career_goals,
+        learning_style=profile.learning_style
     )
 
 @router.get("/me", response_model=UserProfileResponse)
@@ -69,8 +71,20 @@ def get_me(
     current_user: User = Depends(get_current_user)
 ):
     profile_completed = False
-    if current_user.profile and current_user.profile.degree_program:
-        profile_completed = True
+    archetype = None
+    phone_number = None
+    whatsapp_number = None
+    career_goals = []
+    learning_style = None
+
+    if current_user.profile: 
+        if current_user.profile.degree_program:
+            profile_completed = True
+        archetype = current_user.profile.archetype
+        phone_number = current_user.profile.phone_number
+        whatsapp_number = current_user.profile.whatsapp_number
+        career_goals = current_user.profile.career_goals or []
+        learning_style = current_user.profile.learning_style
         
     return UserProfileResponse(
         id=current_user.id,
@@ -79,7 +93,9 @@ def get_me(
         role=str(current_user.role) if current_user.role else None,
         curriculum_id=current_user.curriculum_id,
         profile_completed=profile_completed,
-        archetype=current_user.profile.archetype if current_user.profile else None,
-        phone_number=current_user.profile.phone_number if current_user.profile else None,
-        whatsapp_number=current_user.profile.whatsapp_number if current_user.profile else None
+        archetype=archetype,
+        phone_number=phone_number,
+        whatsapp_number=whatsapp_number,
+        career_goals=career_goals,
+        learning_style=learning_style
     )

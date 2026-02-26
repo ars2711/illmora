@@ -24,3 +24,5 @@ class UserProfileResponse(BaseModel):
     archetype: Optional[str] = None
     phone_number: Optional[str] = None
     whatsapp_number: Optional[str] = None
+    career_goals: Optional[List[str]] = []
+    learning_style: Optional[str] = None
